@@ -1,0 +1,104 @@
+name: Site
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: site-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  IMAGE: us-docker.pkg.dev/baldmaninc/gcr.io/common-obligations
+
+jobs:
+  verify-and-build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run format:check
+      - run: npm run build
+      - uses: azure/setup-helm@v4
+      - run: helm lint charts/common-obligations --set image.tag=${{ github.sha }}
+      - run: npx playwright install --with-deps chromium
+      - uses: docker/setup-buildx-action@v3
+      - name: Build production container from this static artifact
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          load: true
+          platforms: linux/amd64
+          tags: ${{ env.IMAGE }}:${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+      - name: Start production container
+        run: docker run --detach --name site-check -p 8080:80 "$IMAGE:${{ github.sha }}"
+      - name: Verify HTTP behavior and security headers
+        run: node scripts/smoke.mjs http://127.0.0.1:8080
+      - name: Test browser journeys against nginx and its CSP
+        run: npm test
+        env:
+          PLAYWRIGHT_BASE_URL: http://127.0.0.1:8080
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: browser-traces
+          path: test-results/
+          retention-days: 7
+      - name: Authenticate to Google Cloud
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.GCP_WIF_PROVIDER }}
+          service_account: ${{ secrets.GCP_WIF_SERVICE_ACCOUNT }}
+      - uses: google-github-actions/setup-gcloud@v2
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+      - name: Push the tested image
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        run: |
+          gcloud auth configure-docker us-docker.pkg.dev --quiet
+          docker push "$IMAGE:${{ github.sha }}"
+      - name: Stop test container
+        if: always()
+        run: docker rm -f site-check || true
+
+  deploy:
+    needs: verify-and-build
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    permissions:
+      contents: read
+      id-token: write
+    uses: prassanna-ravishankar/clusterkit/.github/workflows/deploy-app.yml@033ae9372f092538cb091dc4a4e632392fc01106 # deploy-app/v2
+    with:
+      chart_path: charts/common-obligations
+      release: common-obligations
+      namespace: common-obligations
+      deployments: common-obligations
+      hostnames: commonobligations.org
+      source_sha: ${{ github.sha }}
+    secrets:
+      GCP_WIF_PROVIDER: ${{ secrets.GCP_WIF_PROVIDER }}
+      GCP_WIF_SERVICE_ACCOUNT: ${{ secrets.GCP_WIF_SERVICE_ACCOUNT }}
+
+  verify-public:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+      - run: node scripts/smoke.mjs https://commonobligations.org --www

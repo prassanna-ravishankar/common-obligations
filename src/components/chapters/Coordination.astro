@@ -1,0 +1,93 @@
+---
+import { pacts } from "../../data/coordination.js";
+import ChapterImage from "../ChapterImage.astro";
+const pact = pacts[0];
+---
+
+<section id="race" class="chapter race">
+  <div class="chapter-heading reveal">
+    <div class="section-label">
+      <span>03 / THE RACE TO LEAD</span><span
+        >COMPETITION → COORDINATION → VERIFICATION</span
+      >
+    </div><h2>“What if the other<br />side <em>doesn’t stop?”</em></h2><p>
+      The strongest objection deserves a real answer. A US–China race framing
+      puts reciprocal restraint under pressure. The consequences reach far
+      beyond either country.
+    </p>
+  </div>
+  <ChapterImage
+    src="/assets/assembly.webp"
+    alt="Conceptual international meeting chamber with an empty circular table and many chairs in soft daylight"
+    caption="A shared table. Terms still to be agreed."
+  />
+  <div class="race-grid">
+    <div class="race-argument">
+      <span class="section-label">THE CASE FOR MOVING FIRST</span><p
+        class="large-prose"
+      >
+        A government may see leadership as a source of security, prosperity, and
+        influence. Slowing down alone could surrender those advantages without
+        reducing a rival’s risks.
+      </p><span class="section-label">THE CASE FOR COMMON LIMITS</span><p>
+        Racing can impose risks that cross borders. Shared requirements could
+        make restraint more credible if participants can verify compliance and
+        respond to evasion.
+      </p>
+    </div><div class="coordination">
+      <span class="section-label">CHANGE THE AGREEMENT</span><div
+        role="group"
+        aria-label="International agreement type"
+        class="choice"
+      >
+        <button data-pact="0" aria-pressed="true">Promises</button><button
+          data-pact="1"
+          aria-pressed="false">Verified commitments</button
+        >
+      </div><div class="pact-graphic" aria-hidden="true">
+        <span>STATE A</span><div class="pact-lines">
+          <i></i><b id="pact-symbol">{pact.symbol}</b><i></i>
+        </div><span>STATE B</span>
+      </div><h3 id="pact-title">{pact.title}</h3><p id="pact-copy">
+        {pact.copy}
+      </p><div class="assumption">
+        <span id="pact-tag">THE LIMIT</span><p id="pact-limit">{pact.limit}</p>
+      </div>
+    </div>
+  </div><p class="race-note">
+    A conceptual comparison, not a forecast of US or Chinese policy.
+    Verification is incomplete; non-participation remains possible. Other
+    countries and affected communities need a voice in setting the terms.
+  </p><details class="evidence">
+    <summary
+      ><span>↳ What international oversight can build on</span><span
+        class="summary-hint">Existing institutions & their limits</span
+      ><span class="plus">+</span></summary
+    ><div class="evidence-content">
+      <div>
+        <h3>Give the institution<br />a job description.</h3><p>
+          The <a
+            href="https://www.iaea.org/topics/basics-of-iaea-safeguards"
+            target="_blank"
+            rel="noopener noreferrer">IAEA’s safeguards</a
+          > rely on technical verification under agreements accepted by states. An
+          AI institution would likewise need a basis for access, a defined remit,
+          and legitimate authority.
+        </p>
+      </div><div>
+        <p>
+          The UN established an <a
+            href="https://www.un.org/global-digital-compact/en/ai"
+            target="_blank"
+            rel="noopener noreferrer">AI scientific panel and global dialogue</a
+          > in August 2025. Assessment and discussion are valuable functions; they
+          do not themselves confer global enforcement powers.
+        </p><p>
+          This proposal leaves the institutional form open. The test is whether
+          it can obtain evidence, act on it, resist pressure, and be held
+          accountable itself.
+        </p>
+      </div>
+    </div>
+  </details>
+</section>
