@@ -1,7 +1,6 @@
 ---
 import { stages } from "../../data/surveillance.js";
 const scene = stages[0];
-const condition = scene.conditions[0];
 ---
 
 <section id="surveillance" class="chapter dark">
@@ -15,75 +14,146 @@ const condition = scene.conditions[0];
       question changes as the system grows.
     </p>
   </div>
-  <div class="city-experiment">
-    <div class="scene">
+  <div class="city-experiment" data-story>
+    <div class="scene" data-scene="0">
       <img
         src="/assets/street.webp"
         alt="Conceptual illustration of a generic security camera overlooking a lone pedestrian in a city at night"
         width="1536"
         height="1024"
         loading="lazy"
-      /><div class="scene-shade"></div><div class="scene-top">
+      />
+      <div class="scene-shade"></div>
+      <svg
+        class="scene-network"
+        viewBox="0 0 600 800"
+        fill="none"
+        aria-hidden="true"
+      >
+        <g class="network-collection">
+          <path
+            d="M160 170h-35v35 M300 170h35v35 M125 305v35h35 M300 340h35v-35"
+          ></path>
+          <circle cx="230" cy="255" r="7"></circle>
+        </g>
+        <g class="network-connections">
+          <path
+            pathLength="1"
+            d="M230 255L450 140L485 355L350 440L105 450L230 255L350 440M230 255L485 355"
+          ></path>
+          <circle cx="450" cy="140" r="7"></circle><circle
+            cx="485"
+            cy="355"
+            r="7"></circle>
+          <circle cx="350" cy="440" r="7"></circle><circle
+            cx="105"
+            cy="450"
+            r="7"></circle>
+        </g>
+        <g class="network-consequence">
+          <path pathLength="1" d="M350 440L465 525H530"></path>
+          <rect x="430" y="490" width="115" height="70" rx="2"></rect>
+        </g>
+      </svg>
+      <div class="scene-top">
         <span class="scene-tag">ILLUSTRATIVE SCENARIO</span><span
           id="scene-step">{`01 / ${scene.name}`}</span
         >
-      </div><div class="scene-text" aria-live="polite">
-        <p id="scene-kicker">{scene.kicker}</p><h3
-          id="scene-title"
-          set:html={scene.title}
-        /><p id="scene-description">{scene.description}</p>
-      </div><div class="scene-footer">
-        AI-generated illustration · Not a Flock installation
+      </div>
+      <div class="scene-text">
+        <p id="scene-kicker">{scene.kicker}</p>
+        <h3 id="scene-title" set:html={scene.title} />
+        <p id="scene-description">{scene.description}</p>
+      </div>
+      <div class="scene-footer">
+        Conceptual illustration & diagram · Not a Flock installation
       </div>
     </div>
     <div class="experiment-panel">
-      <div class="section-label">FOLLOW THE SYSTEM</div><div
-        class="stages"
-        role="group"
-        aria-label="Surveillance stage"
-      >
-        <button data-stage="0" aria-pressed="true"
-          ><span>01</span>Collect</button
-        ><button data-stage="1" aria-pressed="false"
-          ><span>02</span>Connect</button
-        ><button data-stage="2" aria-pressed="false"><span>03</span>Act</button>
-      </div><h3 id="decision-question">{scene.question}</h3><p
-        class="small-copy"
-      >
-        Keep the situation. Change the condition.
-      </p><div class="choice" role="group" aria-label="Oversight condition">
-        <button data-choice="0" aria-pressed="true">Operator discretion</button
-        ><button data-choice="1" aria-pressed="false">Independent check</button>
-      </div><div id="consequence" aria-live="polite">
-        <span class="result-label">WHAT THIS ENABLES</span><h4
-          id="result-title"
-        >
-          {condition.title}
-        </h4><p id="result-benefit">{condition.benefit}</p><div
-          class="tradeoff"
-        >
-          <span class="result-label">WHAT IT ASKS US TO ACCEPT</span><p
-            id="result-cost"
-          >
-            {condition.cost}
-          </p>
-        </div><div class="affected">
-          <span class="result-label">WHO FEELS THE DIFFERENCE</span><p
-            id="result-people"
-          >
-            {condition.people}
-          </p>
+      <div class="story-controls">
+        <div class="stages" role="group" aria-label="Surveillance stage">
+          {
+            ["Collect", "Connect", "Act"].map((label, index) => (
+              <button
+                data-stage={index}
+                aria-pressed={index === 0 ? "true" : "false"}
+              >
+                <span>{`0${index + 1}`}</span>
+                {label}
+              </button>
+            ))
+          }
         </div>
-      </div><button
-        id="compare"
-        class="text-button"
-        aria-expanded="false"
-        aria-controls="comparison"
-        >See both conditions together <span>↗</span></button
-      >
+        <div class="choice" role="group" aria-label="Oversight condition">
+          <button data-choice="0" aria-pressed="true"
+            >Operator discretion</button
+          >
+          <button data-choice="1" aria-pressed="false">Independent check</button
+          >
+        </div>
+        <button
+          id="compare"
+          class="text-button"
+          aria-expanded="false"
+          aria-controls="story-beats"
+          >See both conditions together <span>↗</span></button
+        >
+        <span class="sr-only" role="status" id="story-status"></span>
+      </div>
+      <div id="story-beats">
+        {
+          stages.map((item, index) => (
+            <article
+              class="story-beat"
+              id={`story-stage-${index}`}
+              data-beat={index}
+              aria-labelledby={`story-question-${index}`}
+            >
+              <p class="beat-number">{`0${index + 1} / ${item.name}`}</p>
+              <h3 id={`story-question-${index}`}>{item.question}</h3>
+              <p class="beat-description">{item.description}</p>
+              <div class="beat-results">
+                {item.conditions.map((result, conditionIndex) => (
+                  <div
+                    class="stage-result"
+                    data-condition={conditionIndex}
+                    hidden={conditionIndex !== 0}
+                  >
+                    <span class="result-label">
+                      {conditionIndex
+                        ? "INDEPENDENT CHECK"
+                        : "OPERATOR DISCRETION"}
+                    </span>
+                    <h4
+                      id={
+                        index === 0 && conditionIndex === 0
+                          ? "result-title"
+                          : undefined
+                      }
+                      data-result-title
+                    >
+                      {result.title}
+                    </h4>
+                    <p>{result.benefit}</p>
+                    <div class="tradeoff">
+                      <span class="result-label">
+                        WHAT IT ASKS US TO ACCEPT
+                      </span>
+                      <p data-result-cost>{result.cost}</p>
+                    </div>
+                    <div class="affected">
+                      <span class="result-label">WHO FEELS THE DIFFERENCE</span>
+                      <p>{result.people}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </article>
+          ))
+        }
+      </div>
     </div>
   </div>
-  <div id="comparison" class="comparison" hidden></div>
   <details class="evidence">
     <summary
       ><span><span class="orange">↳</span> Ground this in the real world</span

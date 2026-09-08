@@ -31,6 +31,8 @@ Keep comparisons conditional and authored, not forecasts or simulated estimates.
 
 Default comparisons now render from the same data used by interactions, removing duplicate copy edits. Instrument Serif and DM Sans load from Google Fonts with system fallbacks.
 
+On larger screens, the surveillance scene stays pinned while three authored stages advance on scroll. Conditions can be compared throughout. Chapter images overlap their headings with restrained scroll drift. Mobile, short viewports and reduced-motion preferences retain a straightforward reading layout; the header motion control pauses movement. Social sharing uses `public/assets/social-card.jpg` with Open Graph and Twitter metadata.
+
 ## Validate
 
 ```sh
@@ -38,7 +40,7 @@ npx playwright install chromium
 npm run check
 ```
 
-This checks formatting, builds and runs eight desktop/mobile browser journeys. `npm run format` formats source files.
+This checks formatting, builds and runs twelve desktop/mobile browser journeys, including scroll-stage synchronization and social-image validation. `npm run format` formats source files.
 
 To test the production container:
 

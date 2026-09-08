@@ -3,6 +3,61 @@ import { stages } from "../src/data/surveillance.js";
 import { releases } from "../src/data/release.js";
 import { pacts } from "../src/data/coordination.js";
 
+test("social metadata points to a usable 1200 × 630 image", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
+    "content",
+    "https://commonobligations.org/assets/social-card.jpg",
+  );
+  await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute(
+    "content",
+    "summary_large_image",
+  );
+  const response = await page.request.get("/assets/social-card.jpg");
+  expect(response.status()).toBe(200);
+  expect(response.headers()["content-type"]).toContain("image/jpeg");
+  expect(
+    await page.evaluate(async () => {
+      const image = new Image();
+      image.src = "/assets/social-card.jpg";
+      await image.decode();
+      return [image.naturalWidth, image.naturalHeight];
+    }),
+  ).toEqual([1200, 630]);
+});
+
+test("scrolling advances the pinned scene, with a static mobile fallback", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await page.goto("/");
+  for (let stage = 0; stage < 3; stage++) {
+    await page.locator(`[data-beat="${stage}"]`).evaluate((el) => {
+      window.scrollTo({
+        top: el.getBoundingClientRect().top + scrollY - 320,
+        behavior: "instant",
+      });
+    });
+    await expect(page.locator(".scene")).toHaveAttribute(
+      "data-scene",
+      String(stage),
+    );
+    await expect(page.locator(".scene")).toHaveCSS("position", "sticky");
+  }
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect(page.locator(".scene")).toHaveAttribute("data-scene", "0");
+  await expect(page.locator(".scene-network")).toBeHidden();
+  await expect(page.locator(".scene")).not.toHaveCSS("position", "sticky");
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await expect(page.locator("body")).toHaveClass(/reduce-motion/);
+  for (const beat of await page.locator("[data-beat]").all()) {
+    await expect(beat).toBeVisible();
+  }
+});
+
 test("all comparisons update their outcomes and accessible selection", async ({
   page,
 }) => {
@@ -11,21 +66,29 @@ test("all comparisons update their outcomes and accessible selection", async ({
   await page.goto("/");
   for (const [stage, scene] of stages.entries()) {
     await page.locator('[data-stage="' + stage + '"]').click();
-    await expect(page.locator("#decision-question")).toHaveText(scene.question);
+    const beat = page.locator('[data-beat="' + stage + '"]');
+    await expect(beat.locator("h3")).toHaveText(scene.question);
     for (const [choice, condition] of scene.conditions.entries()) {
       await page.locator('[data-choice="' + choice + '"]').click();
-      await expect(page.locator("#result-title")).toHaveText(condition.title);
-      await expect(page.locator("#result-cost")).toHaveText(condition.cost);
+      const result = beat.locator('[data-condition="' + choice + '"]');
+      await expect(result).toBeVisible();
+      await expect(result.locator("[data-result-title]")).toHaveText(
+        condition.title,
+      );
+      await expect(result.locator("[data-result-cost]")).toHaveText(
+        condition.cost,
+      );
       await expect(
         page.locator('[data-choice="' + choice + '"]'),
       ).toHaveAttribute("aria-pressed", "true");
     }
     await page.locator("#compare").click();
-    await expect(page.locator("#comparison")).toBeVisible();
+    await expect(beat.locator('[data-condition="0"]')).toBeVisible();
+    await expect(beat.locator('[data-condition="1"]')).toBeVisible();
     for (const condition of scene.conditions)
-      await expect(page.locator("#comparison")).toContainText(condition.title);
+      await expect(beat).toContainText(condition.title);
     await page.locator("#compare").click();
-    await expect(page.locator("#comparison")).toBeHidden();
+    await expect(beat.locator('[data-condition="0"]')).toBeHidden();
   }
   for (const [index, release] of releases.entries()) {
     await page.locator('[data-release="' + index + '"]').click();
