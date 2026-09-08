@@ -45,7 +45,10 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
       - name: Start production container
-        run: docker run --detach --name site-check -p 8080:80 "$IMAGE:${{ github.sha }}"
+        run: |
+          docker run --detach --name site-check -p 8080:80 "$IMAGE:${{ github.sha }}"
+          curl --fail --silent --show-error --retry 15 --retry-delay 1 \
+            --retry-all-errors --max-time 2 http://127.0.0.1:8080/health
       - name: Verify HTTP behavior and security headers
         run: node scripts/smoke.mjs http://127.0.0.1:8080
       - name: Test browser journeys against nginx and its CSP
@@ -73,7 +76,9 @@ jobs:
           docker push "$IMAGE:${{ github.sha }}"
       - name: Stop test container
         if: always()
-        run: docker rm -f site-check || true
+        run: |
+          docker logs site-check || true
+          docker rm -f site-check || true
 
   deploy:
     needs: verify-and-build
