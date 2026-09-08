@@ -74,7 +74,7 @@ CI builds a Linux amd64 container from the static output, tests it, and pushes t
 
 Repository secrets `GCP_WIF_PROVIDER` and `GCP_WIF_SERVICE_ACCOUNT` select Workload Identity Federation. No service-account keys are stored here.
 
-Clusterkit owns the namespace, ReferenceGrant, deployment identity, Origin CA certificate, Cloudflare settings, and edge `www` → apex 301 redirect. Its Terraform registration must be applied before the first deployment. Only the apex belongs in the GCLB gate because www redirects at Cloudflare. This app owns the Deployment, Service and apex HTTPRoute.
+Clusterkit owns the namespace, ReferenceGrant, deployment identity, Origin CA certificate, Cloudflare settings, and www DNS record. Its Terraform registration must be applied before the first deployment. This app owns the Deployment, Service, apex HTTPRoute and www → apex 301 redirect HTTPRoute. Only the apex belongs in the GCLB gate because the redirect route has no backend.
 
 Two small Spot replicas run nginx. With an authenticated cluster context, inspect `helm history common-obligations -n common-obligations`, then roll back using `helm rollback common-obligations <revision> -n common-obligations --wait`. Verify using `node scripts/smoke.mjs https://commonobligations.org --www`.
 

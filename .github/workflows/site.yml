@@ -81,7 +81,7 @@ jobs:
     permissions:
       contents: read
       id-token: write
-    uses: prassanna-ravishankar/clusterkit/.github/workflows/deploy-app.yml@033ae9372f092538cb091dc4a4e632392fc01106 # deploy-app/v2
+    uses: prassanna-ravishankar/clusterkit/.github/workflows/deploy-app.yml@fe6890367d3d19750d0d2ceee61c4e3e6aa32e40 # deploy-app/v2
     with:
       chart_path: charts/common-obligations
       release: common-obligations

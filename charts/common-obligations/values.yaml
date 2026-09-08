@@ -16,7 +16,7 @@ hostname: commonobligations.org
 
 # Set true for apex sites that should redirect www → apex (301).
 # Set false for subdomains (docs, metadata, etc).
-wwwRedirect: false
+wwwRedirect: true
 
 resources:
   requests:
