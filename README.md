@@ -2,6 +2,10 @@
 
 An interactive visual essay on AI power, accountability, and the decisions that shape what happens next. By Prassanna Ravishankar.
 
+## Continue development
+
+Read [docs/CONTEXT.md](docs/CONTEXT.md) for the full project handoff: goals, design decisions, feedback, evidence, implementation, limitations, and a starter prompt for a new chat.
+
 ## Run locally
 
 No build step or package installation is required. With Python 3 installed:
