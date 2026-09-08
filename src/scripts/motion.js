@@ -12,8 +12,12 @@ export function initMotion() {
       paused ? "Enable animation" : "Pause animation",
     );
     $(".motion").setAttribute("aria-pressed", String(paused));
+    dispatchEvent(new Event("motionchange"));
     if (paused) {
       $(".hero-image img").style.transform = "none";
+      document
+        .querySelectorAll(".chapter-portal")
+        .forEach((portal) => portal.style.removeProperty("--portal-drift"));
       document.getAnimations().forEach((animation) => animation.cancel());
     }
   }
@@ -48,6 +52,19 @@ export function initMotion() {
     const max = document.documentElement.scrollHeight - innerHeight;
     $(".progress").style.transform = `scaleX(${max > 0 ? scrollY / max : 0})`;
     if (!paused) {
+      if (innerWidth > 1000 && innerHeight >= 700 && !media.matches) {
+        document.querySelectorAll(".chapter-portal").forEach((portal) => {
+          const rect = portal
+            .querySelector(".chapter-image-frame")
+            .getBoundingClientRect();
+          if (rect.bottom > 0 && rect.top < innerHeight) {
+            portal.style.setProperty(
+              "--portal-drift",
+              `${Math.max(-55, Math.min(55, (innerHeight / 2 - rect.top - rect.height / 2) * 0.14))}px`,
+            );
+          }
+        });
+      }
       const r = $(".hero-image").getBoundingClientRect();
       if (r.bottom > 0 && r.top < innerHeight)
         $(".hero-image img").style.transform =

@@ -1,5 +1,13 @@
 # Artwork provenance
 
+## Social sharing card
+
+Saved as `public/assets/social-card.jpg` (1200 × 630). Generated with the built-in image-generation tool on 8 September 2026, then resized and encoded as JPEG at quality 88. Used by Open Graph and Twitter large-image metadata.
+
+Prompt:
+
+> Use case: ads-marketing. Create a polished Open Graph social share image for the website Common Obligations, landscape 1200 by 630 aspect ratio (1.905:1). Editorial design matching an elegant visual essay on AI power and accountability. Left 60 percent warm ivory paper #eeeee8 with enormous expressive high contrast black serif typography, similar to Instrument Serif. Exact headline on three lines: 'The future is' / 'a series of' / 'decisions.' The final word is italic rust red #c74622. Small black sans serif brand at top left: 'COMMON OBLIGATIONS'. Small readable sans serif at bottom left: 'AI power. Shared responsibility.' Right 40 percent full-height cinematic black and white aerial city at night with luminous roads, subtle photographic grain, deep charcoal shadows. Image blends into a decisive clean editorial boundary at left, no rounded cards. Use ample margins, deliberately beautiful typography, excellent readability at thumbnail size. No extra text, logos, watermarks, badges, fake UI, or gradients. This is conceptual imagery, not a specific real city.
+
 All site images are AI-generated conceptual illustrations, not documentary photographs. The original city and street images are described in [CONTEXT.md](CONTEXT.md).
 
 Two additional images were generated using the built-in image-generation tool on 8 September 2026, then converted to WebP at quality 82. Original PNGs were retained outside the repository.

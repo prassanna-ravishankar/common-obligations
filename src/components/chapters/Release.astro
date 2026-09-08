@@ -4,7 +4,12 @@ import ChapterImage from "../ChapterImage.astro";
 const release = releases[0];
 ---
 
-<section id="release" class="chapter light">
+<section id="release" class="chapter light chapter-portal">
+  <ChapterImage
+    src="/assets/infrastructure.webp"
+    alt="Conceptual monochrome data center with rows of server cabinets and a distant doorway admitting daylight"
+    caption="Behind every capability, a physical system."
+  />
   <div class="chapter-heading reveal">
     <div class="section-label">
       <span>02 / THE RELEASE DECISION</span><span
@@ -15,11 +20,6 @@ const release = releases[0];
       different systems. Evidence needs to follow the power we give them.
     </p>
   </div>
-  <ChapterImage
-    src="/assets/infrastructure.webp"
-    alt="Conceptual monochrome data center with rows of server cabinets and a distant doorway admitting daylight"
-    caption="Behind every capability, a physical system."
-  />
   <div class="release-visual reveal">
     <div class="system-node">
       <span>MODEL</span><p>Can suggest<br />an action</p>
