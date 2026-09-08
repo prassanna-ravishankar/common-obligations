@@ -2,3 +2,8 @@
 .env
 .env.*
 node_modules/
+dist/
+.astro/
+playwright-report/
+test-results/
+gha-creds-*.json

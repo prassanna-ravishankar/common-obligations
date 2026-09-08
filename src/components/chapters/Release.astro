@@ -1,0 +1,116 @@
+---
+import { releases } from "../../data/release.js";
+import ChapterImage from "../ChapterImage.astro";
+const release = releases[0];
+---
+
+<section id="release" class="chapter light">
+  <div class="chapter-heading reveal">
+    <div class="section-label">
+      <span>02 / THE RELEASE DECISION</span><span
+        >CAPABILITY → ACCESS → RESPONSIBILITY</span
+      >
+    </div><h2>More capable.<br />Ready <em>for what?</em></h2><p>
+      A model answering a question and an agent authorised to move money are
+      different systems. Evidence needs to follow the power we give them.
+    </p>
+  </div>
+  <ChapterImage
+    src="/assets/infrastructure.webp"
+    alt="Conceptual monochrome data center with rows of server cabinets and a distant doorway admitting daylight"
+    caption="Behind every capability, a physical system."
+  />
+  <div class="release-visual reveal">
+    <div class="system-node">
+      <span>MODEL</span><p>Can suggest<br />an action</p>
+    </div><div class="connector">
+      <span>+ tools & permissions</span><i></i>
+    </div><div class="system-node active">
+      <span>AGENT</span><p>Can change<br />the world</p>
+    </div><div class="system-caption">
+      Same underlying model. Different opportunities for harm.
+    </div>
+  </div>
+  <div class="decision-top">
+    <h3>What should happen before wider release?</h3><p>
+      Choose a condition to examine its strongest argument and its costs.
+    </p>
+  </div><div class="release-options" role="group" aria-label="Release approach">
+    <button data-release="0" aria-pressed="true"
+      >01 <span>Developer assessment</span></button
+    ><button data-release="1" aria-pressed="false"
+      >02 <span>Independent evaluation</span></button
+    ><button data-release="2" aria-pressed="false"
+      >03 <span>Limited deployment</span></button
+    >
+  </div><div class="release-result" aria-live="polite">
+    <div>
+      <span class="section-label" id="release-label">{release.label}</span><h3
+        id="release-title"
+      >
+        {release.title}
+      </h3>
+    </div><div>
+      <h4>The strongest argument</h4><p id="release-for">{release.for}</p><h4>
+        The unresolved cost
+      </h4><p id="release-against">{release.against}</p><div class="assumption">
+        <span>Depends on</span><p id="release-assumption">
+          {release.assumption}
+        </p>
+      </div>
+    </div>
+  </div>
+  <details class="evidence">
+    <summary
+      ><span>↳ Evidence before deployment</span><span class="summary-hint"
+        >The FTC’s Rite Aid case</span
+      ><span class="plus">+</span></summary
+    ><div class="evidence-content">
+      <h3>Testing is an obligation<br />with human stakes.</h3><div>
+        <p>
+          In December 2023, the FTC alleged that Rite Aid’s facial-recognition
+          system generated thousands of false-positive matches and that the
+          retailer failed to adequately test accuracy before deployment. The
+          agency described customers being wrongly accused and proposed a
+          five-year surveillance facial-recognition ban as part of a settlement.
+        </p><p>
+          This is an account of the agency’s allegations and announced proposed
+          settlement, not a claim that every allegation was adjudicated. <a
+            href="https://www.ftc.gov/news-events/news/press-releases/2023/12/rite-aid-banned-using-ai-facial-recognition-after-ftc-says-retailer-deployed-technology-without"
+            target="_blank"
+            rel="noopener noreferrer">Read the FTC announcement ↗</a
+          >
+        </p><p>
+          Our inference: testing the product includes examining the actions
+          people take because of its output.
+        </p>
+      </div>
+    </div>
+  </details>
+  <div class="open-closed">
+    <div>
+      <span class="section-label">ANOTHER DIMENSION</span><h3>
+        Open or closed?<br /><em>Neither is an answer.</em>
+      </h3><p>
+        Openness and deployment control are separate questions. Open weights are
+        not automatically open source; a closed API is not automatically safe.
+      </p>
+    </div><div class="two-columns">
+      <div>
+        <h4>Openly released weights</h4><p>
+          Can enable outside research, adaptation, and wider participation.
+        </p><p class="muted">
+          Copies can persist after release. Later restrictions may be difficult
+          to enforce.
+        </p>
+      </div><div>
+        <h4>Provider-controlled access</h4><p>
+          Can support access limits, updates, and withdrawal of a hosted
+          service.
+        </p><p class="muted">
+          Scrutiny and access depend more heavily on the provider’s discretion.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

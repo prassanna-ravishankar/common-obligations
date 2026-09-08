@@ -1,0 +1,133 @@
+---
+import { stages } from "../../data/surveillance.js";
+const scene = stages[0];
+const condition = scene.conditions[0];
+---
+
+<section id="surveillance" class="chapter dark">
+  <div class="chapter-heading reveal">
+    <div class="section-label">
+      <span class="orange">01 / THE WATCHING CITY</span><span
+        >COLLECTION → CONNECTION → CONSEQUENCE</span
+      >
+    </div><h2>A camera sees a car.<br />A network sees <em>a life.</em></h2><p>
+      A useful investigation tool can become a much broader source of power. The
+      question changes as the system grows.
+    </p>
+  </div>
+  <div class="city-experiment">
+    <div class="scene">
+      <img
+        src="/assets/street.webp"
+        alt="Conceptual illustration of a generic security camera overlooking a lone pedestrian in a city at night"
+        width="1536"
+        height="1024"
+        loading="lazy"
+      /><div class="scene-shade"></div><div class="scene-top">
+        <span class="scene-tag">ILLUSTRATIVE SCENARIO</span><span
+          id="scene-step">{`01 / ${scene.name}`}</span
+        >
+      </div><div class="scene-text" aria-live="polite">
+        <p id="scene-kicker">{scene.kicker}</p><h3
+          id="scene-title"
+          set:html={scene.title}
+        /><p id="scene-description">{scene.description}</p>
+      </div><div class="scene-footer">
+        AI-generated illustration · Not a Flock installation
+      </div>
+    </div>
+    <div class="experiment-panel">
+      <div class="section-label">FOLLOW THE SYSTEM</div><div
+        class="stages"
+        role="group"
+        aria-label="Surveillance stage"
+      >
+        <button data-stage="0" aria-pressed="true"
+          ><span>01</span>Collect</button
+        ><button data-stage="1" aria-pressed="false"
+          ><span>02</span>Connect</button
+        ><button data-stage="2" aria-pressed="false"><span>03</span>Act</button>
+      </div><h3 id="decision-question">{scene.question}</h3><p
+        class="small-copy"
+      >
+        Keep the situation. Change the condition.
+      </p><div class="choice" role="group" aria-label="Oversight condition">
+        <button data-choice="0" aria-pressed="true">Operator discretion</button
+        ><button data-choice="1" aria-pressed="false">Independent check</button>
+      </div><div id="consequence" aria-live="polite">
+        <span class="result-label">WHAT THIS ENABLES</span><h4
+          id="result-title"
+        >
+          {condition.title}
+        </h4><p id="result-benefit">{condition.benefit}</p><div
+          class="tradeoff"
+        >
+          <span class="result-label">WHAT IT ASKS US TO ACCEPT</span><p
+            id="result-cost"
+          >
+            {condition.cost}
+          </p>
+        </div><div class="affected">
+          <span class="result-label">WHO FEELS THE DIFFERENCE</span><p
+            id="result-people"
+          >
+            {condition.people}
+          </p>
+        </div>
+      </div><button
+        id="compare"
+        class="text-button"
+        aria-expanded="false"
+        aria-controls="comparison"
+        >See both conditions together <span>↗</span></button
+      >
+    </div>
+  </div>
+  <div id="comparison" class="comparison" hidden></div>
+  <details class="evidence">
+    <summary
+      ><span><span class="orange">↳</span> Ground this in the real world</span
+      ><span class="summary-hint"
+        >Flock, facial recognition & the limits of accuracy</span
+      ><span class="plus">+</span></summary
+    ><div class="evidence-content">
+      <div>
+        <h3>Useful does not settle legitimate.</h3><p>
+          Flock offers automated licence plate recognition and a national LPR
+          network. Its <a
+            href="https://www.flocksafety.com/trust"
+            target="_blank"
+            rel="noopener noreferrer">trust materials</a
+          > describe its approach to privacy and customer controls. Those are the
+          provider’s account of its safeguards, rather than independent proof of how
+          every deployment operates.
+        </p><p>
+          The scenario above is a general policy comparison, not a claim that
+          every Flock customer lacks these checks. Plate recognition and facial
+          recognition are different technologies. Both raise questions about who
+          can search, for which purposes, and with what recourse.
+        </p>
+      </div><div>
+        <h3>A documented failure.</h3><p>
+          Robert Williams was wrongfully arrested in Detroit in 2020 after
+          police relied on an incorrect facial-recognition result. The 2024
+          settlement introduced requirements for independent supporting evidence
+          and an audit of past cases. The <a
+            href="https://www.aclu.org/press-releases/civil-rights-advocates-achieve-the-nations-strongest-police-department-policy-on-facial-recognition-technology"
+            target="_blank"
+            rel="noopener noreferrer">ACLU’s account and settlement links</a
+          > come from his legal representatives.
+        </p><p>
+          Our inference: a safeguard has to govern how a result becomes an
+          action. Better matching alone cannot decide whether a use is
+          justified.
+        </p>
+      </div>
+    </div>
+  </details>
+  <div class="chapter-takeaway">
+    <span>THE CHECK THAT MATTERS</span><p>
+      Ask whether a use is justified<br /><em>before it becomes ordinary.</em>
+    </p><a href="#obligation-6">Obligation 06 / Give people recourse ↗</a>
+  </div>
+</section>

@@ -1,5 +1,15 @@
 # Common Obligations: conversation and development handoff
 
+## Development update: 8 September 2026
+
+The user subsequently authorised an npm modular refactor, deployment to commonobligations.org on their Clusterkit cluster, and additional imagery and transitions. The implementation is now an Astro static site: see README.md for the current structure, commands, validation and deployment contract. The buildless paths and untested-browser notes below describe the original import, not the current source tree.
+
+Chapter components, shared scenario data, browser modules and styles are separated under src/. Two further conceptual illustrations accompany release and international coordination; prompts are in docs/ARTWORK.md. New state transitions respect motion preferences, and the manual motion control is available on mobile. Eight desktop/mobile browser journeys pass against nginx, and a desktop/mobile screenshot pass was completed.
+
+Clusterkit infrastructure registration is committed separately. Live launch depends on applying that registration and completing the Site GitHub Actions workflow; consult the workflow and live domain for deployment status rather than assuming this handoff proves publication. The explicit launch request supersedes the earlier lack of publishing permission for this domain.
+
+---
+
 This is a comprehensive project-context export of the Common Obligations conversation. It records the user's intentions, the decisions we reached, the arguments behind them, the resulting implementation, and unfinished work. It is a curated handoff, not a verbatim transcript, and does not include unrelated personal context, hidden instructions, or credentials.
 
 ## Start here in a new chat

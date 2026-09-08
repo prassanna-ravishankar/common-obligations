@@ -1,0 +1,25 @@
+---
+interface Props {
+  src: string;
+  alt: string;
+  caption: string;
+}
+const { src, alt, caption } = Astro.props;
+---
+
+<figure class="chapter-image">
+  <div class="chapter-image-frame">
+    <img
+      src={src}
+      alt={alt}
+      width="1536"
+      height="1024"
+      loading="lazy"
+      decoding="async"
+    />
+  </div>
+  <figcaption>
+    <span>{caption}</span>
+    <span>AI-generated conceptual illustration</span>
+  </figcaption>
+</figure>

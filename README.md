@@ -1,42 +1,83 @@
 # Common Obligations
 
-An interactive visual essay on AI power, accountability, and the decisions that shape what happens next. By Prassanna Ravishankar.
+An interactive visual essay on AI power and accountability. By Prassanna Ravishankar.
 
-## Continue development
+## Develop
 
-Read [docs/CONTEXT.md](docs/CONTEXT.md) for the full project handoff: goals, design decisions, feedback, evidence, implementation, limitations, and a starter prompt for a new chat.
-
-## Run locally
-
-No build step or package installation is required. With Python 3 installed:
+Use Node 24 (`.nvmrc`) and npm:
 
 ```sh
-python3 -m http.server 8000 --directory public
+npm ci
+npm run dev
 ```
 
-Open http://localhost:8000.
+Open http://localhost:4321. `npm run build` produces static files in `dist/`; `npm run preview` serves that output. Production runs nginx with no Node server.
 
 ## Structure
 
-- `public/index.html`: visual essay, six obligations, source notes, and complete long-form essay.
-- `public/style.css`: responsive typography, layout, animation, and reduced-motion support.
-- `public/app.js`: surveillance stages, side-by-side comparisons, release choices, coordination conditions, and scroll effects.
-- `public/assets/`: two original AI-generated conceptual illustrations in WebP format.
+- `src/pages/index.astro`: chapter composition.
+- `src/layouts/PageLayout.astro`: metadata, fonts, shell and script entry.
+- `src/components/chapters/`: independently editable narrative chapters.
+- `src/components/Essay.astro`: the complete long-form essay.
+- `src/data/`: comparison scenarios shared by initial HTML and browser interactions.
+- `src/scripts/`: chapter interactions, navigation, motion and transitions.
+- `src/styles/`: tokens, chapter styles, responsive rules and motion.
+- `public/assets/`: conceptual illustrations.
+- `tests/`: Playwright desktop/mobile browser journeys.
+- `deploy/`, `Dockerfile`, `charts/common-obligations/`: production server and deployment.
+- `.github/workflows/site.yml`: CI and deployment.
 
-The site uses Instrument Serif and DM Sans through Google Fonts, with system font fallbacks.
+Keep comparisons conditional and authored, not forecasts or simulated estimates. Preserve attribution and distinguish allegations from findings. Images are conceptual illustrations. See [project context](docs/CONTEXT.md) and [artwork provenance](docs/ARTWORK.md).
 
-## Editing
+Default comparisons now render from the same data used by interactions, removing duplicate copy edits. Instrument Serif and DM Sans load from Google Fonts with system fallbacks.
 
-Edit the HTML for narrative text and sources. Interactive comparison content is in `public/app.js`; keep the initial HTML state in sync when changing default selections. CSS lives in `public/style.css`.
+## Validate
 
-The comparisons are conditional arguments, not forecasts or simulated estimates. Preserve attribution, distinguish allegations from findings, and identify conceptual imagery. The street illustration depicts a generic camera, not a Flock installation.
+```sh
+npx playwright install chromium
+npm run check
+```
 
-## Hosting
+This checks formatting, builds and runs eight desktop/mobile browser journeys. `npm run format` formats source files.
 
-Deploy the contents of `public/` to any static web host. No server, database, or secrets are required. The purchased domain is commonobligations.org; DNS and hosting configuration are separate steps.
+To test the production container:
 
-The original ChatGPT Sites deployment manifest and source credentials are intentionally excluded from this portable repository.
+```sh
+npm run build
+docker build --platform linux/amd64 -t common-obligations:local .
+docker run --rm --name common-obligations-local -p 8080:80 common-obligations:local
+```
 
-## Validation performed
+In another terminal:
 
-JavaScript syntax, local asset references, internal anchors, and duplicate HTML IDs were checked. Browser interaction and visual QA have not been performed for this version.
+```sh
+node scripts/smoke.mjs http://localhost:8080
+PLAYWRIGHT_BASE_URL=http://localhost:8080 npm test
+```
+
+CI tests nginx's Content Security Policy, assets, cache headers and 404 behavior as well as browser interactions. HTML revalidates, hashed assets are immutable, and unversioned illustrations cache for a day.
+
+## Deploy
+
+Pushes to `main` and manual Site workflow runs on `main` deploy after validation. Pull requests run checks without publishing.
+
+CI builds a Linux amd64 container from the static output, tests it, and pushes that exact image tagged with the full commit SHA. Clusterkit's pinned `deploy-app/v2` workflow performs Helm rollout and load-balancer verification; public HTTP and www redirect checks follow.
+
+| Setting                       | Value                                                             |
+| ----------------------------- | ----------------------------------------------------------------- |
+| Domain                        | `commonobligations.org`                                           |
+| Namespace / release / service | `common-obligations`                                              |
+| Image                         | `us-docker.pkg.dev/baldmaninc/gcr.io/common-obligations`          |
+| Cluster                       | `clusterkit`, `us-central1`, project `baldmaninc`                 |
+| Gateway / HTTPRoute namespace | `clusterkit`                                                      |
+| Service account               | `gh-deploy-common-obligations@baldmaninc.iam.gserviceaccount.com` |
+
+Repository secrets `GCP_WIF_PROVIDER` and `GCP_WIF_SERVICE_ACCOUNT` select Workload Identity Federation. No service-account keys are stored here.
+
+Clusterkit owns the namespace, ReferenceGrant, deployment identity, Origin CA certificate, Cloudflare settings, and www DNS record. Its Terraform registration must be applied before the first deployment. This app owns the Deployment, Service, apex HTTPRoute and www → apex 301 redirect HTTPRoute. Only the apex belongs in the GCLB gate because the redirect route has no backend.
+
+Two small Spot replicas run nginx. With an authenticated cluster context, inspect `helm history common-obligations -n common-obligations`, then roll back using `helm rollback common-obligations <revision> -n common-obligations --wait`. Verify using `node scripts/smoke.mjs https://commonobligations.org --www`.
+
+## Validation scope
+
+The refactor passed the static build, Helm lint, Linux amd64 container build, HTTP smoke checks, eight browser journeys against nginx, and desktop/mobile screenshot inspection. Print rendering and a full accessibility audit remain separate work.
