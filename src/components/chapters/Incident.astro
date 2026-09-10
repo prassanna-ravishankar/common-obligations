@@ -1,5 +1,27 @@
 ---
 import { incidentDecisions } from "../../data/incident.js";
+const supplyContexts = {
+  contain:
+    "A malicious update has been identified. Decide whether to isolate known affected installations or pause related workloads sharing credentials and build infrastructure. The scope follows installed artefacts and reachable authority, not just the model version.",
+  investigate:
+    "Trace where the package was published, built, installed, and executed. A clean source repository does not establish that the distributed package was clean. Downstream operators need a way to report exposure.",
+  resume:
+    "A replacement is available. Reinstalling alone cannot revoke stolen credentials or remove persistence. Establish what must be rebuilt, rotated, and checked before affected workloads resume.",
+};
+const supplyEvidence = {
+  contain: [
+    "Installed versions and artefact hashes, reachable secrets, isolated workloads, and a trigger to widen containment.",
+    "An inventory of shared credentials and build infrastructure, scoped suspension, and a timetable for reviewing the pause.",
+  ],
+  investigate: [
+    "Publication and installation records for known affected artefacts, execution evidence, and explicitly unexamined downstream deployments.",
+    "Reconciled build and distribution records, downstream notifications, missing telemetry, and independent review of the search coverage.",
+  ],
+  resume: [
+    "Validated replacement artefacts, rotated exposed credentials, clean rebuilds where needed, and monitoring for persistence.",
+    "Outside examination of the compromised delivery path, repair provenance, residual exposure, and the authority approving a staged restart.",
+  ],
+};
 ---
 
 <section
@@ -9,7 +31,7 @@ import { incidentDecisions } from "../../data/incident.js";
 >
   <div class="chapter-heading reveal">
     <div class="section-label">
-      <span>03 / AFTER THE BOUNDARY FAILS</span><span
+      <span>04 / AFTER THE BOUNDARY FAILS</span><span
         >CONTAIN → INVESTIGATE → RESUME</span
       >
     </div>
@@ -90,6 +112,21 @@ import { incidentDecisions } from "../../data/incident.js";
       decision on its own; choices do not accumulate into a score or a forecast.
     </p>
   </div>
+  <fieldset class="incident-origin">
+    <legend>Change the starting event</legend><label
+      ><input type="radio" name="incident-origin" value="agent" checked /> Agent exceeds
+      its authority</label
+    ><label
+      ><input type="radio" name="incident-origin" value="supply" /> Trusted dependency
+      is compromised</label
+    >
+  </fieldset>
+  <p class="origin-supply">
+    Illustrative supply-chain compromise: an installed update contains malicious
+    code and may have accessed credentials. The model may have behaved exactly
+    as intended. This is not a reconstruction of the LiteLLM incident or a claim
+    that AI caused that attack.
+  </p>
   <div class="incident-sequence">
     {
       incidentDecisions.map((decision) => (
@@ -105,7 +142,10 @@ import { incidentDecisions } from "../../data/incident.js";
                 <>
                   <span class="section-label">{decision.id}</span>
                   <h3 id={`${decision.id}-heading`}>{decision.title}</h3>
-                  <p>{decision.context}</p>
+                  <>
+                    <p class="origin-agent">{decision.context}</p>
+                    <p class="origin-supply">{supplyContexts[decision.id]}</p>
+                  </>
                 </>
               </div>
             </>
@@ -149,7 +189,10 @@ import { incidentDecisions } from "../../data/incident.js";
                     <dt>Who feels the difference</dt>
                     <dd>{option.people}</dd>
                     <dt>Evidence to ask for</dt>
-                    <dd>{option.evidence}</dd>
+                    <dd class="origin-agent">{option.evidence}</dd>
+                    <dd class="origin-supply">
+                      {supplyEvidence[decision.id][i]}
+                    </dd>
                   </dl>
                 </section>
               ))}

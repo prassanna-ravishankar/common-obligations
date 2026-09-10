@@ -217,3 +217,8 @@ For local work, use `python3 -m http.server 8000 --directory public`. Refer to R
 ## 9 September 2026: incident response chapter
 
 Added Incident.astro between Release and Coordination. OpenAI provider reporting and Reuters reporting on Anthropic are separate from authored contain/investigate/resume comparisons. Both approaches are visible by default; native radio controls narrow each comparison independently without JavaScript or accumulating a forecast. Added chapter navigation, obligation links, research/evaluation scope, review coverage and resumption evidence. Preserve disclosure incentives; incident counts are not safety rankings. No new images or dependencies.
+
+
+## 10 September 2026: six scenarios
+
+Added scenario index, defensive access and scientific discovery. Sources: Anthropic Glasswing, OpenAI Navier–Stokes announcement, Tao’s September 7 post on related work. Distinguish provider claims, proof verification, understanding, provenance, and attribution. Tao’s post predates OpenAI’s announcement. Incident origin switches between agent overreach and illustrative supply-chain compromise, changing stage context and evidence together. No unverified LiteLLM mechanism is asserted. New controls use native radios and CSS without JavaScript. Existing six obligations and essay are expanded, not replaced.

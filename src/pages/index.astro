@@ -1,6 +1,9 @@
 ---
 import PageLayout from "../layouts/PageLayout.astro";
 import ChapterNavigation from "../components/ChapterNavigation.astro";
+import ScenarioIndex from "../components/ScenarioIndex.astro";
+import Defense from "../components/chapters/Defense.astro";
+import Discovery from "../components/chapters/Discovery.astro";
 import Hero from "../components/chapters/Hero.astro";
 import Introduction from "../components/chapters/Introduction.astro";
 import Surveillance from "../components/chapters/Surveillance.astro";
@@ -15,11 +18,13 @@ import Reading from "../components/chapters/Reading.astro";
 <PageLayout>
   <Hero />
   <Introduction />
+  <ScenarioIndex />
   <ChapterNavigation />
-  <div id="decisions"></div>
   <Surveillance />
   <Release />
+  <Defense />
   <Incident />
+  <Discovery />
   <Coordination />
   <Obligations />
   <Closing />

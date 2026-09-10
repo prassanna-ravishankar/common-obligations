@@ -83,3 +83,7 @@ Two small Spot replicas run nginx. With an authenticated cluster context, inspec
 ## Validation scope
 
 The refactor passed the static build, Helm lint, Linux amd64 container build, HTTP smoke checks, eight browser journeys against nginx, and desktop/mobile screenshot inspection. Print rendering and a full accessibility audit remain separate work.
+
+## Scenario navigation
+
+`src/data/scenarios.js` drives the six-scenario index and chapter navigation. `PolicyComparison.astro` renders defensive-access and discovery options with native radio controls. The incident origin selector changes stage context and evidence for illustrative supply-chain compromise. All new comparisons work without JavaScript; factual claims retain adjacent sources.

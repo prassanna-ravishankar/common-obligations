@@ -74,7 +74,9 @@ export function initMotion() {
     for (const id of [
       "surveillance",
       "release",
+      "defense",
       "incident",
+      "discovery",
       "race",
       "obligations",
     ])
