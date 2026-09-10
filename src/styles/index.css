@@ -1,11 +1,5 @@
-@import "./base.css";
-@import "./surveillance.css";
-@import "./release.css";
-@import "./coordination.css";
+@import "./foundation.css";
+@import "./world.css";
 @import "./reading.css";
-@import "./motion.css";
-@import "./responsive.css";
-@import "./imagery.css";
-@import "./story.css";
-@import "./incident.css";
-@import "./scenarios.css";
+@import "./prototype.css";
+@import "./layered-site.css";

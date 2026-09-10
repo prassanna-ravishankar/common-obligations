@@ -5,7 +5,10 @@ import "../styles/index.css";
 const title = "Common Obligations — The future is a series of decisions.";
 const description =
   "An interactive essay on AI power and accountability. Explore the choices, the tradeoffs, and six obligations for the people building our future.";
-const socialImage = new URL("/assets/social-card.jpg", Astro.site).href;
+const socialImage = new URL(
+  "/assets/abstract/social-crossing-v2.jpg",
+  Astro.site,
+).href;
 ---
 
 <!doctype html>
@@ -16,21 +19,37 @@ const socialImage = new URL("/assets/social-card.jpg", Astro.site).href;
       content="width=device-width,initial-scale=1"
     /><link rel="icon" href="/favicon.svg" /><meta
       name="theme-color"
-      content="#eeeee8"
+      content="#f1eee5"
     /><title>
       Common Obligations — The future is a series of decisions.
     </title><meta
       name="description"
       content="An interactive essay on AI power and accountability. Explore the choices, the tradeoffs, and six obligations for the people building our future."
-    /><link rel="preconnect" href="https://fonts.googleapis.com" /><link
-      rel="preconnect"
-      href="https://fonts.gstatic.com"
+    /><link
+      rel="preload"
+      href="/fonts/instrument-serif-latin.woff2"
+      as="font"
+      type="font/woff2"
       crossorigin
     /><link
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;450;500;600;700&family=Instrument+Serif:ital@0;1&display=swap"
-      rel="stylesheet"
+      rel="preload"
+      href="/fonts/instrument-serif-italic-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    /><link
+      rel="preload"
+      href="/fonts/dm-sans-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
     /><link rel="canonical" href={Astro.site} />
     <meta property="og:type" content="website" />
+    {
+      Astro.url.pathname.startsWith("/prototype") && (
+        <meta name="robots" content="noindex, nofollow" />
+      )
+    }
     <meta property="og:site_name" content="Common Obligations" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -42,7 +61,7 @@ const socialImage = new URL("/assets/social-card.jpg", Astro.site).href;
     <meta property="og:image:height" content="630" />
     <meta
       property="og:image:alt"
-      content="The future is a series of decisions. Common Obligations, beside a monochrome city at night."
+      content="The future is a series of decisions. Common Obligations, beside nested stone thresholds, distant islands and rust threads on ivory."
     />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
@@ -54,6 +73,12 @@ const socialImage = new URL("/assets/social-card.jpg", Astro.site).href;
     />
   </head>
   <body>
+    <!-- THESIS: Six independent questions about power, not a predicted timeline.
+    OWN-WORLD: Ivory paper, charcoal engraved fragments, rust vector threads; unboxed comparisons.
+    STORY: Orient, examine conditions, inspect evidence, trace obligations.
+    FIRST VIEWPORT: Oversized left headline, diagonal floating architecture on the right, landscape below; Explore six scenarios on clear paper.
+    FORM: Crossing, user-delegated selection; seed 2a571022. Layered natural scroll with calm reading surfaces.
+    FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md -->
     <a href="#main" class="skip">Skip to essay</a>
     <div class="progress" aria-hidden="true"></div>
     <Header />
@@ -61,9 +86,9 @@ const socialImage = new URL("/assets/social-card.jpg", Astro.site).href;
     <Footer />
     <noscript
       ><div class="no-script">
-        Surveillance, release, and coordination controls require JavaScript.
-        Defensive access, discovery, and incident comparisons work without it.
-        The essay, obligations, and source notes remain available.
+        All comparisons, evidence and the essay remain available without
+        JavaScript. Scroll-linked artwork and current-chapter tracking are
+        optional enhancements.
       </div></noscript
     >
     <script>

@@ -1,29 +1,27 @@
 ---
+import DisclosureIcon from "../DisclosureIcon.astro";
+import ChapterFrame from "../ChapterFrame.astro";
 import PolicyComparison from "../PolicyComparison.astro";
 import { defenseOptions } from "../../data/scenarios.js";
 ---
 
-<section id="defense" class="chapter defense" aria-labelledby="defense-heading">
-  <div class="chapter-heading reveal">
-    <div class="section-label">
-      <span>03 / THE DEFENSIVE ADVANTAGE</span><span
-        >DISCOVER → REPAIR → PROTECT</span
-      >
-    </div><h2 id="defense-heading">
+<ChapterFrame id="defense">
+  <Fragment slot="heading"
+    ><h2 id="defense-heading">
       The same capability.<br /><em>Whose advantage?</em>
     </h2><p>
       A system that finds a weakness can help someone repair it or exploit it.
       Restricting access can reduce exposure while withholding tools from people
       who need to defend themselves.
     </p>
-  </div>
+  </Fragment>
   <div class="scenario-question">
-    <span class="section-label">ILLUSTRATIVE DECISION</span><h3>
+    <h3>
       A small maintainer protects<br />a very large dependency.
     </h3><p>
-      A new model can identify serious vulnerabilities. An under-resourced
-      maintainer wants to use it on software relied on by thousands of
-      organisations. How should access work?
+      In this illustrative situation, a new model can identify serious
+      vulnerabilities. An under-resourced maintainer wants to use it on software
+      relied on by thousands of organisations. How should access work?
     </p>
   </div>
   <PolicyComparison
@@ -40,7 +38,7 @@ import { defenseOptions } from "../../data/scenarios.js";
     <summary
       ><span>Ground this in the real world</span><span class="summary-hint"
         >Mythos Preview & Project Glasswing</span
-      ><span class="plus">+</span></summary
+      ><DisclosureIcon /></summary
     ><div class="evidence-content">
       <h3>Finding a flaw<br />starts another obligation.</h3><div>
         <p>
@@ -69,9 +67,8 @@ import { defenseOptions } from "../../data/scenarios.js";
   </details>
   <details class="evidence">
     <summary
-      ><span>When should a finding become public?</span><span class="plus"
-        >+</span
-      ></summary
+      ><span>When should a finding become public?</span><DisclosureIcon
+      /></summary
     ><div class="evidence-content">
       <div>
         <h3>Give repairs time.</h3><p>
@@ -90,10 +87,10 @@ import { defenseOptions } from "../../data/scenarios.js";
     </div>
   </details>
   <div class="chapter-takeaway">
-    <span>THE CHECK THAT MATTERS</span><p>
+    <p>
       Access should lead<br /><em>to protection.</em>
     </p><a href="#obligation-3">03 / Scrutinise who gets access ↗</a><br /><a
       href="#obligation-5">05 / Share findings responsibly ↗</a
     >
   </div>
-</section>
+</ChapterFrame>

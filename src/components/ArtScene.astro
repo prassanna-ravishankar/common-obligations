@@ -1,0 +1,74 @@
+---
+interface Props {
+  kind: string;
+}
+const { kind } = Astro.props;
+const hero = kind === "hero";
+const motifs: Record<string, string> = {
+  surveillance: "Converging apertures",
+  release: "A threshold of authority",
+  defense: "Access distributed",
+  discovery: "Structure revealed",
+  incident: "A broken boundary",
+  race: "Separate structures, shared terms",
+};
+---
+
+<figure
+  class:list={["art-scene", { "art-hero": hero }]}
+  aria-label={hero
+    ? "Abstract architectural landscape with floating fragments"
+    : motifs[kind]}
+>
+  <img
+    class="art-distance"
+    src={hero
+      ? "/assets/abstract/landscape.webp"
+      : `/assets/abstract/${kind}.webp`}
+    alt=""
+    width="1536"
+    height="1024"
+    loading={hero ? "eager" : "lazy"}
+    fetchpriority={hero ? "high" : "auto"}
+    decoding="async"
+  />
+  <svg
+    class="art-threads"
+    viewBox="0 0 1400 900"
+    fill="none"
+    aria-hidden="true"
+    preserveAspectRatio="xMidYMid slice"
+  >
+    {
+      [0, 1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
+        <path
+          class="thread-fine"
+          pathLength="1"
+          d={`M-80 ${760 + n * 8} C310 ${820 - n * 22},430 ${350 + n * 18},740 ${450 + n * 9} S1120 ${230 + n * 10},1470 ${80 + n * 8}`}
+        />
+      ))
+    }
+    <path
+      class="thread-lead"
+      pathLength="1"
+      d="M-100 790C250 850 420 320 760 455S1140 220 1490 40"></path>
+  </svg>
+  {
+    (
+      <img
+        class="art-foreground"
+        src={
+          hero
+            ? "/assets/abstract/fragments.webp"
+            : `/assets/abstract/crossing-${["defense", "discovery", "incident", "race"].includes(kind) ? kind : kind === "release" ? "threshold" : "screen"}-v2.webp`
+        }
+        alt=""
+        width="1024"
+        height="1536"
+        loading={hero ? "eager" : "lazy"}
+        decoding="async"
+      />
+    )
+  }
+  <figcaption>AI-generated conceptual illustration</figcaption>
+</figure>

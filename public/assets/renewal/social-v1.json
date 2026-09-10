@@ -1,0 +1,7 @@
+{
+  "prompt": "Create a finished 1200x630 landscape Open Graph image for Common Obligations using the supplied image as the material and composition reference. Keep its coherent charcoal intaglio strata and fine rust trace along the lower third, with ample ivory negative space above. No new objects. Typeset exact text at upper left: small 'Common Obligations' then large elegant high-contrast serif headline on two lines 'The future is a' and 'series of decisions.' Make only 'decisions.' muted burnt rust and italic; other lettering charcoal. Lettering must be clear and beautifully spaced, not cramped. Add small 'commonobligations.org' at bottom right in a clear ivory area if it fits without colliding with the image; otherwise omit URL. Preserve tactile ivory paper and engraved lower composition; do not put text in a panel, do not add borders, UI, extra slogans, arches or floating shapes. This is a social card, not a webpage screenshot.",
+  "method": "built-in image generation edit",
+  "original": "/Users/prass/.codex/generated_images/01a082bf-c41e-7251-8f70-74017e02fb54/exec-ad847422-cd72-44b9-8b17-82ae4922d472.png",
+  "reference": "/Users/prass/.codex/generated_images/01a082bf-c41e-7251-8f70-74017e02fb54/exec-a5b94a0f-19cc-4768-a39e-ea0b8b6c88e3.png",
+  "conversion": "1200x630 JPEG quality 88"
+}

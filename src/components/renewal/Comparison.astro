@@ -1,0 +1,42 @@
+---
+import Argument from "../Argument.astro";
+import Scene from "./Scene.astro";
+const { id, options } = Astro.props;
+const kind = id.startsWith("coordination") ? "race" : id.split("-")[0];
+---
+
+<div
+  class={`reading-sequence reading-sequence--${kind}`}
+  data-reading-sequence={id}
+  data-kind={kind}
+  data-count={options.length}
+>
+  <div class="reading-stage">
+    <a class="reading-bypass" href={`#${id}-all`} hidden
+      >Read all perspectives</a
+    >
+    <Scene kind={kind} id={`comparison-${id}`} />
+    <div class="focused-perspectives" aria-hidden="true">
+      {
+        options.map((option, i) => (
+          <div class="focused-perspective" data-focus={i}>
+            <Argument option={option} />
+          </div>
+        ))
+      }
+    </div>
+    <span class="reading-position" aria-hidden="true"></span>
+  </div>
+</div>
+<div class="settled-reading" id={`${id}-all`} data-reading-all={id}>
+  <h3 class="settled-heading">Read the perspectives together.</h3>
+  <div class="settled-columns" style={`--columns:${options.length}`}>
+    {
+      options.map((option) => (
+        <section aria-label={option.name}>
+          <Argument option={option} />
+        </section>
+      ))
+    }
+  </div>
+</div>

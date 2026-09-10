@@ -1,0 +1,388 @@
+/* Scoped experiment: typography inhabits the scene; scroll stages perspectives. */
+.surveillance-threshold {
+  position: relative;
+  isolation: isolate;
+  min-height: 850px;
+  height: 105svh;
+  max-height: 1100px;
+  overflow: clip;
+  --crossing: 0;
+}
+.threshold-distance {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  inset: 0;
+  object-position: center bottom;
+  mix-blend-mode: multiply;
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 8%,
+    #000 68%,
+    transparent 100%
+  );
+  transform: translateY(calc(var(--crossing) * 35px)) scale(1.05);
+}
+.threshold-copy {
+  position: relative;
+  z-index: 2;
+  padding: 120px 6% 0;
+}
+.threshold-copy h2 {
+  font-size: clamp(70px, 7.5vw, 116px);
+  max-width: 1050px;
+  line-height: 1;
+}
+.threshold-copy p {
+  margin-top: 35px;
+  max-width: 44ch;
+  font-size: 21px;
+  color: var(--ink);
+}
+.threshold-fragment {
+  position: absolute;
+  z-index: 3;
+  right: -4%;
+  bottom: -12%;
+  width: 35%;
+  height: 95%;
+  object-fit: contain;
+  transform: translateY(calc(var(--crossing) * -90px))
+    rotate(calc(var(--crossing) * -2deg));
+  pointer-events: none;
+}
+.threshold-thread {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  stroke: var(--accent);
+  stroke-width: 1;
+  z-index: 1;
+  transform: translateY(calc(var(--crossing) * -30px));
+}
+.threshold-thread path:first-child {
+  stroke-width: 2;
+}
+.threshold-caption {
+  z-index: 4;
+  position: absolute;
+  bottom: 8px;
+  left: 6%;
+  font-size: 10px;
+  color: var(--muted);
+}
+.surveillance-prototype .chapter-body {
+  margin-top: 10px;
+}
+.scroll-comparison {
+  position: relative;
+  margin-top: 45px;
+}
+.comparison-scene {
+  position: relative;
+  padding-top: 22px;
+  isolation: isolate;
+}
+/* Actual independent depth planes; no image or colour panel behind the copy. */
+.comparison-world,
+.world-foreground {
+  display: none;
+}
+.scroll-comparison[data-enhanced] .comparison-scene {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  padding: 60px 12vw 40px;
+  min-height: calc(100svh - 90px);
+  overflow: clip;
+}
+.scroll-comparison[data-enhanced] .comparison-world {
+  display: block;
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+.world-distance {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center bottom;
+  mix-blend-mode: multiply;
+  opacity: 0.7;
+  mask-image: linear-gradient(transparent, #000 18%, #000 88%, transparent);
+  transform: translateX(calc(var(--art-crossing, 0) * -20px)) scale(1.04);
+}
+.world-middle {
+  position: absolute;
+  top: 26%;
+  left: 76%;
+  width: 22%;
+  height: 65%;
+  object-fit: contain;
+  transform: translate3d(
+      calc(var(--art-crossing, 0) * -52vw + var(--scene-opening, 0) * 67vw),
+      calc(var(--scene-opening, 0) * 90px),
+      0
+    )
+    scale(calc(0.85 + var(--scene-opening, 0) * 0.15));
+  opacity: 0.8;
+}
+.scroll-comparison[data-enhanced] .world-foreground {
+  display: block;
+  position: absolute;
+  z-index: 3;
+  pointer-events: none;
+  top: 2%;
+  left: 60%;
+  width: 42%;
+  height: 98%;
+  object-fit: contain;
+  transform: translate3d(
+      calc(var(--art-crossing, 0) * -62vw - var(--scene-opening, 0) * 27vw),
+      calc(var(--scene-opening, 0) * 30px),
+      0
+    )
+    rotate(calc(var(--art-crossing, 0) * -6deg))
+    scale(calc(1 - var(--scene-opening, 0) * 0.08));
+}
+.world-threads {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  stroke: var(--accent);
+  stroke-width: 0.8;
+  transform: translateY(calc(var(--art-crossing, 0) * -12px));
+}
+.world-threads path:first-child {
+  stroke-width: 1.8;
+}
+.scroll-comparison[data-enhanced] .read-together {
+  top: 35px;
+  right: 12vw;
+  z-index: 5;
+}
+.scroll-comparison[data-enhanced] .scroll-options {
+  position: relative;
+  z-index: 2;
+  gap: 9vw;
+}
+.scroll-comparison[data-enhanced] .comparison-direction {
+  position: relative;
+  z-index: 5;
+}
+.scroll-comparison[data-enhanced] .comparison-scroll-note {
+  position: relative;
+  z-index: 4;
+  margin-top: 48px;
+}
+.scroll-comparison[data-enhanced] .comparison-thread {
+  display: none;
+}
+.scroll-comparison[data-enhanced] .scroll-option {
+  background: none;
+}
+.scroll-comparison[data-enhanced] .scroll-option h4 {
+  font-size: clamp(38px, 3.3vw, 52px);
+}
+.scroll-comparison[data-enhanced] .perspective-thesis {
+  font-size: clamp(26px, 2.5vw, 36px);
+  min-height: 0;
+  margin-bottom: 30px;
+}
+.scroll-comparison[data-enhanced] .scroll-option dd {
+  color: var(--ink);
+  font-size: 17px;
+}
+.comparison-direction {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  color: var(--muted);
+  font-size: 13px;
+  margin-bottom: 32px;
+}
+.read-together {
+  position: absolute;
+  right: 0;
+  top: 8px;
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--accent);
+  padding: 12px 0;
+  min-height: 44px;
+  color: var(--accent);
+  font-size: 14px;
+}
+.scroll-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 70px;
+}
+.scroll-option {
+  min-width: 0;
+}
+.scroll-option h4 {
+  font-size: 40px;
+}
+.perspective-thesis {
+  font: italic 30px/1.15 var(--serif);
+  color: var(--accent);
+  margin-top: 16px;
+  min-height: 2.3em;
+}
+.scroll-option dl {
+  margin: 25px 0 0;
+}
+.scroll-option dt {
+  font-size: 13px;
+  font-weight: 600;
+  margin: 22px 0 7px;
+}
+.scroll-option dd {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.65;
+  max-width: 65ch;
+  color: var(--muted);
+}
+.comparison-thread {
+  width: 100%;
+  height: 65px;
+  margin-top: 20px;
+  stroke: var(--accent);
+  stroke-width: 1;
+}
+.comparison-scroll-note {
+  display: none;
+  color: var(--muted);
+  font-size: 12px;
+}
+.scroll-comparison[data-enhanced] {
+  height: calc(var(--scene-height) + 400svh);
+}
+.scroll-comparison[data-enhanced] .comparison-scene {
+  position: sticky;
+  top: 90px;
+}
+.scroll-comparison[data-enhanced] .scroll-option {
+  transition: none;
+}
+.scroll-comparison[data-enhanced] .scroll-option:last-child {
+  opacity: var(--right-presence, 1);
+  transform: translateX(calc((1 - var(--right-presence, 1)) * 18px));
+}
+.scroll-comparison[data-enhanced] .scroll-option:first-child {
+  opacity: var(--left-presence, 1);
+  transform: translateX(calc((1 - var(--left-presence, 1)) * -18px));
+}
+.scroll-comparison[data-enhanced] .comparison-thread path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: calc(1 - var(--read-progress, 0));
+}
+.scroll-comparison[data-enhanced] .comparison-scroll-note {
+  display: block;
+}
+.surveillance-prototype .chapter-takeaway {
+  position: relative;
+  padding-block: 90px;
+}
+@media (max-width: 1000px) {
+  .surveillance-threshold {
+    min-height: 700px;
+    height: 85svh;
+  }
+  .threshold-copy {
+    padding-top: 70px;
+  }
+  .threshold-copy h2 {
+    font-size: clamp(52px, 8vw, 90px);
+  }
+  .threshold-copy p {
+    font-size: 18px;
+    max-width: 38ch;
+  }
+  .threshold-fragment {
+    width: 45%;
+    height: 62%;
+    right: -12%;
+    bottom: -6%;
+  }
+  .threshold-distance {
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 30%,
+      #000 80%,
+      transparent
+    );
+  }
+  .scroll-options {
+    gap: 35px;
+  }
+}
+@media (max-width: 600px) {
+  .surveillance-threshold {
+    min-height: 720px;
+  }
+  .threshold-copy h2 {
+    font-size: clamp(49px, 12vw, 65px);
+  }
+  .threshold-copy p {
+    max-width: 29ch;
+  }
+  .threshold-fragment {
+    height: 48%;
+    width: 62%;
+    right: -8%;
+  }
+  .scroll-options {
+    grid-template-columns: 1fr;
+    gap: 45px;
+  }
+  .scroll-option + .scroll-option {
+    padding-top: 35px;
+    border-top: 1px solid var(--line);
+  }
+  .scroll-option h4 {
+    font-size: 36px;
+  }
+  .perspective-thesis {
+    min-height: 0;
+  }
+  .scroll-option dd {
+    font-size: 16px;
+  }
+  .comparison-direction svg {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .surveillance-threshold img,
+  .threshold-thread {
+    transform: none;
+  }
+}
+.reduce-motion .surveillance-threshold img,
+.reduce-motion .threshold-thread {
+  transform: none;
+}
+@media print {
+  .scroll-comparison[data-enhanced] {
+    height: auto;
+  }
+  .scroll-comparison[data-enhanced] .comparison-scene {
+    position: static;
+  }
+  .scroll-comparison[data-enhanced] .scroll-option {
+    opacity: 1 !important;
+    clip-path: none !important;
+    transform: none !important;
+  }
+  .read-together,
+  .comparison-scroll-note {
+    display: none;
+  }
+}

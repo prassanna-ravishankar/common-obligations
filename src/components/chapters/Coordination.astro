@@ -1,27 +1,19 @@
 ---
+import DisclosureIcon from "../DisclosureIcon.astro";
+import ChapterFrame from "../ChapterFrame.astro";
+import PolicyComparison from "../PolicyComparison.astro";
 import { pacts } from "../../data/coordination.js";
-import ChapterImage from "../ChapterImage.astro";
-const pact = pacts[0];
 ---
 
-<section id="race" class="chapter race chapter-portal">
-  <ChapterImage
-    src="/assets/assembly.webp"
-    alt="Conceptual international meeting chamber with an empty circular table and many chairs in soft daylight"
-    caption="A shared table. Terms still to be agreed."
-  />
-  <div class="chapter-heading reveal">
-    <div class="section-label">
-      <span>06 / THE RACE TO LEAD</span><span
-        >COMPETITION → COORDINATION → VERIFICATION</span
-      >
-    </div><h2>“What if the other<br />side <em>doesn’t stop?”</em></h2><p>
+<ChapterFrame id="race">
+  <Fragment slot="heading"
+    ><h2>“What if the other<br />side <em>doesn’t stop?”</em></h2><p>
       A lab that pauses to investigate still faces competitors that may
       continue. The strongest objection deserves a real answer. A US–China race
       framing puts reciprocal restraint under pressure. The consequences reach
       far beyond either country.
     </p>
-  </div>
+  </Fragment>
   <div class="race-grid">
     <div class="race-argument">
       <span class="section-label">THE CASE FOR MOVING FIRST</span><p
@@ -36,24 +28,16 @@ const pact = pacts[0];
         respond to evasion.
       </p>
     </div><div class="coordination">
-      <span class="section-label">CHANGE THE AGREEMENT</span><div
-        role="group"
-        aria-label="International agreement type"
-        class="choice"
-      >
-        <button data-pact="0" aria-pressed="true">Promises</button><button
-          data-pact="1"
-          aria-pressed="false">Verified commitments</button
-        >
-      </div><div class="pact-graphic" aria-hidden="true">
-        <span>STATE A</span><div class="pact-lines">
-          <i></i><b id="pact-symbol">{pact.symbol}</b><i></i>
-        </div><span>STATE B</span>
-      </div><h3 id="pact-title">{pact.title}</h3><p id="pact-copy">
-        {pact.copy}
-      </p><div class="assumption">
-        <span id="pact-tag">THE LIMIT</span><p id="pact-limit">{pact.limit}</p>
-      </div>
+      <PolicyComparison
+        id="coordination-agreement"
+        legend="Compare the agreement"
+        options={pacts.map((p, i) => ({
+          name: i ? "Verified commitments" : "Promises",
+          title: p.title,
+          benefit: p.copy,
+          cost: p.limit,
+        }))}
+      />
     </div>
   </div><p class="race-note">
     A conceptual comparison, not a forecast of US or Chinese policy.
@@ -63,7 +47,7 @@ const pact = pacts[0];
     <summary
       ><span>↳ What international oversight can build on</span><span
         class="summary-hint">Existing institutions & their limits</span
-      ><span class="plus">+</span></summary
+      ><DisclosureIcon /></summary
     ><div class="evidence-content">
       <div>
         <h3>Give the institution<br />a job description.</h3><p>
@@ -92,8 +76,8 @@ const pact = pacts[0];
     </div>
   </details>
   <div class="chapter-takeaway">
-    <span>THE CHECK THAT MATTERS</span><p>
+    <p>
       Make commitments<br /><em>open to examination.</em>
     </p><a href="#obligation-3">Obligation 03 / Make scrutiny independent ↗</a>
   </div>
-</section>
+</ChapterFrame>

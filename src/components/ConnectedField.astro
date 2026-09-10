@@ -1,0 +1,34 @@
+---
+// Every strand, including the rust strand, belongs to the same projected field.
+// No independent image coordinates or decorative connector endpoints.
+const strands = Array.from({ length: 76 }, (_, i) => {
+  const t = i / 75;
+  return {
+    d: `M -240 ${820 + t * 370} C 160 ${950 + t * 260}, 300 ${450 + t * 370}, 690 ${620 + t * 180} S 1220 ${1000 - t * 120}, 1840 ${180 + t * 640}`,
+    selected: i === 34,
+  };
+});
+---
+
+<svg
+  class="connected-field"
+  viewBox="0 0 1600 1100"
+  fill="none"
+  preserveAspectRatio="xMidYMid slice"
+  aria-hidden="true"
+>
+  <g class="field-distance">
+    {strands.map(({ d }) => <path d={d} />)}
+  </g>
+  <g class="field-near">
+    {
+      strands.map(({ d, selected }) => (
+        <path
+          d={d}
+          class:list={{ "field-trace": selected }}
+          data-field-strand
+        />
+      ))
+    }
+  </g>
+</svg>

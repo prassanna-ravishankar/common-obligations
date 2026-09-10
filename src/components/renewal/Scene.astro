@@ -1,0 +1,68 @@
+---
+const { kind } = Astro.props;
+const available = [
+  "hero",
+  "surveillance",
+  "release",
+  "defense",
+  "discovery",
+  "race",
+].includes(kind);
+---
+
+{
+  available && (
+    <figure
+      class={`scene-art scene-art--${kind}`}
+      aria-label="Abstract conceptual illustration"
+    >
+      <svg
+        viewBox="0 0 1536 1024"
+        preserveAspectRatio="xMidYMid slice"
+        aria-hidden="true"
+      >
+        <g class="scene-image-plane">
+          <image
+            href={`/assets/renewal/${kind}-v1.webp`}
+            x="0"
+            y="0"
+            width="1536"
+            height="1024"
+            preserveAspectRatio="none"
+          />
+        </g>
+        {kind === "discovery" && (
+          <g class="scene-cover-plane">
+            <image
+              href="/assets/renewal/discovery-veil-v2.webp"
+              x="0"
+              y="0"
+              width="1536"
+              height="1024"
+              preserveAspectRatio="none"
+            />
+          </g>
+        )}
+      </svg>
+    </figure>
+  )
+}
+{
+  kind === "incident" && (
+    <figure
+      class="scene-art scene-art--incident"
+      aria-label="A connection interrupted, not yet restored"
+    >
+      <svg
+        viewBox="0 0 1536 1024"
+        preserveAspectRatio="xMidYMid slice"
+        aria-hidden="true"
+      >
+        <path class="incident-before" d="M-100 780H680" />
+        <path class="incident-after" d="M800 805H1636" />
+        <path class="incident-gap" d="M680 780l16 -7" />
+        <path class="incident-after incident-gap" d="M800 805l-16 7" />
+      </svg>
+    </figure>
+  )
+}

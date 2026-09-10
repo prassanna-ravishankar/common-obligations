@@ -1,46 +1,41 @@
 ---
+import DisclosureIcon from "../DisclosureIcon.astro";
+import ChapterFrame from "../ChapterFrame.astro";
 import PolicyComparison from "../PolicyComparison.astro";
 import { discoveryOptions } from "../../data/scenarios.js";
 ---
 
-<section
-  id="discovery"
-  class="chapter discovery"
-  aria-labelledby="discovery-heading"
->
-  <div class="chapter-heading reveal">
-    <div class="section-label">
-      <span>05 / THE DISCOVERY</span><span>GENERATE → VERIFY → UNDERSTAND</span>
-    </div><h2 id="discovery-heading">
+<ChapterFrame id="discovery">
+  <Fragment slot="heading"
+    ><h2 id="discovery-heading">
       The answer is here.<br /><em>What have we learned?</em>
     </h2><p>
       A verified result can be an achievement while leaving its ideas difficult
       to explain, teach, or extend. What should its authors help others
       understand?
     </p>
-  </div>
+  </Fragment>
   <ol class="discovery-stages" aria-label="Three distinct contributions">
     <li>
-      <span>01 / GENERATE</span><h3>Find a result.</h3><p>
-        Produce a claim and an argument.
-      </p>
+      <h3>Find a result.</h3><p>Produce a claim and an argument.</p>
     </li><li>
-      <span>02 / VERIFY</span><h3>Check the proof.</h3><p>
+      <h3>Check the proof.</h3><p>
         Establish what follows from stated assumptions.
       </p>
     </li><li>
-      <span>03 / UNDERSTAND</span><h3>Share the ideas.</h3><p>
+      <h3>Share the ideas.</h3><p>
         Explain why it works and what others can build on.
       </p>
     </li>
   </ol>
   <div class="scenario-question">
-    <span class="section-label">ILLUSTRATIVE DECISION</span><h3>
+    <h3>
       A proof is checkable.<br />Its ideas remain difficult to use.
     </h3><p>
-      A lab has a formally verified mathematical result. How much responsibility
-      should accompany its claim to a breakthrough? The comparison concerns how
-      work is shared, not a judgement on any particular proof.
+      In this illustrative situation, a lab has a formally verified mathematical
+      result. How much responsibility should accompany its claim to a
+      breakthrough? The comparison concerns how work is shared, not a judgement
+      on any particular proof.
     </p>
   </div>
   <PolicyComparison
@@ -52,7 +47,7 @@ import { discoveryOptions } from "../../data/scenarios.js";
     <summary
       ><span>Navier–Stokes & the purpose of a proof</span><span
         class="summary-hint">Two sources, different claims</span
-      ><span class="plus">+</span></summary
+      ><DisclosureIcon /></summary
     ><div class="evidence-content">
       <div>
         <h3>A claimed solution.</h3><p>
@@ -100,9 +95,9 @@ import { discoveryOptions } from "../../data/scenarios.js";
     proposed responsibilities, not a certification of scientific merit.
   </p>
   <div class="chapter-takeaway">
-    <span>THE CHECK THAT MATTERS</span><p>
+    <p>
       A breakthrough should leave<br /><em>others able to build.</em>
     </p><a href="#obligation-1">01 / Trace contributions and provenance ↗</a><br
     /><a href="#obligation-2">02 / Make evidence usable ↗</a>
   </div>
-</section>
+</ChapterFrame>

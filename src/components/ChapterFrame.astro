@@ -1,0 +1,37 @@
+---
+import ArtScene from "./ArtScene.astro";
+import FreshScene from "./renewal/Scene.astro";
+import { scenarios } from "../data/scenarios.js";
+const { id, prototype = false } = Astro.props;
+const scenario = scenarios.find((s) => s.id === id);
+const fresh =
+  Astro.url.pathname === "/" || Astro.url.pathname.startsWith("/renewal");
+---
+
+<section
+  id={id}
+  class:list={["chapter", { "surveillance-prototype": prototype }]}
+  aria-label={scenario.title}
+>
+  {
+    prototype ? (
+      <slot name="threshold" />
+    ) : (
+      <div
+        class="chapter-threshold"
+        data-motion-scene
+        data-fresh-threshold={fresh ? id : undefined}
+      >
+        {fresh ? (
+          <FreshScene kind={id} id={`threshold-${id}`} />
+        ) : (
+          <ArtScene kind={id} />
+        )}
+        <div class="chapter-heading">
+          <slot name="heading" />
+        </div>
+      </div>
+    )
+  }
+  <div class="chapter-body"><slot /></div>
+</section>

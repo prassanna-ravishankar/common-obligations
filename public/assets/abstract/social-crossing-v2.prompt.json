@@ -1,0 +1,6 @@
+{
+  "prompt": "Use case: ads-marketing. Create a refined editorial Open Graph image 1200x630 landscape for Common Obligations. Warm ivory paper, huge charcoal high-contrast serif headline LEFT: exact words 'The future is a series of decisions.' with 'decisions.' in rust italic. Small 'COMMON OBLIGATIONS' upper left. Right third: exquisite copperplate charcoal engraving of one curved limestone screen with tall oval aperture, and a smaller simple rectangular stone threshold visible through it. A very low misty engraved island horizon along bottom edge, fine rust lines sweeping along the bottom. Beautiful negative space, typography directly in the composition, no text panel or card. Sharp legible text and subtle intricate engraving. No gothic ruins, no photographic elements, no extra text or logos.",
+  "generator": "OpenAI image generation",
+  "original": "/Users/prass/.codex/generated_images/01a082bf-c41e-7251-8f70-74017e02fb54/exec-4984952c-3ce1-4c7c-af42-bb22ad989e5b.png",
+  "conversion": "ImageMagick resize 1200x630, JPEG quality 88"
+}

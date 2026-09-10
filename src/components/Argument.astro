@@ -1,0 +1,41 @@
+---
+const { option: o } = Astro.props;
+---
+
+<h4>{o.name}</h4>
+{o.title && <p class="perspective-thesis">{o.title}</p>}
+<dl>
+  <dt>The strongest case</dt><dd>{o.benefit}</dd>
+  <dt>What it asks us to accept</dt><dd>{o.cost}</dd>
+  {
+    o.people && (
+      <>
+        <>
+          <dt>Who feels the difference</dt>
+          <dd>{o.people}</dd>
+        </>
+      </>
+    )
+  }
+  {
+    o.evidence && (
+      <>
+        <dt>What would need to be shown</dt>
+        <dd class:list={{ "origin-agent": !!o.supplyEvidence }}>
+          {o.evidence}
+        </dd>
+        {o.supplyEvidence && <dd class="origin-supply">{o.supplyEvidence}</dd>}
+      </>
+    )
+  }
+  {
+    o.dependency && (
+      <>
+        <>
+          <dt>Depends on</dt>
+          <dd>{o.dependency}</dd>
+        </>
+      </>
+    )
+  }
+</dl>

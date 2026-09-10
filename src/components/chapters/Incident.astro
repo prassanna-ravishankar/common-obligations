@@ -1,4 +1,7 @@
 ---
+import DisclosureIcon from "../DisclosureIcon.astro";
+import ChapterFrame from "../ChapterFrame.astro";
+import ScrollComparison from "../ScrollComparison.astro";
 import { incidentDecisions } from "../../data/incident.js";
 const supplyContexts = {
   contain:
@@ -24,18 +27,9 @@ const supplyEvidence = {
 };
 ---
 
-<section
-  id="incident"
-  class="chapter incident"
-  aria-labelledby="incident-heading"
->
-  <div class="chapter-heading reveal">
-    <div class="section-label">
-      <span>04 / AFTER THE BOUNDARY FAILS</span><span
-        >CONTAIN → INVESTIGATE → RESUME</span
-      >
-    </div>
-    <h2 id="incident-heading">
+<ChapterFrame id="incident">
+  <Fragment slot="heading"
+    ><h2 id="incident-heading">
       The boundary failed.<br />What earns <em>trust again?</em>
     </h2>
     <p>
@@ -43,72 +37,14 @@ const supplyEvidence = {
       is how to contain the failure, find what was missed, and establish the
       conditions for continuing.
     </p>
-  </div>
-  <details class="evidence incident-records" open>
-    <summary
-      ><span>Two documented accounts</span><span class="summary-hint"
-        >Events and disclosure are different dates</span
-      ><span class="plus">+</span></summary
-    >
-    <div class="evidence-content">
-      <div>
-        <span class="section-label">OPENAI · PROVIDER ACCOUNT</span>
-        <h3>Research reached<br />outside the lab.</h3>
-        <p>
-          <strong>Occurred: July 2026. Report published: 26 August 2026.</strong
-          >
-        </p>
-        <p>
-          OpenAI reported that models in internal cybersecurity evaluations
-          bypassed isolation controls and compromised parts of its research
-          infrastructure and Hugging Face’s systems. These evaluations used
-          reduced safeguards. Its account also links an independent
-          investigation by METR and Redwood Research.
-        </p>
-        <p>
-          <a
-            href="https://openai.com/index/hugging-face-incident-and-the-road-ahead/"
-            target="_blank"
-            rel="noopener noreferrer">Read OpenAI’s incident report ↗</a
-          >
-        </p>
-      </div>
-      <div>
-        <span class="section-label">ANTHROPIC · REUTERS REPORTING</span>
-        <h3>A later review<br />found another incident.</h3>
-        <p>
-          <strong>Occurred: January 2026. Reported: 9 September 2026.</strong>
-        </p>
-        <p>
-          Reuters reported that Anthropic disclosed a fourth cybersecurity
-          incident involving an early Claude model, identified after previously
-          overlooked test sessions were reviewed. Anthropic commissioned METR to
-          investigate independently.
-        </p>
-        <p>
-          <a
-            href="https://www.reuters.com/legal/litigation/anthropic-reports-fourth-cybersecurity-incident-with-early-version-claude-2026-09-09/"
-            target="_blank"
-            rel="noopener noreferrer">Read the Reuters report ↗</a
-          >
-        </p>
-      </div>
-    </div>
-    <p class="incident-caveat">
-      These accounts have different scopes. A disclosed incident count cannot
-      rank labs by safety: it also reflects detection, investigation, and
-      willingness to report. An investigation being commissioned does not
-      establish that its findings are complete.
-    </p>
-  </details>
+  </Fragment>
+
   <div class="incident-scenario">
-    <span class="section-label"
-      >AN ILLUSTRATIVE RESPONSE · NOT A RECONSTRUCTION</span
-    >
     <h3>One incident.<br /><em>Three decisions still open.</em></h3>
     <p>
-      The comparisons below are proposals, not claims about what either company
-      did or predictions of what would have prevented its incident. Examine each
+      This is an illustrative response, not a reconstruction. The comparisons
+      below are proposals, not claims about what either company did or
+      predictions of what would have prevented its incident. Examine each
       decision on its own; choices do not accumulate into a score or a forecast.
     </p>
   </div>
@@ -140,7 +76,6 @@ const supplyEvidence = {
               <span class="incident-number">{decision.number}</span>
               <div>
                 <>
-                  <span class="section-label">{decision.id}</span>
                   <h3 id={`${decision.id}-heading`}>{decision.title}</h3>
                   <>
                     <p class="origin-agent">{decision.context}</p>
@@ -150,54 +85,13 @@ const supplyEvidence = {
               </div>
             </>
           </div>
-          <fieldset class="incident-comparison">
-            <legend>Compare the scope of the response</legend>
-            <div class="incident-controls">
-              <label>
-                <input
-                  type="radio"
-                  name={`response-${decision.id}`}
-                  value="both"
-                  checked
-                />{" "}
-                Both approaches
-              </label>
-              {decision.options.map((option, i) => (
-                <label>
-                  <input
-                    type="radio"
-                    name={`response-${decision.id}`}
-                    value={String(i)}
-                  />{" "}
-                  {option.name}
-                </label>
-              ))}
-            </div>
-            <div class="incident-options">
-              {decision.options.map((option, i) => (
-                <section
-                  class="incident-option"
-                  data-option={String(i)}
-                  aria-label={option.name}
-                >
-                  <h4>{option.name}</h4>
-                  <dl>
-                    <dt>The strongest case</dt>
-                    <dd>{option.benefit}</dd>
-                    <dt>What it asks us to accept</dt>
-                    <dd>{option.cost}</dd>
-                    <dt>Who feels the difference</dt>
-                    <dd>{option.people}</dd>
-                    <dt>Evidence to ask for</dt>
-                    <dd class="origin-agent">{option.evidence}</dd>
-                    <dd class="origin-supply">
-                      {supplyEvidence[decision.id][i]}
-                    </dd>
-                  </dl>
-                </section>
-              ))}
-            </div>
-          </fieldset>
+          <ScrollComparison
+            id={`incident-${decision.id}`}
+            options={decision.options.map((o, i) => ({
+              ...o,
+              supplyEvidence: supplyEvidence[decision.id][i],
+            }))}
+          />
           <div class="incident-obligations">
             <span>Trace this decision to</span>
             {decision.obligations.map((n) => (
@@ -210,8 +104,65 @@ const supplyEvidence = {
       ))
     }
   </div>
+  <details class="evidence incident-records">
+    <summary
+      ><span>Two documented accounts</span><span class="summary-hint"
+        >Events and disclosure are different dates</span
+      ><DisclosureIcon /></summary
+    >
+    <div class="evidence-content">
+      <div>
+        <h3>Research reached<br />outside the lab.</h3>
+        <p class="section-label">OpenAI · provider account</p>
+        <p>
+          <strong>Occurred: July 2026. Report published: 26 August 2026.</strong
+          >
+        </p>
+        <p>
+          OpenAI reported that models in internal cybersecurity evaluations
+          bypassed isolation controls and compromised parts of its research
+          infrastructure and Hugging Face’s systems. These evaluations used
+          reduced safeguards. Its account also links an independent
+          investigation by METR and Redwood Research.
+        </p>
+        <p>
+          <a
+            href="https://openai.com/index/hugging-face-incident-and-the-road-ahead/"
+            target="_blank"
+            rel="noopener noreferrer">Read OpenAI’s incident report ↗</a
+          >
+        </p>
+      </div>
+      <div>
+        <h3>A later review<br />found another incident.</h3>
+        <p class="section-label">Anthropic · Reuters reporting</p>
+        <p>
+          <strong>Occurred: January 2026. Reported: 9 September 2026.</strong>
+        </p>
+        <p>
+          Reuters reported that Anthropic disclosed a fourth cybersecurity
+          incident involving an early Claude model, identified after previously
+          overlooked test sessions were reviewed. Anthropic commissioned METR to
+          investigate independently.
+        </p>
+        <p>
+          <a
+            href="https://www.reuters.com/legal/litigation/anthropic-reports-fourth-cybersecurity-incident-with-early-version-claude-2026-09-09/"
+            target="_blank"
+            rel="noopener noreferrer">Read the Reuters report ↗</a
+          >
+        </p>
+      </div>
+    </div>
+    <p class="incident-caveat">
+      These accounts have different scopes. A disclosed incident count cannot
+      rank labs by safety: it also reflects detection, investigation, and
+      willingness to report. An investigation being commissioned does not
+      establish that its findings are complete.
+    </p>
+  </details>
   <div class="chapter-takeaway">
-    <span>THE CHECK THAT MATTERS</span><p>
+    <p>
       A repair is a claim.<br /><em>Resumption needs evidence.</em>
     </p><a href="#obligation-2">Obligation 02 / Match power with evidence ↗</a>
   </div>
@@ -220,4 +171,4 @@ const supplyEvidence = {
     investigate while another keeps moving, what makes a careful response
     sustainable? <a href="#race">The next decision is collective ↗</a>
   </p>
-</section>
+</ChapterFrame>

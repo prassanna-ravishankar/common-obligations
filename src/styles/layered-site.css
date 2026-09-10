@@ -1,0 +1,291 @@
+/* Site-wide composition: negative space comes from the scene, never text panels. */
+.hero-copy p,
+.hero-note {
+  background: none;
+  padding-left: 0;
+}
+.art-hero .art-distance {
+  mask-image: linear-gradient(transparent, #000 48%, #000);
+}
+.hero-note {
+  position: relative;
+  inset: auto;
+  margin: 24px 5% 0;
+  padding: 0;
+  max-width: none;
+  font-size: 12px;
+  color: var(--muted);
+}
+.chapter-threshold {
+  position: relative;
+  isolation: isolate;
+  min-height: 880px;
+  height: 100svh;
+  max-height: 1100px;
+}
+.chapter-threshold > .art-scene,
+.motion-on .chapter-threshold > .art-scene {
+  position: absolute;
+  inset: 0;
+  top: 0;
+  height: 100%;
+  max-height: none;
+  clip-path: none;
+  overflow: clip;
+}
+.chapter-threshold .art-distance {
+  mask-image: linear-gradient(transparent 24%, #000 82%, transparent);
+  opacity: 0.7;
+  object-position: center bottom;
+}
+.chapter-threshold .art-foreground,
+.chapter:nth-of-type(even) .chapter-threshold .art-foreground {
+  left: auto;
+  right: -3%;
+  top: 8%;
+  width: 32%;
+  height: 86%;
+  --fragment-flip: 1;
+  opacity: 1;
+}
+.chapter-threshold .art-threads {
+  top: 28%;
+  height: 72%;
+}
+.chapter .chapter-heading,
+.motion-on .chapter .chapter-heading {
+  background: none;
+  padding: 100px 0 0;
+  margin: 0 0 0 6%;
+  transform: none;
+  max-width: 73%;
+  width: auto;
+}
+.chapter-heading h2 {
+  font-size: clamp(62px, 7vw, 108px);
+  max-width: 1050px;
+}
+.chapter-heading > p:last-child {
+  max-width: 43ch;
+  color: var(--ink);
+  font-size: 21px;
+}
+.art-scene figcaption {
+  background: none;
+  left: 6%;
+  right: auto;
+}
+.chapter-body {
+  margin-top: 15px;
+}
+.race-grid {
+  display: block;
+}
+.race-argument {
+  max-width: 75ch;
+  margin: 0 0 70px;
+}
+.scroll-comparison[data-count="3"]:not([data-enhanced]) {
+  display: none;
+}
+.scroll-comparison[data-count="3"][data-enhanced] {
+  height: calc(var(--scene-height) + 480svh);
+}
+.scroll-comparison[data-count="3"][data-enhanced] .scroll-options {
+  display: block;
+  height: var(--focus-height);
+}
+.scroll-comparison[data-count="3"][data-enhanced] .scroll-option {
+  position: absolute;
+  width: 33.5vw;
+  top: 0;
+}
+.scroll-comparison[data-count="3"][data-enhanced] .scroll-option:first-child {
+  left: 0;
+  opacity: var(--left-presence);
+}
+.scroll-comparison[data-count="3"][data-enhanced] .scroll-option:nth-child(2) {
+  right: 0;
+  opacity: var(--right-presence);
+}
+.scroll-comparison[data-count="3"][data-enhanced] .scroll-option:last-child {
+  left: 27%;
+  opacity: var(--third-presence);
+  transform: translateY(calc((1 - var(--third-presence)) * 16px));
+}
+.three-reading {
+  position: relative;
+  padding: 60px 0 80px;
+}
+.three-reading > h3 {
+  margin-bottom: 45px;
+}
+.three-reading-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 36px;
+}
+.three-reading-grid h4 {
+  font-size: 35px;
+}
+.three-reading-grid dd {
+  font-size: 16px;
+}
+.comparison-direction {
+  visibility: hidden;
+}
+.scroll-comparison[data-enhanced] .read-together {
+  top: 8px;
+  right: 50%;
+  transform: translateX(50%);
+}
+.scroll-comparison[data-enhanced] .comparison-scroll-note {
+  text-align: center;
+  max-width: none;
+  margin-top: 35px;
+}
+.scroll-comparison[data-view="right"] .comparison-scroll-note {
+  margin-left: 55%;
+  text-align: left;
+}
+.scroll-comparison[data-enhanced] .comparison-scene {
+  padding-top: 65px;
+}
+.incident-origin {
+  border: 0;
+  padding: 15px 0;
+}
+.incident-origin label {
+  border-bottom: 1px solid var(--line);
+  padding: 12px 0;
+}
+.incident-origin label:has(:checked) {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.incident-origin input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+.incident-origin label:has(:focus-visible) {
+  outline: 2px solid var(--accent);
+  outline-offset: 5px;
+}
+.obligations {
+  position: relative;
+  isolation: isolate;
+}
+.obligations::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: url("/assets/abstract/crossing-distance-v2.webp") center bottom /
+    cover no-repeat;
+  mix-blend-mode: multiply;
+  opacity: 0.3;
+  mask-image: linear-gradient(transparent 65%, #000);
+  pointer-events: none;
+}
+.closing {
+  position: relative;
+  background: none;
+  color: var(--ink);
+  overflow: clip;
+  padding-bottom: 190px;
+}
+.closing em {
+  color: var(--accent);
+}
+.closing::after {
+  content: "";
+  position: absolute;
+  inset: 30% 0 0;
+  z-index: -1;
+  background: url("/assets/abstract/crossing-distance-v2.webp") center bottom /
+    cover;
+  opacity: 0.65;
+  mix-blend-mode: multiply;
+  mask-image: linear-gradient(transparent, #000);
+}
+.closing {
+  isolation: isolate;
+}
+.closing h2 {
+  font-size: clamp(60px, 7.8vw, 116px);
+}
+.chapter-takeaway {
+  background: none;
+}
+@media (max-width: 1000px) {
+  .chapter-threshold {
+    min-height: 760px;
+    height: 90svh;
+  }
+  .chapter .chapter-heading,
+  .motion-on .chapter .chapter-heading {
+    padding-top: 60px;
+    max-width: 85%;
+  }
+  .chapter-heading h2 {
+    font-size: clamp(52px, 8vw, 85px);
+  }
+  .chapter-heading > p:last-child {
+    font-size: 18px;
+    max-width: 40ch;
+  }
+  .chapter-threshold .art-foreground,
+  .chapter:nth-of-type(even) .chapter-threshold .art-foreground {
+    top: 35%;
+    height: 62%;
+    right: -8%;
+    width: 38%;
+  }
+  .three-reading-grid {
+    grid-template-columns: 1fr;
+    gap: 45px;
+  }
+  .three-reading-grid .scroll-option {
+    max-width: 65ch;
+  }
+}
+@media (max-width: 600px) {
+  .chapter-threshold {
+    min-height: 800px;
+    height: auto;
+  }
+  .chapter-heading h2 {
+    font-size: clamp(47px, 11vw, 65px);
+  }
+  .chapter-heading > p:last-child {
+    max-width: 30ch;
+  }
+  .chapter-threshold .art-distance {
+    mask-image: linear-gradient(transparent 46%, #000 85%, transparent);
+  }
+  .chapter-threshold .art-foreground,
+  .chapter:nth-of-type(even) .chapter-threshold .art-foreground {
+    top: auto;
+    bottom: 0;
+    height: 43%;
+    width: 53%;
+  }
+  .art-scene figcaption {
+    max-width: 42%;
+    font-size: 9px;
+  }
+  .closing {
+    padding-bottom: 110px;
+  }
+}
+@media print {
+  .scroll-comparison[data-count="3"] {
+    display: none !important;
+  }
+  .comparison-world,
+  .world-foreground {
+    display: none !important;
+  }
+}

@@ -1,11 +1,17 @@
-import { $ } from "./dom.js";
 export function initNavigation() {
-  // Direct links to an obligation open the relevant explanation.
   function revealAnchor() {
     const hash = location.hash;
-    if (/^#obligation-[1-6]$/.test(hash)) $(hash).open = true;
-    if (hash === "#reading") $(".full-essay").open = true;
+    if (/^#obligation-[1-6]$/.test(hash)) {
+      const el = document.querySelector(hash);
+      if (el) el.open = true;
+    }
+    if (hash === "#reading") document.querySelector(".full-essay").open = true;
   }
+  document.querySelectorAll(".chapter-nav a").forEach((a) =>
+    a.addEventListener("click", () => {
+      a.closest("details").open = false;
+    }),
+  );
   addEventListener("hashchange", revealAnchor);
   revealAnchor();
 }

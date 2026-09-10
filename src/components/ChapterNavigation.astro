@@ -1,14 +1,26 @@
 ---
+import DisclosureIcon from "./DisclosureIcon.astro";
 import { scenarios } from "../data/scenarios.js";
 ---
 
-<nav class="chapter-nav" aria-label="Chapters">
-  <a href="#decisions">All scenarios</a>{
-    scenarios.map((s) => (
-      <a href={`#${s.id}`}>
-        <span>{s.number}</span>
-        {s.title}
-      </a>
-    ))
-  }<a href="#obligations">Common ground</a>
-</nav>
+<div class="chapter-nav">
+  <details>
+    <summary
+      ><strong data-current-chapter>Six scenarios</strong><span
+        >Choose a chapter <DisclosureIcon /></span
+      ></summary
+    >
+    <nav aria-label="Chapters">
+      <a href="#decisions">All scenarios</a>
+      {
+        scenarios.map((s) => (
+          <a href={`#${s.id}`}>
+            <span>{s.number}</span>
+            {s.title}
+          </a>
+        ))
+      }
+      <a href="#obligations">Common ground</a>
+    </nav>
+  </details>
+</div>

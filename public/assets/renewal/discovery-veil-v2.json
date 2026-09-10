@@ -1,0 +1,7 @@
+{
+  "prompt": "TRANSPARENT BACKGROUND ASSET. Output a PNG with a REAL alpha channel, not a visual simulation of transparency. Extract only the curled ivory tracing-paper edge from the supplied image. All drawing, the whole background and empty areas must be transparent pixels. NO CHECKERBOARD painted into the bitmap, no grey squares. Keep original 1536x1024 landscape placement: the curled paper diagonal runs from x180 at top edge to x1200 at bottom edge; right side empty transparent, left side extremely thin translucent fibres or transparent. Preserve the subtle ivory paper fibres and folded crease. This is a foreground cutout for compositing over the supplied source, not a complete picture. No ink contours, no red thread, no added objects, no text. Actual transparent background required.",
+  "method": "built-in image generation edit",
+  "original": "/Users/prass/.codex/generated_images/01a082bf-c41e-7251-8f70-74017e02fb54/exec-a6180b5f-0c10-42f9-8cdb-7496511efcef.png",
+  "reference": "/Users/prass/.codex/generated_images/01a082bf-c41e-7251-8f70-74017e02fb54/exec-763c9ff6-b530-418f-baab-85fded9d680d.png",
+  "transparency": "Verified source PNG srgba and encoded WebP srgba"
+}

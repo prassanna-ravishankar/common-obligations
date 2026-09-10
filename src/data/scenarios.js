@@ -21,18 +21,18 @@ export const scenarios = [
     lens: "Access",
   },
   {
-    id: "incident",
-    number: "04",
-    title: "After the boundary fails",
-    question: "What must we establish before work resumes?",
-    lens: "Recovery",
-  },
-  {
     id: "discovery",
-    number: "05",
+    number: "04",
     title: "The discovery",
     question: "A result is verified. Who helps us understand it?",
     lens: "Understanding",
+  },
+  {
+    id: "incident",
+    number: "05",
+    title: "After the boundary fails",
+    question: "What must we establish before work resumes?",
+    lens: "Recovery",
   },
   {
     id: "race",

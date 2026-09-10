@@ -67,6 +67,9 @@
   font-size: clamp(67px, 8.7vw, 130px);
   margin: 40px 0;
 }
+.closing em {
+  color: inherit;
+}
 .closing > p {
   max-width: 520px;
   margin: 0 auto 30px;
@@ -146,4 +149,24 @@ footer p {
   background: var(--ink);
   color: white;
   padding: 20px;
+}
+@media (max-width: 800px) {
+  .obligations-intro {
+    display: block;
+  }
+  .obligations-intro > p {
+    max-width: 65ch;
+    margin-top: 24px;
+  }
+  .obligation-body {
+    display: block;
+    padding: 0 0 30px;
+  }
+  .obligation-list summary {
+    gap: 16px;
+  }
+  .number {
+    width: 30px;
+    flex-shrink: 0;
+  }
 }

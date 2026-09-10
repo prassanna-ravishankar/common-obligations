@@ -1,0 +1,89 @@
+---
+import Scene from "./Scene.astro";
+import Introduction from "../chapters/Introduction.astro";
+import ScenarioIndex from "../ScenarioIndex.astro";
+import Surveillance from "../chapters/Surveillance.astro";
+import Release from "../chapters/Release.astro";
+import Defense from "../chapters/Defense.astro";
+import Discovery from "../chapters/Discovery.astro";
+import Incident from "../chapters/Incident.astro";
+import Coordination from "../chapters/Coordination.astro";
+import Obligations from "../chapters/Obligations.astro";
+import Reading from "../chapters/Reading.astro";
+import Closing from "../chapters/Closing.astro";
+import { scenarios } from "../../data/scenarios.js";
+---
+
+<header class="fresh-header">
+  <a class="fresh-wordmark" href="#main">Common<br />Obligations</a><nav
+    aria-label="Main navigation"
+  >
+    <a href="#decisions">Scenarios</a><a href="#obligations">The obligations</a
+    ><a href="#reading">Read the essay</a>
+  </nav>
+</header>
+<main id="main">
+  <section
+    class="fresh-opening"
+    aria-labelledby="hero-title"
+    data-fresh-threshold="hero"
+  >
+    <Scene kind="hero" id="opening" />
+    <div class="fresh-opening-copy">
+      <h1 id="hero-title">
+        The future is a<br />series of <em>decisions.</em>
+      </h1><p>Who gets to make them?<br />Who lives with the consequences?</p><a
+        class="fresh-start"
+        href="#decisions"
+        >Explore six scenarios <svg viewBox="0 0 24 24" aria-hidden="true"
+          ><path d="M4 12h16m-6-6 6 6-6 6"></path></svg
+        ></a
+      >
+    </div>
+  </section>
+  <p class="fresh-credit">
+    An independent proposal by Prassanna Ravishankar · AI-generated conceptual
+    imagery
+  </p>
+  <Introduction /><ScenarioIndex />
+  <div class="reading-rail">
+    <details class="chapter-chooser">
+      <summary
+        ><span data-current-chapter>Six scenarios</span><span
+          >Choose a chapter <svg viewBox="0 0 20 20" aria-hidden="true"
+            ><path d="M10 3v14M3 10h14"></path></svg
+          ></span
+        ></summary
+      ><nav aria-label="Chapters">
+        <a href="#decisions">All scenarios</a>{
+          scenarios.map((s) => <a href={`#${s.id}`}>{s.title}</a>)
+        }<a href="#obligations">Common obligations</a><a href="#reading"
+          >Full essay</a
+        >
+      </nav>
+    </details>
+    <button class="motion" data-motion-toggle aria-pressed="false"
+      >Pause motion</button
+    >
+  </div>
+  <Surveillance />
+  <aside class="quiet-passage">
+    <p>
+      Better matching alone cannot decide<br /><em
+        >whether a use is justified.</em
+      >
+    </p>
+  </aside>
+  <Release /><Defense /><Discovery /><Incident /><Coordination />
+  <aside class="quiet-passage quiet-passage--last">
+    <p>Delegation should preserve<br /><em>responsibility.</em></p>
+  </aside>
+  <Obligations /><Closing /><Reading />
+</main>
+<footer class="fresh-footer">
+  <a class="fresh-wordmark" href="#main">Common<br />Obligations</a><p>
+    A proposal. An open question.<br />A future we have a part in.
+  </p><a href="https://prassanna.io" target="_blank" rel="noopener noreferrer"
+    >By Prassanna Ravishankar</a
+  ><a href="#main">Back to the beginning</a>
+</footer>

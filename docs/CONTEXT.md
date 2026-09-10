@@ -1,5 +1,27 @@
 # Common Obligations: conversation and development handoff
 
+## Latest: 11 September 2026 fresh edition
+
+User reviewed the discovery composition and called this a “very good checkpoint,” explicitly requesting a local commit. This approves preserving the checkpoint, not publishing. Chapter illustration banners scroll normally; introductory material remains in document flow; only subsequent focused comparison stages pin (on sufficiently wide/tall screens with motion enabled), followed by normal-flow combined reading. Generated HTML is in ignored `dist/index.html`; browser screenshots were captured separately. No separate hydrated DOM snapshot was saved.
+
+The architectural-object version below was rejected for arbitrary objects, overlaps and disconnected threads. The current local `/` is a fresh whole-site implementation: `RenewalLayout.astro`, `components/renewal/`, `scripts/renewal.js`, `styles/renewal.css` and `renewal-world.css`. Each scenario has its own material and movement: surveillance traces widen, release approaches a seam, defense traverses a weave, discovery peels a real transparent paper layer, incident rests on a broken line, and coordination gradually reveals one connected print. Original arguments, sources, essay, obligations and incident origins remain. Ten comparisons have slow reading holds followed by all perspectives in normal flow; mobile, short screens, no-JS and motion-off remain complete. Typography is unboxed on composed negative space. New imagery and prompt sidecars live in `public/assets/renewal/`; social metadata uses `social-v1.jpg` (1200 × 630).
+
+Build and ten browser tests pass against the fresh root. The prior visual implementation is archived at `/Users/prass/development/projects/common-obligations-visual-backup.XK6HYn/before-fresh-build.tar.gz`. `/renewal/` is a noindex copy; `/prototype/` and `/composition/` redirect to `/`. This is a local implementation awaiting the user's aesthetic feedback, not a claim of their approval. Do not push or deploy without explicit approval. Earlier review verdicts and design contracts below do not describe this edition. User requested core design work, not further Impeccable review/documentation rituals.
+
+## Historical: 10 September 2026 whole-site layered reading
+
+The user expanded the surveillance prototype to the entire site and explicitly prioritised beauty and subtlety over ease of changing the implementation. All ten comparison sequences now share ScrollComparison and scenic-reading.js: generous reading holds, continuous architectural crossings, then all arguments together. Two-way comparisons settle in-place; three-way comparisons end in a separate unbounded reading layout. Text is transparent over negative space, not white or translucent panels. All six chapter entrances use separate foreground motifs, distant landscapes and SVG threads. Mobile/short/no-JS/reduced/manual-pause alternatives remain static and complete. The native incident origin control still switches its context and evidence independently.
+
+Seven new purpose-made distance/cutout assets use crossing-*-v2 filenames. Social metadata uses social-crossing-v2.jpg. `/prototype/` redirects to `/`; the site-wide implementation is the current preview. Ten Playwright checks pass. New finish review and documentation supersede the previous redesign disposition below. No push or deployment is authorised.
+
+## Earlier: 10 September 2026 abstract redesign
+
+The user requested a replacement abstract visual world based on their LinkedIn poster, layered overlapping parallax and vector threads, coherent typography/type colours, and repaired scenario scrolling/information placement. They delegated the composition choice: Crossing, with rust italic emphasis. See PRODUCT.md and docs/REDESIGN.md for the active brief. This redesign remains local, not approved for publication; do not push main (it auto-deploys) without approval.
+
+All six scenarios now use one reading grammar and normal document flow. Ordered pairs: surveillance/release (who may act), defense/discovery (who benefits), incident/coordination (who answers). Every authored comparison is rendered server-side with native radio controls. Scrolling moves optional artwork, never comparison state. The original essay and external sources remain intact. Header motion control, reduced-motion, mobile static artwork and native disclosures remain available. README.md is authoritative for npm commands; buildless instructions below are historical.
+
+Shared ChapterFrame, ArtScene and PolicyComparison components replace separate chapter themes. Active styles are foundation.css, world.css and reading.css; browser code is main.js, motion.js and navigation.js. Obsolete chapter-specific scripts/styles were removed, recoverable from git. New imagery is in public/assets/abstract with full-prompt sidecars; docs/ABSTRACT-ASSETS.md records provenance. Open Graph now uses social-abstract.jpg (1200 × 630). Deployment infrastructure was not changed by this redesign.
+
 ## Development update: 8 September 2026
 
 The user subsequently authorised an npm modular refactor, deployment to commonobligations.org on their Clusterkit cluster, and additional imagery and transitions. The implementation is now an Astro static site: see README.md for the current structure, commands, validation and deployment contract. The buildless paths and untested-browser notes below describe the original import, not the current source tree.

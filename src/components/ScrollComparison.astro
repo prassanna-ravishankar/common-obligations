@@ -1,0 +1,123 @@
+---
+import Argument from "./Argument.astro";
+import ConnectedField from "./ConnectedField.astro";
+import FreshComparison from "./renewal/Comparison.astro";
+const { id, options, connected = false } = Astro.props;
+const count = options.length;
+const fresh =
+  Astro.url.pathname === "/" || Astro.url.pathname.startsWith("/renewal");
+const key = id.startsWith("coordination") ? "race" : id.split("-")[0];
+const motif = ["defense", "discovery", "incident", "race"].includes(key)
+  ? key
+  : key === "release"
+    ? "threshold"
+    : "screen";
+---
+
+{
+  fresh ? (
+    <FreshComparison id={id} options={options} />
+  ) : (
+    <>
+      <div
+        class:list={[
+          "scroll-comparison",
+          { "connected-comparison": connected },
+        ]}
+        data-scroll-comparison={id}
+        data-count={count}
+        data-motif={motif}
+      >
+        <div class="comparison-scene">
+          {connected && <ConnectedField />}
+          <div class="comparison-world" aria-hidden="true">
+            <img
+              class="world-distance"
+              src="/assets/abstract/crossing-distance-v2.webp"
+              width="1536"
+              height="1024"
+              alt=""
+              loading="lazy"
+            />
+            <img
+              class="world-middle"
+              src="/assets/abstract/crossing-threshold-v2.webp"
+              width="1024"
+              height="1536"
+              alt=""
+              loading="lazy"
+            />
+            <svg
+              class="world-threads"
+              viewBox="0 0 1440 900"
+              preserveAspectRatio="none"
+              fill="none"
+            >
+              <path d="M-150 820 C210 760 420 880 680 790 S1100 670 1540 750" />
+              <path d="M-150 838 C210 778 420 898 680 808 S1100 688 1540 768" />
+              <path d="M-150 856 C210 796 420 916 680 826 S1100 706 1540 786" />
+            </svg>
+          </div>
+          <img
+            class="world-foreground"
+            src={`/assets/abstract/crossing-${motif}-v2.webp`}
+            width="1024"
+            height="1536"
+            alt=""
+            loading="lazy"
+          />
+          <div class="comparison-direction" aria-hidden="true">
+            <span data-perspective-label>Two perspectives, read together</span>
+            <svg viewBox="0 0 100 10" width="100" height="10" fill="none">
+              <path d="M0 5h98m-5-4 5 4-5 4" stroke="currentColor" />
+            </svg>
+          </div>
+          <button class="read-together" type="button" hidden>
+            Read together
+          </button>
+          <div
+            class="scroll-options"
+            aria-hidden={count === 3 ? "true" : undefined}
+          >
+            {options.map((o, i) => (
+              <section
+                class="scroll-option"
+                data-perspective={i}
+                aria-label={o.name}
+                data-name={o.name}
+              >
+                <Argument option={o} />
+              </section>
+            ))}
+          </div>
+          <svg
+            class="comparison-thread"
+            viewBox="0 0 1000 100"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M0 70C180 70 230 10 480 40S750 90 1000 20"
+              pathLength="1"
+            />
+          </svg>
+          <p class="comparison-scroll-note" aria-hidden="true">
+            Scroll to cross between perspectives. Neither is a prediction.
+          </p>
+        </div>
+      </div>
+      {count === 3 && (
+        <div class="three-reading" id={id + "-together"}>
+          <h3>Read the perspectives together.</h3>
+          <div class="three-reading-grid">
+            {options.map((o) => (
+              <section class="scroll-option" aria-label={o.name}>
+                <Argument option={o} />
+              </section>
+            ))}
+          </div>
+        </div>
+      )}
+    </>
+  )
+}

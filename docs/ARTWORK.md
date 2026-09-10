@@ -1,5 +1,7 @@
 # Artwork provenance
 
+The September 10 abstract redesign uses the assets documented in [ABSTRACT-ASSETS.md](ABSTRACT-ASSETS.md), including the new Open Graph image. The photographic-style assets below are retained as historical source material and are no longer referenced by the redesigned page.
+
 ## Social sharing card
 
 Saved as `public/assets/social-card.jpg` (1200 × 630). Generated with the built-in image-generation tool on 8 September 2026, then resized and encoded as JPEG at quality 88. Used by Open Graph and Twitter large-image metadata.

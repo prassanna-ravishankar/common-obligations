@@ -1,5 +1,10 @@
 ---
 import { scenarios } from "../data/scenarios.js";
+const groups = [
+  { title: "Who may act?", ids: ["surveillance", "release"] },
+  { title: "Who benefits?", ids: ["defense", "discovery"] },
+  { title: "Who answers?", ids: ["incident", "race"] },
+];
 ---
 
 <section
@@ -7,29 +12,35 @@ import { scenarios } from "../data/scenarios.js";
   class="scenario-index"
   aria-labelledby="scenario-index-title"
 >
-  <div>
-    <span class="section-label">SIX SCENARIOS / ONE FRAMEWORK</span><h2
-      id="scenario-index-title"
-    >
-      Choose a question.<br /><em>Follow the consequences.</em>
-    </h2><p>
-      Start anywhere, or follow the chapters in order. Each examines a different
-      tradeoff and returns to the obligations that could govern it.
-    </p>
-  </div>
-  <div class="scenario-index-grid">
+  <h2 id="scenario-index-title">
+    Six situations.<br /><em>Questions we share.</em>
+  </h2>
+  <p>
+    Start anywhere, or read in order. These are independent situations—not steps
+    in a predicted future. Each returns to the responsibilities that could
+    govern it.
+  </p>
+  <div class="scenario-groups">
     {
-      scenarios.map((s) => (
-        <a href={`#${s.id}`}>
+      groups.map((group) => (
+        <div class="scenario-group">
           <>
-            <span class="section-label">
-              {s.number} / {s.lens}
-            </span>
-            <h3>{s.title}</h3>
-            <p>{s.question}</p>
-            <span aria-hidden="true">↗</span>
+            <h3>{group.title}</h3>
+            <div class="scenario-index-grid">
+              {group.ids.map((id) => {
+                const s = scenarios.find((s) => s.id === id);
+                return (
+                  <a href={`#${s.id}`}>
+                    <h4>
+                      {s.number} / {s.title}
+                    </h4>
+                    <p>{s.question}</p>
+                  </a>
+                );
+              })}
+            </div>
           </>
-        </a>
+        </div>
       ))
     }
   </div>

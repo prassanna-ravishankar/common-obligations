@@ -16,12 +16,13 @@ Open http://localhost:4321. `npm run build` produces static files in `dist/`; `n
 ## Structure
 
 - `src/pages/index.astro`: chapter composition.
-- `src/layouts/PageLayout.astro`: metadata, fonts, shell and script entry.
+- `src/layouts/RenewalLayout.astro`: current metadata, fonts, shell and script entry.
 - `src/components/chapters/`: independently editable narrative chapters.
 - `src/components/Essay.astro`: the complete long-form essay.
-- `src/data/`: comparison scenarios shared by initial HTML and browser interactions, plus incident-response comparisons rendered with native radio controls.
-- `src/scripts/`: chapter interactions, navigation, motion and transitions.
-- `src/styles/`: tokens, chapter styles, responsive rules and motion.
+- `src/data/`: authored comparisons rendered server-side for progressive scenic reading.
+- `src/components/ChapterFrame.astro`, `ScrollComparison.astro`, `renewal/`: current chapter, scene artwork and comparison grammar.
+- `src/scripts/`: optional chapter tracking, navigation and scroll-linked artwork.
+- `src/styles/renewal.css`, `renewal-world.css`, `src/scripts/renewal.js`: current visual system and optional scroll enhancement; other visual files are earlier iterations.
 - `public/assets/`: conceptual illustrations.
 - `tests/`: Playwright desktop/mobile browser journeys.
 - `deploy/`, `Dockerfile`, `charts/common-obligations/`: production server and deployment.
@@ -29,9 +30,9 @@ Open http://localhost:4321. `npm run build` produces static files in `dist/`; `n
 
 Keep comparisons conditional and authored, not forecasts or simulated estimates. Preserve attribution and distinguish allegations from findings. Images are conceptual illustrations. See [project context](docs/CONTEXT.md) and [artwork provenance](docs/ARTWORK.md).
 
-Default comparisons now render from the same data used by interactions, removing duplicate copy edits. Instrument Serif and DM Sans load from Google Fonts with system fallbacks.
+Every comparison renders in HTML and works without JavaScript. Instrument Serif and DM Sans are self-hosted under `public/fonts/`, with licences and system fallbacks. The abstract redesign is local and awaits approval before publication; see [redesign brief](docs/REDESIGN.md) and [abstract artwork provenance](docs/ABSTRACT-ASSETS.md).
 
-On larger screens, the surveillance scene stays pinned while three authored stages advance on scroll. Conditions can be compared throughout. Chapter images overlap their headings with restrained scroll drift. Mobile, short viewports and reduced-motion preferences retain a straightforward reading layout; the header motion control pauses movement. Social sharing uses `public/assets/social-card.jpg` with Open Graph and Twitter metadata.
+On wide, tall screens, ten comparison sequences use natural scroll to dwell on each perspective, then read all arguments together in unbounded flow. Six distinct scene treatments alternate rich abstract prints, woven texture, transparent paper and minimal linework, with different movement for each. Text has no background panels. “Read together” bypasses each sequence; mobile, short viewports, reduced motion, manual pause and no JavaScript show complete static reading. Current artwork and prompt sidecars are in `public/assets/renewal/`; social sharing uses `social-v1.jpg` (1200 × 630). `/prototype/` and `/composition/` redirect to the main site. `/renewal/` is a noindex copy.
 
 ## Validate
 
@@ -40,7 +41,7 @@ npx playwright install chromium
 npm run check
 ```
 
-This checks formatting, builds and runs twelve desktop/mobile browser journeys, including scroll-stage synchronization and social-image validation. `npm run format` formats source files.
+This checks formatting, builds and runs ten desktop/mobile browser checks, including every authored option without JavaScript, incident origins, source/anchor preservation, layered scroll behavior, keyboard navigation, narrow-screen overflow and social-image validation. `npm run format` formats source files.
 
 To test the production container:
 
@@ -86,4 +87,4 @@ The refactor passed the static build, Helm lint, Linux amd64 container build, HT
 
 ## Scenario navigation
 
-`src/data/scenarios.js` drives the six-scenario index and chapter navigation. `PolicyComparison.astro` renders defensive-access and discovery options with native radio controls. The incident origin selector changes stage context and evidence for illustrative supply-chain compromise. All new comparisons work without JavaScript; factual claims retain adjacent sources.
+`src/data/scenarios.js` drives the six-scenario index and chapter navigation, grouped as who may act, who benefits, and who answers. `PolicyComparison.astro` renders surveillance, release, defensive-access, discovery and coordination options with scroll-guided perspectives and static alternatives. The incident origin selector changes stage context and evidence for illustrative supply-chain compromise. Every comparison works without JavaScript; factual claims retain adjacent sources.

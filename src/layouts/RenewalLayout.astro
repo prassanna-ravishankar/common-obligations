@@ -1,0 +1,85 @@
+---
+import "../styles/renewal.css";
+import "../styles/renewal-world.css";
+const title = "Common Obligations — The future is a series of decisions.";
+const description =
+  "An interactive essay on AI power and accountability. Explore the choices, the tradeoffs, and six obligations for the people building our future.";
+const image = new URL("/assets/renewal/social-v1.jpg", Astro.site).href;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" /><meta
+      name="viewport"
+      content="width=device-width,initial-scale=1"
+    />
+    <title>{title}</title><meta name="description" content={description} /><meta
+      name="theme-color"
+      content="#f1eee5"
+    />
+    <link rel="icon" href="/favicon.svg" /><link
+      rel="canonical"
+      href={Astro.site}
+    />
+    {
+      Astro.url.pathname !== "/" && (
+        <meta name="robots" content="noindex,nofollow" />
+      )
+    }
+    <link
+      rel="preload"
+      href="/fonts/instrument-serif-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/instrument-serif-italic-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/dm-sans-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <meta property="og:type" content="website" /><meta
+      property="og:site_name"
+      content="Common Obligations"
+    />
+    <meta property="og:title" content={title} /><meta
+      property="og:description"
+      content={description}
+    /><meta property="og:url" content={Astro.site} />
+    <meta property="og:image" content={image} /><meta
+      property="og:image:secure_url"
+      content={image}
+    /><meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" /><meta
+      property="og:image:height"
+      content="630"
+    />
+    <meta
+      property="og:image:alt"
+      content="The future is a series of decisions. Common Obligations above charcoal strata and a fine rust trace on ivory paper."
+    />
+    <meta name="twitter:card" content="summary_large_image" /><meta
+      name="twitter:title"
+      content={title}
+    /><meta name="twitter:description" content={description} /><meta
+      name="twitter:image"
+      content={image}
+    />
+  </head><body class="renewal"
+    ><a class="skip" href="#main">Skip to reading</a><slot />
+    <script>
+      import { initRenewal } from "../scripts/renewal.js";
+      initRenewal();
+    </script>
+  </body>
+</html>
