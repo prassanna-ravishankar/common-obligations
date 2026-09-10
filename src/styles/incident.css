@@ -1,0 +1,175 @@
+.incident {
+  background: #e5e6df;
+  border-top: 1px solid var(--ink);
+}
+.incident h2 em {
+  color: var(--accent);
+}
+.incident-records {
+  border-color: #a9aca0;
+}
+.incident-records h3 {
+  margin: 16px 0 24px;
+}
+.incident-caveat {
+  max-width: 85ch;
+  font-size: 14px;
+  padding: 0 0 24px;
+  color: #53564d;
+}
+.incident-scenario {
+  max-width: 760px;
+  margin: 85px 0 55px;
+}
+.incident-scenario h3 {
+  font-size: clamp(40px, 5vw, 68px);
+  margin: 20px 0;
+}
+.incident-sequence {
+  border-left: 1px solid #9a9e90;
+  margin-left: 24px;
+  padding-left: clamp(20px, 4vw, 64px);
+}
+.incident-step {
+  padding: 0 0 70px;
+}
+.incident-step-heading {
+  display: flex;
+  gap: 24px;
+  border-top: 1px solid #a9aca0;
+  padding-top: 30px;
+}
+.incident-number {
+  font: clamp(46px, 6vw, 80px)/1 var(--serif);
+  color: var(--accent);
+}
+.incident-step-heading h3 {
+  font-size: clamp(32px, 4vw, 48px);
+  margin: 8px 0 20px;
+}
+.incident-step-heading p {
+  max-width: 72ch;
+}
+.incident-comparison {
+  border: 0;
+  margin: 20px 0;
+  padding: 0;
+  min-width: 0;
+}
+.incident-comparison legend {
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+.incident-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 24px;
+  padding: 18px 0;
+  border-top: 1px solid #a9aca0;
+}
+.incident-controls label {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  min-height: 44px;
+  cursor: pointer;
+  font-size: 14px;
+}
+.incident-controls input {
+  accent-color: var(--accent);
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+.incident-controls input:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 4px;
+}
+.incident-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  background: #a9aca0;
+  border: 1px solid #a9aca0;
+}
+.incident-option {
+  background: var(--paper);
+  padding: clamp(20px, 3vw, 40px);
+}
+.incident-option h4 {
+  font: 32px/1.15 var(--serif);
+  margin-bottom: 28px;
+}
+.incident-option dl {
+  margin: 0;
+}
+.incident-option dt {
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 24px;
+}
+.incident-option dd {
+  margin: 8px 0 0;
+}
+.incident-comparison:has(input[value="0"]:checked) [data-option="1"],
+.incident-comparison:has(input[value="1"]:checked) [data-option="0"] {
+  display: none;
+}
+.incident-comparison:has(input[value="0"]:checked) .incident-options,
+.incident-comparison:has(input[value="1"]:checked) .incident-options {
+  grid-template-columns: 1fr;
+}
+.incident-obligations {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  font-size: 14px;
+}
+.incident-obligations a,
+.incident-bridge a {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.incident-bridge {
+  max-width: 760px;
+  margin: 60px auto 0;
+  font-size: 20px;
+}
+.chapter-nav {
+  gap: 20px;
+  overflow-x: auto;
+}
+.chapter-nav a {
+  flex-shrink: 0;
+}
+@media (max-width: 700px) {
+  .incident-sequence {
+    margin-left: 0;
+    padding-left: 16px;
+  }
+  .incident-options {
+    grid-template-columns: 1fr;
+  }
+  .incident-step-heading {
+    gap: 14px;
+  }
+  .incident-scenario {
+    margin-top: 55px;
+  }
+}
+@media print {
+  .incident {
+    background: white;
+  }
+  .incident-controls,
+  .incident-comparison legend {
+    display: none;
+  }
+  .incident .incident-option {
+    display: block !important;
+    background: white;
+  }
+  .incident .incident-options {
+    grid-template-columns: 1fr;
+  }
+}

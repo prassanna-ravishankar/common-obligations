@@ -212,3 +212,8 @@ Useful follow-on work, not automatically authorised new tasks:
 - Choose a licence if the user wants one. No software or content licence has been selected; do not invent a licence grant.
 
 For local work, use `python3 -m http.server 8000 --directory public`. Refer to README for the rest. Never reuse or request disclosure of prior hosting credentials; those are intentionally absent from this repository.
+
+
+## 9 September 2026: incident response chapter
+
+Added Incident.astro between Release and Coordination. OpenAI provider reporting and Reuters reporting on Anthropic are separate from authored contain/investigate/resume comparisons. Both approaches are visible by default; native radio controls narrow each comparison independently without JavaScript or accumulating a forecast. Added chapter navigation, obligation links, research/evaluation scope, review coverage and resumption evidence. Preserve disclosure incentives; incident counts are not safety rankings. No new images or dependencies.

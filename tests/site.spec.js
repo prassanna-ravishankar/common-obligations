@@ -171,3 +171,32 @@ test("essay and default comparisons are rendered without JavaScript", async ({
   );
   await context.close();
 });
+
+test("incident comparisons remain independent and usable without JavaScript", async ({
+  browser,
+  baseURL,
+}) => {
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  const page = await context.newPage();
+  await page.goto(baseURL);
+  for (const id of ["contain", "investigate", "resume"]) {
+    const step = page.locator(`#incident-${id}`);
+    await expect(step.locator('[data-option="0"]')).toBeVisible();
+    await expect(step.locator('[data-option="1"]')).toBeVisible();
+    await step.locator('input[value="0"]').check();
+    await expect(step.locator('[data-option="1"]')).toBeHidden();
+    await step.locator('input[value="1"]').focus();
+    await page.keyboard.press("Space");
+    await expect(step.locator('[data-option="0"]')).toBeHidden();
+    await expect(step.locator('[data-option="1"]')).toBeVisible();
+    await step.locator('input[value="both"]').check();
+  }
+  await page.locator('#incident-contain input[value="0"]').check();
+  await expect(
+    page.locator('#incident-investigate [data-option="1"]'),
+  ).toBeVisible();
+  await expect(
+    page.locator('#incident-resume [data-option="1"]'),
+  ).toBeVisible();
+  await context.close();
+});
