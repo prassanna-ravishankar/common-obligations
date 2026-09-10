@@ -200,3 +200,44 @@ test("incident comparisons remain independent and usable without JavaScript", as
   ).toBeVisible();
   await context.close();
 });
+
+test("new scenarios and supply-chain variation work without JavaScript", async ({
+  browser,
+  baseURL,
+}) => {
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  const page = await context.newPage();
+  await page.goto(baseURL);
+  await expect(page.locator(".scenario-index-grid > a")).toHaveCount(6);
+  for (const [id, count] of [
+    ["defense", 3],
+    ["discovery", 2],
+  ]) {
+    const chapter = page.locator(`#${id}`);
+    await expect(chapter.locator(".policy-option:visible")).toHaveCount(count);
+    for (let i = 0; i < count; i++) {
+      await chapter.locator(`input[value="${i}"]`).check();
+      await expect(chapter.locator(".policy-option:visible")).toHaveCount(1);
+      await expect(
+        chapter.locator(`[data-policy-option="${i}"]`),
+      ).toBeVisible();
+    }
+    await chapter.locator('input[value="all"]').focus();
+    await page.keyboard.press("Space");
+    await expect(chapter.locator(".policy-option:visible")).toHaveCount(count);
+  }
+  await page.locator('input[name="incident-origin"][value="supply"]').check();
+  await expect(
+    page.locator("#incident-investigate .incident-step-heading .origin-supply"),
+  ).toContainText("distributed package");
+  await expect(
+    page
+      .locator("#incident-resume .incident-option")
+      .first()
+      .locator(".origin-supply"),
+  ).toContainText("rotated exposed credentials");
+  await expect(page.locator("#incident .origin-agent:visible")).toHaveCount(0);
+  await page.locator('input[name="incident-origin"][value="agent"]').check();
+  await expect(page.locator("#incident .origin-supply:visible")).toHaveCount(0);
+  await context.close();
+});

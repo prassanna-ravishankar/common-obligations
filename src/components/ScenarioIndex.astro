@@ -1,0 +1,36 @@
+---
+import { scenarios } from "../data/scenarios.js";
+---
+
+<section
+  id="decisions"
+  class="scenario-index"
+  aria-labelledby="scenario-index-title"
+>
+  <div>
+    <span class="section-label">SIX SCENARIOS / ONE FRAMEWORK</span><h2
+      id="scenario-index-title"
+    >
+      Choose a question.<br /><em>Follow the consequences.</em>
+    </h2><p>
+      Start anywhere, or follow the chapters in order. Each examines a different
+      tradeoff and returns to the obligations that could govern it.
+    </p>
+  </div>
+  <div class="scenario-index-grid">
+    {
+      scenarios.map((s) => (
+        <a href={`#${s.id}`}>
+          <>
+            <span class="section-label">
+              {s.number} / {s.lens}
+            </span>
+            <h3>{s.title}</h3>
+            <p>{s.question}</p>
+            <span aria-hidden="true">↗</span>
+          </>
+        </a>
+      ))
+    }
+  </div>
+</section>

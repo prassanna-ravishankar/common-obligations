@@ -1,0 +1,99 @@
+---
+import PolicyComparison from "../PolicyComparison.astro";
+import { defenseOptions } from "../../data/scenarios.js";
+---
+
+<section id="defense" class="chapter defense" aria-labelledby="defense-heading">
+  <div class="chapter-heading reveal">
+    <div class="section-label">
+      <span>03 / THE DEFENSIVE ADVANTAGE</span><span
+        >DISCOVER → REPAIR → PROTECT</span
+      >
+    </div><h2 id="defense-heading">
+      The same capability.<br /><em>Whose advantage?</em>
+    </h2><p>
+      A system that finds a weakness can help someone repair it or exploit it.
+      Restricting access can reduce exposure while withholding tools from people
+      who need to defend themselves.
+    </p>
+  </div>
+  <div class="scenario-question">
+    <span class="section-label">ILLUSTRATIVE DECISION</span><h3>
+      A small maintainer protects<br />a very large dependency.
+    </h3><p>
+      A new model can identify serious vulnerabilities. An under-resourced
+      maintainer wants to use it on software relied on by thousands of
+      organisations. How should access work?
+    </p>
+  </div>
+  <PolicyComparison
+    id="defense-access"
+    legend="Who can use the capability?"
+    options={defenseOptions}
+  />
+  <p class="scenario-note">
+    These are compatible policy ingredients, not exhaustive alternatives. A
+    supported programme can use vetting and later broaden access. Outcomes
+    depend on implementation; these comparisons are not measured forecasts.
+  </p>
+  <details class="evidence">
+    <summary
+      ><span>Ground this in the real world</span><span class="summary-hint"
+        >Mythos Preview & Project Glasswing</span
+      ><span class="plus">+</span></summary
+    ><div class="evidence-content">
+      <h3>Finding a flaw<br />starts another obligation.</h3><div>
+        <p>
+          Anthropic describes Claude Mythos Preview identifying vulnerabilities
+          and developing exploits, and presents Project Glasswing as an effort
+          to give defenders an advantage. Its published examples include flaws
+          it says were reported to maintainers and patched. These are the
+          provider’s account of capabilities and outcomes.
+        </p><p>
+          <a
+            href="https://www.anthropic.com/glasswing"
+            target="_blank"
+            rel="noopener noreferrer">Read Anthropic’s account ↗</a
+          >
+        </p><p>
+          Finding a vulnerability, exploiting one, and introducing a new flaw in
+          generated code are different behaviours. None establishes the others
+          by itself.
+        </p><p>
+          Our inference: defensive access should be judged by protection
+          delivered, including whether maintainers can validate and distribute
+          repairs. More findings alone need not mean safer systems.
+        </p>
+      </div>
+    </div>
+  </details>
+  <details class="evidence">
+    <summary
+      ><span>When should a finding become public?</span><span class="plus"
+        >+</span
+      ></summary
+    ><div class="evidence-content">
+      <div>
+        <h3>Give repairs time.</h3><p>
+          Confidential notification can give maintainers a window to patch. That
+          window needs an owner, support, and a review date; indefinite secrecy
+          leaves users unable to judge their exposure.
+        </p>
+      </div><div>
+        <h3>Give users an account.</h3><p>
+          A public advisory can help users respond and scrutinise the process.
+          Publishing actionable exploit details too early may increase exposure.
+          Separate urgent notification, mitigation advice, and later technical
+          disclosure.
+        </p>
+      </div>
+    </div>
+  </details>
+  <div class="chapter-takeaway">
+    <span>THE CHECK THAT MATTERS</span><p>
+      Access should lead<br /><em>to protection.</em>
+    </p><a href="#obligation-3">03 / Scrutinise who gets access ↗</a><br /><a
+      href="#obligation-5">05 / Share findings responsibly ↗</a
+    >
+  </div>
+</section>
