@@ -71,7 +71,13 @@ export function initMotion() {
           `translateY(${Math.max(-45, Math.min(45, (innerHeight / 2 - r.top - r.height / 2) * 0.1))}px)`;
     }
     let active = "";
-    for (const id of ["surveillance", "release", "race", "obligations"])
+    for (const id of [
+      "surveillance",
+      "release",
+      "incident",
+      "race",
+      "obligations",
+    ])
       if ($("#" + id).getBoundingClientRect().top < 200) active = id;
     document.querySelectorAll(".chapter-nav a").forEach((a) => {
       const on = a.hash === "#" + active;

@@ -19,7 +19,7 @@ Open http://localhost:4321. `npm run build` produces static files in `dist/`; `n
 - `src/layouts/PageLayout.astro`: metadata, fonts, shell and script entry.
 - `src/components/chapters/`: independently editable narrative chapters.
 - `src/components/Essay.astro`: the complete long-form essay.
-- `src/data/`: comparison scenarios shared by initial HTML and browser interactions.
+- `src/data/`: comparison scenarios shared by initial HTML and browser interactions, plus incident-response comparisons rendered with native radio controls.
 - `src/scripts/`: chapter interactions, navigation, motion and transitions.
 - `src/styles/`: tokens, chapter styles, responsive rules and motion.
 - `public/assets/`: conceptual illustrations.
