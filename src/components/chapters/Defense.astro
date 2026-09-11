@@ -2,6 +2,7 @@
 import DisclosureIcon from "../DisclosureIcon.astro";
 import ChapterFrame from "../ChapterFrame.astro";
 import PolicyComparison from "../PolicyComparison.astro";
+import QuestionSequence from "../renewal/QuestionSequence.astro";
 import { defenseOptions } from "../../data/scenarios.js";
 ---
 
@@ -15,20 +16,25 @@ import { defenseOptions } from "../../data/scenarios.js";
       who need to defend themselves.
     </p>
   </Fragment>
-  <div class="scenario-question">
-    <h3>
-      A small maintainer protects<br />a very large dependency.
-    </h3><p>
-      In this illustrative situation, a new model can identify serious
-      vulnerabilities. An under-resourced maintainer wants to use it on software
-      relied on by thousands of organisations. How should access work?
-    </p>
-  </div>
-  <PolicyComparison
-    id="defense-access"
-    legend="Who can use the capability?"
-    options={defenseOptions}
-  />
+  <QuestionSequence kind="defense"
+    ><article data-question>
+      <div class="scenario-question">
+        <h3>
+          A small maintainer protects<br />a very large dependency.
+        </h3><p>
+          In this illustrative situation, a new model can identify serious
+          vulnerabilities. An under-resourced maintainer wants to use it on
+          software relied on by thousands of organisations. How should access
+          work?
+        </p>
+      </div>
+      <PolicyComparison
+        id="defense-access"
+        legend="Who can use the capability?"
+        options={defenseOptions}
+      />
+    </article></QuestionSequence
+  >
   <p class="scenario-note">
     These are compatible policy ingredients, not exhaustive alternatives. A
     supported programme can use vetting and later broaden access. Outcomes

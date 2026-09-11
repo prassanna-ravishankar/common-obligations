@@ -2,6 +2,7 @@
 import DisclosureIcon from "../DisclosureIcon.astro";
 import ChapterFrame from "../ChapterFrame.astro";
 import PolicyComparison from "../PolicyComparison.astro";
+import QuestionSequence from "../renewal/QuestionSequence.astro";
 import { pacts } from "../../data/coordination.js";
 ---
 
@@ -28,16 +29,23 @@ import { pacts } from "../../data/coordination.js";
         respond to evasion.
       </p>
     </div><div class="coordination">
-      <PolicyComparison
-        id="coordination-agreement"
-        legend="Compare the agreement"
-        options={pacts.map((p, i) => ({
-          name: i ? "Verified commitments" : "Promises",
-          title: p.title,
-          benefit: p.copy,
-          cost: p.limit,
-        }))}
-      />
+      <QuestionSequence kind="race"
+        ><article data-question>
+          <div class="decision-heading">
+            <h3>What makes a commitment credible?</h3>
+          </div>
+          <PolicyComparison
+            id="coordination-agreement"
+            legend="Compare the agreement"
+            options={pacts.map((p, i) => ({
+              name: i ? "Verified commitments" : "Promises",
+              title: p.title,
+              benefit: p.copy,
+              cost: p.limit,
+            }))}
+          />
+        </article></QuestionSequence
+      >
     </div>
   </div><p class="race-note">
     A conceptual comparison, not a forecast of US or Chinese policy.

@@ -36,6 +36,12 @@ On wide, tall screens, ten comparison sequences use natural scroll to shift atte
 
 ## Validate
 
+### Changing the reading experience
+
+`components/renewal/QuestionSequence.astro` supplies one shared scene for a scenario's `data-question` articles. `Comparison.astro` renders each argument once into fixed regions. `Statement.astro` supplies the quiet sentence-to-next-chapter handoff. Chapter files retain their authored content and evidence.
+
+`scripts/renewal.js` only coordinates motion preferences and a single scroll/resize scheduler. The `scripts/reading/` modules separately own questions, perspective emphasis, statement dwell and navigation; `timing.js` is the shared pacing configuration. `styles/reading-sequences.css` owns staging and transitions, while chapter imagery remains in the existing visual styles. Question transitions enhance only when the complete longest slide fits; mobile, short screens, no-JS and motion-off retain normal document flow. There is no wheel interception or nested reading scroll.
+
 ```sh
 npx playwright install chromium
 npm run check

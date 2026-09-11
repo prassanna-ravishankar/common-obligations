@@ -5,6 +5,7 @@ import PolicyComparison from "../PolicyComparison.astro";
 import { stages } from "../../data/surveillance.js";
 import ScrollComparison from "../ScrollComparison.astro";
 import SurveillanceThreshold from "../SurveillanceThreshold.astro";
+import QuestionSequence from "../renewal/QuestionSequence.astro";
 const { prototype = false } = Astro.props;
 ---
 
@@ -27,44 +28,51 @@ const { prototype = false } = Astro.props;
       ))
     }
   </nav>
-  {
-    stages.map((stage, i) => (
-      <article class="story-beat" id={`story-stage-${i}`} data-beat={i}>
-        <div class="decision-heading">
-          <>
-            <span class="decision-number">
-              {String(i + 1).padStart(2, "0")}
-            </span>
-            <div>
-              <>
-                <h3>{stage.question}</h3>
-                <p class="stage-caption">{stage.kicker}</p>
-                <p>{stage.description}</p>
-              </>
-            </div>
-          </>
-        </div>
-        {prototype ? (
-          <ScrollComparison
-            id={`surveillance-${i}`}
-            options={stage.conditions.map((c, n) => ({
-              ...c,
-              name: n ? "Independent check" : "Operator discretion",
-            }))}
-          />
-        ) : (
-          <PolicyComparison
-            id={`surveillance-${i}`}
-            legend="Compare the oversight conditions"
-            options={stage.conditions.map((c, n) => ({
-              ...c,
-              name: n ? "Independent check" : "Operator discretion",
-            }))}
-          />
-        )}
-      </article>
-    ))
-  }
+  <QuestionSequence kind="surveillance">
+    {
+      stages.map((stage, i) => (
+        <article
+          class="story-beat"
+          id={`story-stage-${i}`}
+          data-beat={i}
+          data-question
+        >
+          <div class="decision-heading">
+            <>
+              <span class="decision-number">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <div>
+                <>
+                  <h3>{stage.question}</h3>
+                  <p class="stage-caption">{stage.kicker}</p>
+                  <p>{stage.description}</p>
+                </>
+              </div>
+            </>
+          </div>
+          {prototype ? (
+            <ScrollComparison
+              id={`surveillance-${i}`}
+              options={stage.conditions.map((c, n) => ({
+                ...c,
+                name: n ? "Independent check" : "Operator discretion",
+              }))}
+            />
+          ) : (
+            <PolicyComparison
+              id={`surveillance-${i}`}
+              legend="Compare the oversight conditions"
+              options={stage.conditions.map((c, n) => ({
+                ...c,
+                name: n ? "Independent check" : "Operator discretion",
+              }))}
+            />
+          )}
+        </article>
+      ))
+    }
+  </QuestionSequence>
   <details class="evidence">
     <summary
       ><span><span class="orange">↳</span> Ground this in the real world</span

@@ -2,6 +2,7 @@
 import DisclosureIcon from "../DisclosureIcon.astro";
 import ChapterFrame from "../ChapterFrame.astro";
 import ScrollComparison from "../ScrollComparison.astro";
+import QuestionSequence from "../renewal/QuestionSequence.astro";
 import { incidentDecisions } from "../../data/incident.js";
 const supplyContexts = {
   contain:
@@ -63,13 +64,14 @@ const supplyEvidence = {
     as intended. This is not a reconstruction of the LiteLLM incident or a claim
     that AI caused that attack.
   </p>
-  <div class="incident-sequence">
+  <QuestionSequence kind="incident">
     {
       incidentDecisions.map((decision) => (
         <article
           class="incident-step"
           id={`incident-${decision.id}`}
           aria-labelledby={`${decision.id}-heading`}
+          data-question
         >
           <div class="incident-step-heading">
             <>
@@ -103,7 +105,7 @@ const supplyEvidence = {
         </article>
       ))
     }
-  </div>
+  </QuestionSequence>
   <details class="evidence incident-records">
     <summary
       ><span>Two documented accounts</span><span class="summary-hint"

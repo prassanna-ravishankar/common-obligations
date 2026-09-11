@@ -2,6 +2,7 @@
 import DisclosureIcon from "../DisclosureIcon.astro";
 import ChapterFrame from "../ChapterFrame.astro";
 import PolicyComparison from "../PolicyComparison.astro";
+import QuestionSequence from "../renewal/QuestionSequence.astro";
 import { releases } from "../../data/release.js";
 ---
 
@@ -23,26 +24,30 @@ import { releases } from "../../data/release.js";
       Same underlying model. Different opportunities for harm.
     </div>
   </div>
-  <div class="decision-heading">
-    <h3>What should happen before wider release?</h3><p>
-      Examine the strongest argument and costs of each condition.
-    </p>
-  </div>
-  <PolicyComparison
-    id="release-approach"
-    legend="Compare release approaches"
-    options={releases.map((r, i) => ({
-      name: [
-        "Developer assessment",
-        "Independent evaluation",
-        "Limited deployment",
-      ][i],
-      title: r.title,
-      benefit: r.for,
-      cost: r.against,
-      dependency: r.assumption,
-    }))}
-  />
+  <QuestionSequence kind="release"
+    ><article data-question>
+      <div class="decision-heading">
+        <h3>What should happen before wider release?</h3><p>
+          Examine the strongest argument and costs of each condition.
+        </p>
+      </div>
+      <PolicyComparison
+        id="release-approach"
+        legend="Compare release approaches"
+        options={releases.map((r, i) => ({
+          name: [
+            "Developer assessment",
+            "Independent evaluation",
+            "Limited deployment",
+          ][i],
+          title: r.title,
+          benefit: r.for,
+          cost: r.against,
+          dependency: r.assumption,
+        }))}
+      />
+    </article></QuestionSequence
+  >
   <details class="evidence">
     <summary
       ><span>↳ Evidence before deployment</span><span class="summary-hint"

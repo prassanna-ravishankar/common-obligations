@@ -1,5 +1,6 @@
 ---
 import Scene from "./Scene.astro";
+import Statement from "./Statement.astro";
 import Introduction from "../chapters/Introduction.astro";
 import ScenarioIndex from "../ScenarioIndex.astro";
 import Surveillance from "../chapters/Surveillance.astro";
@@ -67,17 +68,14 @@ import { scenarios } from "../../data/scenarios.js";
     >
   </div>
   <Surveillance />
-  <aside class="quiet-passage">
-    <p>
-      Better matching alone cannot decide<br /><em
-        >whether a use is justified.</em
-      >
-    </p>
-  </aside>
+  <Statement next="release">
+    Better matching alone cannot decide<br /><em>whether a use is justified.</em
+    >
+  </Statement>
   <Release /><Defense /><Discovery /><Incident /><Coordination />
-  <aside class="quiet-passage quiet-passage--last">
-    <p>Delegation should preserve<br /><em>responsibility.</em></p>
-  </aside>
+  <Statement next="obligations"
+    >Delegation should preserve<br /><em>responsibility.</em></Statement
+  >
   <Obligations /><Closing /><Reading />
 </main>
 <footer class="fresh-footer">

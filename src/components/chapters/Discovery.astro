@@ -2,6 +2,7 @@
 import DisclosureIcon from "../DisclosureIcon.astro";
 import ChapterFrame from "../ChapterFrame.astro";
 import PolicyComparison from "../PolicyComparison.astro";
+import QuestionSequence from "../renewal/QuestionSequence.astro";
 import { discoveryOptions } from "../../data/scenarios.js";
 ---
 
@@ -28,21 +29,25 @@ import { discoveryOptions } from "../../data/scenarios.js";
       </p>
     </li>
   </ol>
-  <div class="scenario-question">
-    <h3>
-      A proof is checkable.<br />Its ideas remain difficult to use.
-    </h3><p>
-      In this illustrative situation, a lab has a formally verified mathematical
-      result. How much responsibility should accompany its claim to a
-      breakthrough? The comparison concerns how work is shared, not a judgement
-      on any particular proof.
-    </p>
-  </div>
-  <PolicyComparison
-    id="discovery-publication"
-    legend="What should accompany the result?"
-    options={discoveryOptions}
-  />
+  <QuestionSequence kind="discovery"
+    ><article data-question>
+      <div class="scenario-question">
+        <h3>
+          A proof is checkable.<br />Its ideas remain difficult to use.
+        </h3><p>
+          In this illustrative situation, a lab has a formally verified
+          mathematical result. How much responsibility should accompany its
+          claim to a breakthrough? The comparison concerns how work is shared,
+          not a judgement on any particular proof.
+        </p>
+      </div>
+      <PolicyComparison
+        id="discovery-publication"
+        legend="What should accompany the result?"
+        options={discoveryOptions}
+      />
+    </article></QuestionSequence
+  >
   <details class="evidence">
     <summary
       ><span>Navier–Stokes & the purpose of a proof</span><span

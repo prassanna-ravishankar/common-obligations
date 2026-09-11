@@ -1,0 +1,236 @@
+/* Shared scenario staging. Chapter art and content remain authored separately. */
+.reading-sequence {
+  display: block;
+  position: relative;
+}
+.reading-stage {
+  position: relative;
+  isolation: isolate;
+}
+[data-staged] .settled-columns {
+  gap: 4vw;
+}
+[data-staged] [data-focus] {
+  --attention: 1;
+  border-top: 1px solid var(--line);
+  padding-top: 22px;
+}
+[data-staged] [data-focus] h4 {
+  opacity: calc(0.55 + var(--attention) * 0.45);
+}
+[data-staged] [data-focus] :is(.perspective-thesis, dl) {
+  opacity: calc(0.18 + var(--attention) * 0.82);
+}
+.reading-bypass {
+  position: absolute;
+  z-index: 3;
+  font-size: 13px;
+  color: var(--accent);
+  opacity: 0;
+  pointer-events: none;
+}
+.reading-bypass:focus-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+.question-stage > .scene-art,
+.question-controls {
+  display: none;
+}
+.question-sequence[data-question-staged] {
+  position: relative;
+  height: calc(100svh + var(--question-travel));
+  margin: 50px 0 70px;
+}
+[data-question-staged] .question-stage {
+  position: sticky;
+  top: 64px;
+  height: calc(100svh - 64px);
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  isolation: isolate;
+}
+[data-question-staged] .question-stage > .scene-art {
+  display: block;
+  mask-image: linear-gradient(transparent var(--art-clearance, 65%), #000);
+  opacity: 0.4;
+}
+[data-question-staged] .question-stage > .scene-art--race {
+  opacity: calc(0.22 + var(--scene-progress, 0) * 0.18);
+}
+[data-question-staged] .question-slides {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: 88vw;
+  max-width: 1400px;
+  margin: auto;
+  padding-top: 30px;
+}
+[data-question-staged] [data-question] {
+  grid-area: 1 / 1;
+  align-self: start;
+  margin: 0;
+  position: relative;
+}
+[data-question-staged] [data-question][aria-hidden="true"] {
+  pointer-events: none;
+}
+[data-question-staged] .decision-heading,
+[data-question-staged] .scenario-question,
+[data-question-staged] .incident-step-heading {
+  margin: 0 0 22px;
+  max-width: none;
+}
+[data-question-staged]
+  :is(.decision-heading, .scenario-question, .incident-step-heading)
+  h3 {
+  font: 42px/1.12 var(--serif);
+  max-width: 30ch;
+}
+[data-question-staged]
+  :is(.decision-heading, .scenario-question, .incident-step-heading)
+  p {
+  font-size: 16px;
+  line-height: 1.5;
+  margin-top: 12px;
+  max-width: 90ch;
+}
+[data-question-staged] .stage-caption {
+  display: none;
+}
+[data-question-staged] .reading-sequence[data-staged] {
+  height: auto;
+  margin: 0;
+  opacity: var(--question-arrival, 1);
+}
+[data-question-staged] .reading-stage {
+  position: static;
+  width: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+}
+[data-question-staged] .reading-stage > .scene-art {
+  display: none;
+}
+[data-question-staged] .reading-sequence .settled-reading {
+  width: auto;
+  max-width: none;
+  padding: 0;
+}
+[data-question-staged] .incident-obligations {
+  margin: 20px 0 0;
+}
+[data-question-staged] .reading-bypass {
+  top: -25px;
+  left: 0;
+}
+[data-question-staged] .question-controls {
+  display: flex;
+  position: absolute;
+  right: 6vw;
+  top: 4px;
+  gap: 20px;
+  z-index: 5;
+}
+.question-controls button {
+  opacity: 0;
+  pointer-events: none;
+  color: var(--accent);
+  background: var(--paper);
+  border: 0;
+  font: inherit;
+  font-size: 13px;
+}
+.question-controls:focus-within button {
+  opacity: 1;
+  pointer-events: auto;
+}
+/* A sentence can linger as the next chapter's background enters underneath. */
+.quiet-passage .statement-stage {
+  width: 100%;
+  display: grid;
+  place-items: center;
+}
+.quiet-passage[data-statement-staged] {
+  position: relative;
+  display: block;
+  height: 190svh;
+  min-height: 0;
+  padding: 0;
+  margin: 0 0 -65svh;
+  z-index: 3;
+  pointer-events: none;
+}
+[data-statement-staged] .statement-stage {
+  position: sticky;
+  top: 64px;
+  height: calc(100svh - 64px);
+  padding: 0 6vw;
+}
+[data-statement-staged] p {
+  opacity: var(--statement-presence, 1);
+}
+[data-statement-staged] em {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(8px);
+}
+[data-statement-staged][data-revealed] em {
+  transition:
+    opacity 1100ms ease,
+    transform 1400ms cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 1;
+  transform: none;
+}
+/* The model → agent diagram is typography and a connecting rule, never cards. */
+.release-visual .system-node {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+}
+@media print {
+  .reading-sequence {
+    display: block !important;
+  }
+  .question-sequence[data-question-staged] {
+    height: auto;
+    margin: 0;
+  }
+  [data-question-staged] .question-stage {
+    position: static;
+    height: auto;
+    width: auto;
+    margin: 0;
+  }
+  [data-question-staged] .question-slides {
+    display: block;
+    width: auto;
+  }
+  [data-question-staged] [data-question],
+  [data-question-staged] .reading-sequence[data-staged] {
+    opacity: 1 !important;
+  }
+  [data-question-staged] [data-focus] {
+    --attention: 1 !important;
+  }
+  .question-controls,
+  [data-question-staged] .question-stage > .scene-art {
+    display: none;
+  }
+  .quiet-passage[data-statement-staged] {
+    height: auto;
+    margin: 40px 0;
+  }
+  [data-statement-staged] .statement-stage {
+    position: static;
+    height: auto;
+  }
+  [data-statement-staged] p,
+  [data-statement-staged] em {
+    opacity: 1;
+    transform: none;
+  }
+}

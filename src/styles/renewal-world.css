@@ -180,10 +180,6 @@
   white-space: nowrap;
   padding: 5px 0;
 }
-.reading-stage {
-  top: 64px;
-  height: calc(100svh - 64px);
-}
 .scene-art--defense .scene-image-plane {
   transform-origin: 70% 75%;
   transform: translateX(calc(var(--scene-progress, 0.5) * -90px)) scale(1.12);
@@ -220,20 +216,6 @@
     calc(var(--scene-progress, 0.5) * -65px)
   );
   opacity: calc(0.75 - var(--scene-progress, 0.5) * 0.6);
-}
-.reading-sequence--discovery .focused-perspectives {
-  margin-left: 52vw;
-  width: 40vw;
-}
-.reading-sequence--discovery .reading-stage .scene-art {
-  mask-image: linear-gradient(90deg, #000, #000 28%, transparent 80%);
-}
-.reading-sequence--discovery .reading-bypass,
-.reading-sequence--discovery .reading-position {
-  left: 52vw;
-}
-.reading-sequence--discovery .focused-perspective {
-  max-width: 480px;
 }
 .scenario-question {
   max-width: 72ch;
@@ -388,24 +370,6 @@
 .incident-bridge a {
   color: var(--accent);
 }
-.reading-sequence--incident .focused-perspectives {
-  margin-left: calc(50vw - 270px);
-  width: 540px;
-}
-.reading-sequence--incident .reading-stage .scene-art {
-  opacity: 1;
-  mask-image: none;
-}
-.reading-sequence--incident .reading-bypass,
-.reading-sequence--incident .reading-position {
-  left: calc(50vw - 270px);
-}
-.reading-sequence--incident .focused-perspective {
-  max-width: 540px;
-}
-.reading-sequence--incident .scene-art svg {
-  transform: translateY(100px);
-}
 #race .chapter-heading {
   max-width: 1100px;
   padding: 100px 6% 0;
@@ -445,78 +409,7 @@
   font-size: 14px;
   margin: 40px 0;
 }
-.reading-sequence--race .focused-perspectives {
-  margin-left: calc(50vw - 260px);
-  width: 520px;
-}
-.reading-sequence--race .reading-stage .scene-art {
-  mask-image: linear-gradient(
-    transparent calc(50% - var(--scene-progress, 0.5) * 20%),
-    #000 90%
-  );
-}
-.reading-sequence--race .reading-bypass,
-.reading-sequence--race .reading-position {
-  left: calc(50vw - 260px);
-}
-.reading-sequence {
-  display: block;
-}
-.reading-sequence:not([data-staged]) .reading-stage {
-  position: relative;
-  top: auto;
-  width: auto;
-  height: auto;
-  margin: 0;
-  overflow: visible;
-}
-.reading-sequence:not([data-staged]) .reading-stage > .scene-art {
-  display: none;
-}
-.reading-sequence[data-staged] .settled-reading {
-  position: relative;
-  z-index: 1;
-  width: 88vw;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 55px 0 65px;
-}
-.reading-sequence[data-staged] .settled-columns {
-  gap: 4vw;
-}
-.reading-sequence[data-staged] [data-focus] {
-  --attention: 1;
-  border-top: 1px solid var(--line);
-  padding-top: 22px;
-}
-.reading-sequence[data-staged] [data-focus] h4 {
-  opacity: calc(0.55 + var(--attention) * 0.45);
-}
-.reading-sequence[data-staged] [data-focus] .perspective-thesis,
-.reading-sequence[data-staged] [data-focus] dl {
-  opacity: calc(0.18 + var(--attention) * 0.82);
-}
 /* Keep the print below the text, not behind a newly invented reading panel. */
-.reading-sequence[data-staged] .reading-stage > .scene-art {
-  mask-image: linear-gradient(transparent 65%, #000 100%);
-  opacity: 0.4;
-}
-.reading-sequence--race[data-staged] .reading-stage > .scene-art {
-  mask-image: linear-gradient(
-    transparent calc(75% - var(--scene-progress, 0) * 15%),
-    #000 100%
-  );
-}
-.reading-sequence .reading-bypass {
-  left: 6vw;
-  top: 8px;
-  opacity: 0;
-  pointer-events: none;
-}
-.reading-sequence .reading-bypass:focus-visible {
-  opacity: 1;
-  pointer-events: auto;
-}
 .quiet-passage--last {
   margin-bottom: 0;
   min-height: 65svh;

@@ -259,14 +259,8 @@ svg {
 .decision-heading .stage-caption + p {
   margin-top: 8px;
 }
-.reading-sequence {
-  display: none;
-}
 .settled-reading {
   padding: 45px 0 65px;
-}
-.settled-heading {
-  display: none;
 }
 .settled-columns {
   display: grid;
@@ -299,84 +293,6 @@ dd {
 }
 dd + dd {
   margin-top: 18px;
-}
-.reading-sequence[data-staged] {
-  display: block;
-  height: calc(100svh + var(--reading-travel));
-  position: relative;
-  margin-top: 40px;
-}
-.reading-stage {
-  height: 100svh;
-  position: sticky;
-  top: 0;
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-  overflow: clip;
-  isolation: isolate;
-}
-.reading-stage .scene-art {
-  mask-image: linear-gradient(110deg, transparent 16%, #000 70%);
-  opacity: 0.85;
-}
-.focused-perspectives {
-  position: relative;
-  margin: 0 6vw;
-  width: 43vw;
-  height: 100%;
-  padding-top: 80px;
-}
-.focused-perspective {
-  position: absolute;
-  top: 80px;
-  left: 0;
-  max-width: 500px;
-  opacity: 0;
-  pointer-events: none;
-}
-.focused-perspective h4 {
-  font-size: 52px;
-}
-.focused-perspective .perspective-thesis {
-  font-size: 36px;
-  max-width: 25ch;
-}
-.focused-perspective dl {
-  max-width: 48ch;
-}
-.reading-bypass {
-  position: absolute;
-  top: 24px;
-  left: 6vw;
-  z-index: 3;
-  font-size: 13px;
-  color: var(--accent);
-}
-.reading-position {
-  position: absolute;
-  left: 6vw;
-  bottom: 28px;
-  font-size: 12px;
-  color: var(--muted);
-}
-.reading-sequence[data-staged] + .settled-reading {
-  padding-top: 110px;
-}
-.reading-sequence[data-staged] + .settled-reading .settled-heading {
-  display: block;
-  font-size: 24px;
-  color: var(--muted);
-  margin-bottom: 45px;
-}
-.reading-sequence--release .focused-perspectives {
-  margin-left: 10vw;
-}
-.reading-sequence--release .reading-stage .scene-art {
-  opacity: 0.8;
-  mask-image: linear-gradient(90deg, transparent, #000 70%);
-}
-.reading-sequence--release .reading-position {
-  left: 10vw;
 }
 .quiet-passage {
   min-height: 70svh;

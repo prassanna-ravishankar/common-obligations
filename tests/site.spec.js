@@ -11,17 +11,19 @@ import { incidentDecisions } from "../src/data/incident.js";
 import sources from "./original-sources.json" with { type: "json" };
 const route = "/";
 async function progress(page, track, p) {
-  await track.evaluate(
-    (e, p) =>
-      scrollTo(
-        0,
-        e.getBoundingClientRect().top +
-          scrollY -
-          64 +
-          (e.offsetHeight - (innerHeight - 64)) * p,
-      ),
-    p,
-  );
+  await track.evaluate((e, p) => {
+    const deck = e.closest("[data-question-sequence]");
+    const panes = [...deck.querySelectorAll("[data-question]")];
+    const index = panes.indexOf(e.closest("[data-question]"));
+    const mapped = (index + 0.16 + p * 0.68) / panes.length;
+    scrollTo(
+      0,
+      deck.getBoundingClientRect().top +
+        scrollY -
+        64 +
+        (deck.offsetHeight - (innerHeight - 64)) * mapped,
+    );
+  }, p);
   await expect
     .poll(() =>
       track.evaluate((e) =>
@@ -68,6 +70,7 @@ test("perspectives keep their regions, resolve together in the same DOM, and rev
   await page.emulateMedia({ reducedMotion: "no-preference" });
   await page.goto(route);
   await expect(page.locator("[data-staged]")).toHaveCount(10);
+  await expect(page.locator("[data-question-staged]")).toHaveCount(6);
   for (const id of [
     "surveillance-0",
     "release-approach",
@@ -144,12 +147,16 @@ test("scene-specific geometry changes without moving imagery and its embedded th
     for (const p of [0.1, 0.9]) {
       await progress(page, track, p);
       values.push(
-        await track.locator(selector).evaluate((e) => ({
-          transform: getComputedStyle(e).transform,
-          opacity: getComputedStyle(e).opacity,
-          clip: getComputedStyle(e).clipPath,
-          mask: getComputedStyle(e).maskImage,
-        })),
+        await track
+          .locator("xpath=ancestor::*[@data-question-sequence]")
+          .locator(".question-stage > .scene-art")
+          .locator(selector === ".scene-art--race" ? "xpath=." : selector)
+          .evaluate((e) => ({
+            transform: getComputedStyle(e).transform,
+            opacity: getComputedStyle(e).opacity,
+            clip: getComputedStyle(e).clipPath,
+            mask: getComputedStyle(e).maskImage,
+          })),
       );
     }
     expect(values[0]).not.toEqual(values[1]);
@@ -157,10 +164,12 @@ test("scene-specific geometry changes without moving imagery and its embedded th
   }
   expect(new Set(measured).size).toBe(6);
   const discovery = page.locator(
-    '[data-reading-sequence="discovery-publication"]',
+    '[data-question-sequence="discovery"] .question-stage > .scene-art',
   );
   await expect(discovery.locator("svg image")).toHaveCount(2);
-  const incident = page.locator('[data-reading-sequence="incident-contain"]');
+  const incident = page.locator(
+    '[data-question-sequence="incident"] .question-stage > .scene-art',
+  );
   expect(
     await incident
       .locator(".incident-after")
@@ -251,4 +260,81 @@ test("fresh assets, anchors and social metadata resolve", async ({
     return [asset.naturalWidth, asset.naturalHeight];
   }, new URL(image).pathname);
   expect(dimensions).toEqual([1200, 630]);
+});
+
+test("questions dissolve on a shared stage and statements reveal after dwelling", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1600, height: 1100 });
+  await page.goto(route);
+  await expect(page.locator("[data-question-staged]")).toHaveCount(6);
+  for (const kind of ["surveillance", "incident"]) {
+    const deck = page.locator(`[data-question-sequence="${kind}"]`);
+    const positions = [];
+    for (const index of [0, 1, 2, 1]) {
+      await deck.evaluate(
+        (e, i) =>
+          scrollTo(
+            0,
+            e.getBoundingClientRect().top +
+              scrollY -
+              64 +
+              (e.offsetHeight - (innerHeight - 64)) * ((i + 0.45) / 3),
+          ),
+        index,
+      );
+      await expect(deck).toHaveAttribute("data-question-index", String(index));
+      await expect(deck.locator("[data-question]").nth(index)).toHaveCSS(
+        "opacity",
+        "1",
+      );
+      await expect(
+        deck.locator('[data-question][aria-hidden="false"]'),
+      ).toHaveCount(1);
+      positions.push(
+        await deck
+          .locator(".question-stage")
+          .evaluate((e) => e.getBoundingClientRect().y),
+      );
+    }
+    expect(new Set(positions).size).toBe(1);
+    await deck.locator('[data-question-jump="1"]').focus();
+    await page.keyboard.press("Enter");
+    await expect(deck).toHaveAttribute("data-question-index", "2");
+  }
+  await page.goto(route + "?statement-check");
+  await expect(page.locator("[data-statement-staged]")).toHaveCount(2);
+  const statement = page.locator('[data-statement][data-next="release"]');
+  await statement.evaluate((e) =>
+    scrollTo(0, e.getBoundingClientRect().top + scrollY - 64),
+  );
+  await expect(statement.locator("em")).toHaveCSS("opacity", "0");
+  await expect(statement).toHaveAttribute("data-revealed", "");
+  await expect(statement.locator("em")).toHaveCSS("opacity", "1");
+  await statement.evaluate((e) =>
+    scrollTo(
+      0,
+      e.getBoundingClientRect().top +
+        scrollY -
+        64 +
+        (e.offsetHeight - innerHeight + 64) * 0.65,
+    ),
+  );
+  await expect
+    .poll(() =>
+      statement.evaluate((e) =>
+        Number(e.style.getPropertyValue("--statement-presence")),
+      ),
+    )
+    .toBeLessThan(1);
+  expect(
+    await page
+      .locator("#release")
+      .evaluate((e) => e.getBoundingClientRect().top),
+  ).toBeLessThan(1100);
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await expect(
+    page.locator("[data-question-staged], [data-statement-staged]"),
+  ).toHaveCount(0);
+  await expect(page.locator("[data-question][inert]")).toHaveCount(0);
 });

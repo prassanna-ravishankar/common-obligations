@@ -1,0 +1,15 @@
+---
+import Scene from "./Scene.astro";
+const { kind } = Astro.props;
+---
+
+<div class="question-sequence" data-question-sequence={kind}>
+  <div class="question-stage">
+    <nav class="question-controls" aria-label="Question sequence">
+      <button data-question-jump="-1">Previous question</button>
+      <button data-question-jump="1">Next question</button>
+    </nav>
+    <Scene kind={kind} />
+    <div class="question-slides"><slot /></div>
+  </div>
+</div>

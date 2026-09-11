@@ -1,6 +1,5 @@
 ---
 import Argument from "../Argument.astro";
-import Scene from "./Scene.astro";
 const { id, options } = Astro.props;
 const kind = id.startsWith("coordination") ? "race" : id.split("-")[0];
 ---
@@ -15,7 +14,6 @@ const kind = id.startsWith("coordination") ? "race" : id.split("-")[0];
     <a class="reading-bypass" href={`#${id}-all`} hidden
       >Skip to complete comparison</a
     >
-    <Scene kind={kind} id={`comparison-${id}`} />
     <div class="settled-reading" id={`${id}-all`} data-reading-all={id}>
       <div class="settled-columns" style={`--columns:${options.length}`}>
         {
