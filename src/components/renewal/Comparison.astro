@@ -13,30 +13,19 @@ const kind = id.startsWith("coordination") ? "race" : id.split("-")[0];
 >
   <div class="reading-stage">
     <a class="reading-bypass" href={`#${id}-all`} hidden
-      >Read all perspectives</a
+      >Skip to complete comparison</a
     >
     <Scene kind={kind} id={`comparison-${id}`} />
-    <div class="focused-perspectives" aria-hidden="true">
-      {
-        options.map((option, i) => (
-          <div class="focused-perspective" data-focus={i}>
-            <Argument option={option} />
-          </div>
-        ))
-      }
+    <div class="settled-reading" id={`${id}-all`} data-reading-all={id}>
+      <div class="settled-columns" style={`--columns:${options.length}`}>
+        {
+          options.map((option, i) => (
+            <section aria-label={option.name} data-focus={i}>
+              <Argument option={option} />
+            </section>
+          ))
+        }
+      </div>
     </div>
-    <span class="reading-position" aria-hidden="true"></span>
-  </div>
-</div>
-<div class="settled-reading" id={`${id}-all`} data-reading-all={id}>
-  <h3 class="settled-heading">Read the perspectives together.</h3>
-  <div class="settled-columns" style={`--columns:${options.length}`}>
-    {
-      options.map((option) => (
-        <section aria-label={option.name}>
-          <Argument option={option} />
-        </section>
-      ))
-    }
   </div>
 </div>

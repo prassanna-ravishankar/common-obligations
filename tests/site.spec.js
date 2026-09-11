@@ -61,7 +61,7 @@ test("fresh edition preserves every argument, source and essay without JavaScrip
   ).toBeGreaterThan(10000);
   await c.close();
 });
-test("all staged perspectives have reading holds, reverse and lead to complete unbounded comparisons", async ({
+test("perspectives keep their regions, resolve together in the same DOM, and reverse", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 1600, height: 1100 });
@@ -78,14 +78,40 @@ test("all staged perspectives have reading holds, reverse and lead to complete u
   ]) {
     const track = page.locator(`[data-reading-sequence="${id}"]`);
     const n = Number(await track.getAttribute("data-count"));
+    const regions = [];
     for (const i of [...Array(n).keys(), 0]) {
-      await progress(page, track, (i + 0.4) / n);
+      await progress(page, track, (0.8 * (i + 0.4)) / n);
       await expect(track).toHaveAttribute("data-focused", String(i));
-      await expect(track.locator('[data-focus="' + i + '"]')).toHaveCSS(
+      await expect(track.locator('[data-focus="' + i + '"] dl')).toHaveCSS(
         "opacity",
         "1",
       );
+      regions.push(
+        await track.locator("[data-focus]").evaluateAll((es) =>
+          es.map((e) => {
+            const r = e.getBoundingClientRect();
+            return [r.x, r.y, r.width];
+          }),
+        ),
+      );
     }
+    await progress(page, track, 0.9);
+    await expect(track).toHaveAttribute("data-focused", "all");
+    for (const column of await track.locator("[data-focus] dl").all())
+      await expect(column).toHaveCSS("opacity", "1");
+    const finalRegions = await track.locator("[data-focus]").evaluateAll((es) =>
+      es.map((e) => {
+        const r = e.getBoundingClientRect();
+        return [r.x, r.y, r.width];
+      }),
+    );
+    for (const region of regions) expect(region).toEqual(finalRegions);
+    await expect(track.locator(".settled-reading")).toHaveCount(1);
+    await expect(
+      track.locator(
+        ".settled-heading, .reading-position, .focused-perspectives",
+      ),
+    ).toHaveCount(0);
     await track.locator(".reading-bypass").focus();
     await page.keyboard.press("Enter");
     await expect(page.locator("#" + id + "-all")).toBeFocused();
@@ -93,6 +119,10 @@ test("all staged perspectives have reading holds, reverse and lead to complete u
       page.locator("#" + id + "-all .settled-columns>section"),
     ).toHaveCount(n);
   }
+  await page.goto("/#release-approach-all");
+  await expect(
+    page.locator('[data-reading-sequence="release-approach"]'),
+  ).toHaveAttribute("data-focused", "all");
 });
 test("scene-specific geometry changes without moving imagery and its embedded thread independently", async ({
   page,

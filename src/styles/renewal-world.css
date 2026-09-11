@@ -459,11 +459,63 @@
 .reading-sequence--race .reading-position {
   left: calc(50vw - 260px);
 }
-.reading-sequence .reading-position {
-  left: auto;
-  right: 6vw;
-  top: 24px;
-  bottom: auto;
+.reading-sequence {
+  display: block;
+}
+.reading-sequence:not([data-staged]) .reading-stage {
+  position: relative;
+  top: auto;
+  width: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+}
+.reading-sequence:not([data-staged]) .reading-stage > .scene-art {
+  display: none;
+}
+.reading-sequence[data-staged] .settled-reading {
+  position: relative;
+  z-index: 1;
+  width: 88vw;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 55px 0 65px;
+}
+.reading-sequence[data-staged] .settled-columns {
+  gap: 4vw;
+}
+.reading-sequence[data-staged] [data-focus] {
+  --attention: 1;
+  border-top: 1px solid var(--line);
+  padding-top: 22px;
+}
+.reading-sequence[data-staged] [data-focus] h4 {
+  opacity: calc(0.55 + var(--attention) * 0.45);
+}
+.reading-sequence[data-staged] [data-focus] .perspective-thesis,
+.reading-sequence[data-staged] [data-focus] dl {
+  opacity: calc(0.18 + var(--attention) * 0.82);
+}
+/* Keep the print below the text, not behind a newly invented reading panel. */
+.reading-sequence[data-staged] .reading-stage > .scene-art {
+  mask-image: linear-gradient(transparent 65%, #000 100%);
+  opacity: 0.4;
+}
+.reading-sequence--race[data-staged] .reading-stage > .scene-art {
+  mask-image: linear-gradient(
+    transparent calc(75% - var(--scene-progress, 0) * 15%),
+    #000 100%
+  );
+}
+.reading-sequence .reading-bypass {
+  left: 6vw;
+  top: 8px;
+  opacity: 0;
+  pointer-events: none;
+}
+.reading-sequence .reading-bypass:focus-visible {
+  opacity: 1;
+  pointer-events: auto;
 }
 .quiet-passage--last {
   margin-bottom: 0;

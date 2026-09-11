@@ -22,12 +22,12 @@ export function initRenewal() {
           (e) => e.offsetHeight,
         ),
       );
-      const fits = enabled() && max + 160 < innerHeight - 64;
+      const fits = enabled() && max + 120 < innerHeight - 64;
       sequence.toggleAttribute("data-staged", fits);
       sequence.querySelector(".reading-bypass").hidden = !fits;
       sequence.style.setProperty(
         "--reading-travel",
-        `${Number(sequence.dataset.count) * 160}svh`,
+        `${Number(sequence.dataset.count) * 140 + 100}svh`,
       );
     });
     if (motion) {
@@ -46,27 +46,37 @@ export function initRenewal() {
       el.style.setProperty("--scene-progress", String(p));
     });
     sequences.forEach((sequence) => {
-      if (!sequence.hasAttribute("data-staged")) return;
+      if (!sequence.hasAttribute("data-staged")) {
+        sequence
+          .querySelectorAll("[data-focus]")
+          .forEach((el) => el.style.removeProperty("--attention"));
+        return;
+      }
       const r = sequence.getBoundingClientRect();
       const p = clamp(
         (64 - r.top) / (sequence.offsetHeight - (innerHeight - 64)),
       );
       sequence.style.setProperty("--scene-progress", String(p));
       const count = Number(sequence.dataset.count);
-      const index = Math.min(count - 1, Math.floor(p * count));
-      const local = p * count - index;
-      sequence.dataset.focused = String(index);
+      // The last fifth holds the whole composition, before the same DOM unpins.
+      const phase = Math.min(count, (p / 0.8) * count);
+      const index = Math.min(count - 1, Math.floor(phase));
+      const local = phase - index;
+      const together = ease(0.75, 0.84, p);
+      sequence.dataset.focused = together === 1 ? "all" : String(index);
       sequence.querySelectorAll("[data-focus]").forEach((el, i) => {
-        // A long stationary reading hold; exits clear before the next argument arrives.
-        const presence =
-          i === index
-            ? (index === 0 ? 1 : ease(0, 0.13, local)) *
-              (index === count - 1 ? 1 : 1 - ease(0.83, 1, local))
-            : 0;
-        el.style.opacity = String(presence);
+        // Regions never move or disappear. Attention gently crosses between them.
+        let attention = i === index ? 1 : 0;
+        if (index < count - 1 && local > 0.72) {
+          const cross = ease(0.72, 1, local);
+          if (i === index) attention = 1 - cross;
+          if (i === index + 1) attention = cross;
+        }
+        el.style.setProperty(
+          "--attention",
+          String(attention + (1 - attention) * together),
+        );
       });
-      sequence.querySelector(".reading-position").textContent =
-        `${index + 1} / ${count} perspectives`;
     });
     let active = "decisions";
     for (const s of scenarios)
@@ -98,14 +108,37 @@ export function initRenewal() {
       requestAnimationFrame(update);
     }
   }
+  function revealTogether(sequence) {
+    scrollTo(
+      0,
+      sequence.getBoundingClientRect().top +
+        scrollY -
+        64 +
+        (sequence.offsetHeight - (innerHeight - 64)) * 0.88,
+    );
+  }
+  function resolveComparisonHash() {
+    const target = document.getElementById(location.hash.slice(1));
+    const sequence = target?.matches("[data-reading-all]")
+      ? target.closest("[data-staged]")
+      : null;
+    if (sequence) revealTogether(sequence);
+  }
   sequences.forEach((sequence) =>
-    sequence.querySelector(".reading-bypass").addEventListener("click", () => {
-      const target = document.getElementById(
-        sequence.dataset.readingSequence + "-all",
-      );
-      target.setAttribute("tabindex", "-1");
-      target.focus({ preventScroll: true });
-    }),
+    sequence
+      .querySelector(".reading-bypass")
+      .addEventListener("click", (event) => {
+        const target = document.getElementById(
+          sequence.dataset.readingSequence + "-all",
+        );
+        target.setAttribute("tabindex", "-1");
+        if (sequence.hasAttribute("data-staged")) {
+          event.preventDefault();
+          revealTogether(sequence);
+          history.replaceState(null, "", "#" + target.id);
+        }
+        target.focus({ preventScroll: true });
+      }),
   );
   motion?.addEventListener("click", () => {
     paused = !paused;
@@ -126,5 +159,9 @@ export function initRenewal() {
   addEventListener("resize", setup);
   reduce.addEventListener("change", setup);
   document.querySelector(".incident-origin")?.addEventListener("change", setup);
-  document.fonts.ready.then(setup);
+  addEventListener("hashchange", resolveComparisonHash);
+  document.fonts.ready.then(() => {
+    setup();
+    resolveComparisonHash();
+  });
 }
