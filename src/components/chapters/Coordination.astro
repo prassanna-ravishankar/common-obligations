@@ -9,10 +9,9 @@ import { pacts } from "../../data/coordination.js";
 <ChapterFrame id="race">
   <Fragment slot="heading"
     ><h2>“What if the other<br />side <em>doesn’t stop?”</em></h2><p>
-      A lab that pauses to investigate still faces competitors that may
-      continue. The strongest objection deserves a real answer. A US–China race
-      framing puts reciprocal restraint under pressure. The consequences reach
-      far beyond either country.
+      Two labs find a reason to spend longer testing. Neither wants to be the
+      only one that waits. People outside both companies may bear the risk if
+      they keep going. What would make a shared limit hold?
     </p>
   </Fragment>
   <div class="race-grid">
@@ -24,22 +23,30 @@ import { pacts } from "../../data/coordination.js";
         influence. Slowing down alone could surrender those advantages without
         reducing a rival’s risks.
       </p><span class="section-label">THE CASE FOR COMMON LIMITS</span><p>
-        Racing can impose risks that cross borders. Shared requirements could
-        make restraint more credible if participants can verify compliance and
-        respond to evasion.
+        A failure can harm people across borders, including countries that had
+        little say in the decision. Shared checks and agreed responses could
+        make it easier for labs and governments to wait without acting alone.
       </p>
     </div><div class="coordination">
       <QuestionSequence kind="race"
         ><article data-question>
           <div class="decision-heading">
-            <h3>What makes a commitment credible?</h3>
+            <h3>
+              An outside team finds a serious risk.<br />What happens next?
+            </h3>
+            <p>
+              These arrangements can work together. The difference is whether a
+              finding comes with an agreed duty to respond.
+            </p>
           </div>
           <PolicyComparison
             id="coordination-agreement"
             legend="Compare the agreement"
-            options={pacts.map((p, i) => ({
-              name: i ? "Verified commitments" : "Promises",
+            options={pacts.map((p) => ({
+              name: p.name,
               title: p.title,
+              summary: p.summary,
+              tradeoff: p.tradeoff,
               benefit: p.copy,
               cost: p.limit,
             }))}
@@ -48,10 +55,73 @@ import { pacts } from "../../data/coordination.js";
       >
     </div>
   </div><p class="race-note">
-    A conceptual comparison, not a forecast of US or Chinese policy.
-    Verification is incomplete; non-participation remains possible. Other
-    countries and affected communities need a voice in setting the terms.
-  </p><details class="evidence">
+    Neither arrangement guarantees safety. Some companies or states may refuse
+    to participate, and checks can miss hidden activity. People outside the
+    leading companies and countries need a voice in setting the terms.
+  </p>
+  <div class="coordination-example">
+    <h3>A concrete proposal, not just a call to slow down.</h3>
+    <p>
+      In September 2026, Dario Amodei committed Anthropic to bringing outside
+      reviewers inside the company, with continuing access and the right to
+      publish key findings. That is a meaningful proposed safeguard. It is not,
+      by itself, evidence that the arrangement is operating or that reviewers
+      can require work to stop.
+    </p>
+    <p>
+      <a
+        href="https://darioamodei.com/post/we-must-pace-the-frontier"
+        target="_blank"
+        rel="noopener noreferrer">Read “We Must Pace the Frontier” ↗</a
+      > · Source checked 14 September 2026
+    </p>
+  </div>
+  <details class="evidence">
+    <summary
+      ><span>What the proposal includes—and what remains open</span
+      ><DisclosureIcon /></summary
+    >
+    <div class="evidence-content">
+      <div>
+        <h3>Access and publication rights.</h3>
+        <p>
+          Amodei proposes ongoing access comparable to internal risk teams,
+          including tools, workspaces and conversations with staff. He says
+          external reviewers should be able to publish key findings without
+          Anthropic’s editorial control.
+        </p>
+        <p>
+          The proposal allows limited redactions for security, legal privilege,
+          commercial sensitivity and third-party confidentiality—not simply
+          because a finding is unfavourable. Reviewers could publicly say when a
+          redaction removed something important to their conclusions.
+        </p>
+      </div>
+      <div>
+        <h3>Review is one part of accountability.</h3>
+        <p>
+          These are announced intentions for an arrangement to be established,
+          not proof of its implementation. The essay does not establish that
+          reviewers have stop-work authority, or that a binding three-company
+          agreement has been signed.
+        </p>
+        <p>
+          Our question is what follows a serious finding: who must answer, who
+          can require a change, and how affected people can challenge the
+          response. Appointment, funding and actual access also determine how
+          much confidence the review deserves.
+        </p>
+      </div>
+    </div>
+    <p class="scenario-note">
+      Amodei also proposes coordination among democracies and progressively
+      harder international agreements. He explicitly couples pacing with
+      preserving a US/allied lead over China. That is his geopolitical position,
+      not a condition this site places on who deserves protection. His forecasts
+      about future capabilities are not treated here as established facts.
+    </p>
+  </details>
+  <details class="evidence">
     <summary
       ><span>↳ What international oversight can build on</span><span
         class="summary-hint">Existing institutions & their limits</span
@@ -85,7 +155,7 @@ import { pacts } from "../../data/coordination.js";
   </details>
   <div class="chapter-takeaway">
     <p>
-      Make commitments<br /><em>open to examination.</em>
+      Let outsiders see the risk.<br /><em>Make someone answer it.</em>
     </p><a href="#obligation-3">Obligation 03 / Make scrutiny independent ↗</a>
   </div>
 </ChapterFrame>

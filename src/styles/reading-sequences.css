@@ -18,8 +18,81 @@
 [data-staged] [data-focus] h4 {
   opacity: calc(0.55 + var(--attention) * 0.45);
 }
-[data-staged] [data-focus] :is(.perspective-thesis, dl) {
+[data-staged] [data-focus] :is(.perspective-summary, .perspective-tradeoff) {
   opacity: calc(0.18 + var(--attention) * 0.82);
+}
+[data-staged] [data-focus]:focus-within {
+  --attention: 1 !important;
+}
+.perspective-summary {
+  font: 26px/1.35 var(--serif);
+  margin-top: 24px;
+  max-width: 40ch;
+}
+.perspective-tradeoff {
+  font-size: 17px;
+  line-height: 1.65;
+  margin-top: 20px;
+  max-width: 62ch;
+}
+.perspective-reasoning {
+  margin-top: 22px;
+}
+.perspective-reasoning > summary {
+  padding: 12px 0;
+  font-size: 14px;
+  color: var(--accent);
+  justify-content: space-between;
+  gap: 12px;
+}
+.perspective-reasoning > summary span {
+  transition: transform 180ms ease;
+}
+.perspective-reasoning[open] > summary span {
+  transform: rotate(45deg);
+}
+.perspective-reasoning .reasoning-thesis {
+  margin-top: 16px;
+  font: italic 25px/1.3 var(--serif);
+  color: var(--accent);
+}
+[data-reading-mode] {
+  overflow-anchor: none;
+}
+.settled-columns {
+  align-items: start;
+}
+.obligation-label {
+  flex: 1;
+}
+.obligation-label p {
+  font: 16px/1.5 var(--sans);
+  color: var(--muted);
+  margin-top: 12px;
+  max-width: 58ch;
+}
+.coordination-example {
+  margin: 65px 0 30px;
+  max-width: 76ch;
+}
+.coordination-example h3 {
+  font: 34px/1.2 var(--serif);
+  margin-bottom: 22px;
+}
+.coordination-example p + p {
+  margin-top: 18px;
+}
+.coordination-example p:last-child {
+  font-size: 14px;
+  color: var(--muted);
+}
+@media (max-width: 700px) {
+  .perspective-summary {
+    font-size: 25px;
+  }
+  .obligation-label p {
+    font-size: 15px;
+  }
 }
 .reading-bypass {
   position: absolute;

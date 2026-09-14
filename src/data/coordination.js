@@ -1,16 +1,26 @@
 export const pacts = [
   {
-    title: "Trust carries the weight.",
-    copy: "Shared language can establish intent, but participants have limited reassurance that a rival will absorb the same costs.",
+    name: "Outside review",
+    summary:
+      "Give an outside team access to the work and the right to report concerns. Its findings can prompt repairs and help other labs and the public judge the risks.",
+    tradeoff:
+      "Finding a problem does not decide what must happen next. Without an agreed response, a lab may keep going while competitors wait.",
+    title: "A finding people can examine.",
+    copy: "Ongoing outside review can detect overlooked failures, challenge internal assumptions and inform the public. Publication rights matter even before a binding shared response exists.",
     limit:
-      "A declaration alone does not provide access to evidence or consequences for evasion.",
+      "Reviewers need expertise, access and independence. Reporting alone does not establish who must respond, what action is required or how a dispute will be resolved.",
     symbol: "?",
   },
   {
-    title: "Trust has something to stand on.",
-    copy: "Agreed access to evidence, independent assessment, and specified consequences can make reciprocal restraint more credible.",
+    name: "Review with required follow-up",
+    summary:
+      "Agree in advance who must respond to a serious finding, what they can require, and how the decision can be challenged. Give competing labs the same obligations.",
+    tradeoff:
+      "The decision-maker can be wrong or favour powerful companies. Restrictions need evidence, clear limits and a route to appeal; international enforcement remains difficult.",
+    title: "A finding with a response attached.",
+    copy: "Independent review and specified response duties can make shared restraint more credible. Contracts, purchasing requirements or public rules can assign responsibilities, while the appropriate authority decides on proportionate action.",
     limit:
-      "States must accept scrutiny. Verification can miss hidden activity, impose security costs, or become a source of geopolitical dispute.",
+      "Required follow-up is not automatic acceptance of a reviewer’s recommendation or an unchecked power to stop work. Decisions need reasons, appeal and review deadlines. States may refuse scrutiny, and hidden activity can escape verification.",
     symbol: "↔",
   },
 ];

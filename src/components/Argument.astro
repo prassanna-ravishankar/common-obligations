@@ -1,41 +1,62 @@
 ---
+interface Props {
+  option: {
+    name: string;
+    summary: string;
+    tradeoff: string;
+    title?: string;
+    benefit: string;
+    cost: string;
+    people?: string;
+    evidence?: string;
+    supplyEvidence?: string;
+    dependency?: string;
+  };
+}
 const { option: o } = Astro.props;
 ---
 
 <h4>{o.name}</h4>
-{o.title && <p class="perspective-thesis">{o.title}</p>}
-<dl>
-  <dt>The strongest case</dt><dd>{o.benefit}</dd>
-  <dt>What it asks us to accept</dt><dd>{o.cost}</dd>
-  {
-    o.people && (
-      <>
+<p class="perspective-summary">{o.summary}</p>
+<p class="perspective-tradeoff">{o.tradeoff}</p>
+<details class="perspective-reasoning" data-reasoning>
+  <summary>Reasoning and limits <span aria-hidden="true">+</span></summary>
+  {o.title && <p class="reasoning-thesis">{o.title}</p>}
+  <dl>
+    <dt>The strongest case</dt><dd>{o.benefit}</dd>
+    <dt>What it asks us to accept</dt><dd>{o.cost}</dd>
+    {
+      o.people && (
         <>
-          <dt>Who feels the difference</dt>
-          <dd>{o.people}</dd>
+          <>
+            <dt>Who feels the difference</dt>
+            <dd>{o.people}</dd>
+          </>
         </>
-      </>
-    )
-  }
-  {
-    o.evidence && (
-      <>
-        <dt>What would need to be shown</dt>
-        <dd class:list={{ "origin-agent": !!o.supplyEvidence }}>
-          {o.evidence}
-        </dd>
-        {o.supplyEvidence && <dd class="origin-supply">{o.supplyEvidence}</dd>}
-      </>
-    )
-  }
-  {
-    o.dependency && (
-      <>
+      )
+    }
+    {
+      o.evidence && (
         <>
-          <dt>Depends on</dt>
-          <dd>{o.dependency}</dd>
+          <dt>What would need to be shown</dt>
+          <dd class:list={{ "origin-agent": !!o.supplyEvidence }}>
+            {o.evidence}
+          </dd>
+          {o.supplyEvidence && (
+            <dd class="origin-supply">{o.supplyEvidence}</dd>
+          )}
         </>
-      </>
-    )
-  }
-</dl>
+      )
+    }
+    {
+      o.dependency && (
+        <>
+          <>
+            <dt>Depends on</dt>
+            <dd>{o.dependency}</dd>
+          </>
+        </>
+      )
+    }
+  </dl>
+</details>

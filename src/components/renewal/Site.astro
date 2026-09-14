@@ -2,6 +2,7 @@
 import Scene from "./Scene.astro";
 import Statement from "./Statement.astro";
 import Introduction from "../chapters/Introduction.astro";
+import Provision from "../chapters/Provision.astro";
 import ScenarioIndex from "../ScenarioIndex.astro";
 import Surveillance from "../chapters/Surveillance.astro";
 import Release from "../chapters/Release.astro";
@@ -19,7 +20,8 @@ import { scenarios } from "../../data/scenarios.js";
   <a class="fresh-wordmark" href="#main">Common<br />Obligations</a><nav
     aria-label="Main navigation"
   >
-    <a href="#decisions">Scenarios</a><a href="#obligations">The obligations</a
+    <a href="#provision">The question</a><a href="#decisions">Scenarios</a><a
+      href="#obligations">The obligations</a
     ><a href="#reading">Read the essay</a>
   </nav>
 </header>
@@ -33,10 +35,11 @@ import { scenarios } from "../../data/scenarios.js";
     <div class="fresh-opening-copy">
       <h1 id="hero-title">
         The future is a<br />series of <em>decisions.</em>
-      </h1><p>Who gets to make them?<br />Who lives with the consequences?</p><a
-        class="fresh-start"
-        href="#decisions"
-        >Explore six scenarios <svg viewBox="0 0 24 24" aria-hidden="true"
+      </h1><p>
+        AI could help us produce more. Who gets a share, who holds the power,
+        and who gets to decide?
+      </p><a class="fresh-start" href="#provision"
+        >Begin with the question <svg viewBox="0 0 24 24" aria-hidden="true"
           ><path d="M4 12h16m-6-6 6 6-6 6"></path></svg
         ></a
       >
@@ -46,7 +49,7 @@ import { scenarios } from "../../data/scenarios.js";
     An independent proposal by Prassanna Ravishankar · AI-generated conceptual
     imagery
   </p>
-  <Introduction /><ScenarioIndex />
+  <Introduction /><Provision /><ScenarioIndex />
   <div class="reading-rail">
     <details class="chapter-chooser">
       <summary
@@ -56,11 +59,11 @@ import { scenarios } from "../../data/scenarios.js";
           ></span
         ></summary
       ><nav aria-label="Chapters">
-        <a href="#decisions">All scenarios</a>{
-          scenarios.map((s) => <a href={`#${s.id}`}>{s.title}</a>)
-        }<a href="#obligations">Common obligations</a><a href="#reading"
-          >Full essay</a
-        >
+        <a href="#provision">The promise of more</a><a href="#decisions"
+          >All scenarios</a
+        >{scenarios.map((s) => <a href={`#${s.id}`}>{s.title}</a>)}<a
+          href="#obligations">Common obligations</a
+        ><a href="#reading">Full essay</a>
       </nav>
     </details>
     <button class="motion" data-motion-toggle aria-pressed="false"

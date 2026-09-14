@@ -9,8 +9,9 @@ import { releases } from "../../data/release.js";
 <ChapterFrame id="release">
   <Fragment slot="heading"
     ><h2>More capable.<br />Ready <em>for what?</em></h2><p>
-      A model answering a question and an agent authorised to move money are
-      different systems. Evidence needs to follow the power we give them.
+      A person asks an AI assistant for help with a payment. Suggesting what to
+      do is one thing; permission to move their money is another. What should
+      the developer show before people rely on it to act?
     </p>
   </Fragment>
   <div class="release-visual reveal">
@@ -28,7 +29,8 @@ import { releases } from "../../data/release.js";
     ><article data-question>
       <div class="decision-heading">
         <h3>What should happen before wider release?</h3><p>
-          Examine the strongest argument and costs of each condition.
+          People want useful tools sooner. They also need reasons to trust what
+          those tools can do.
         </p>
       </div>
       <PolicyComparison
@@ -36,11 +38,13 @@ import { releases } from "../../data/release.js";
         legend="Compare release approaches"
         options={releases.map((r, i) => ({
           name: [
-            "Developer assessment",
-            "Independent evaluation",
+            "Developer decides",
+            "Outside evaluation",
             "Limited deployment",
           ][i],
           title: r.title,
+          summary: r.summary,
+          tradeoff: r.tradeoff,
           benefit: r.for,
           cost: r.against,
           dependency: r.assumption,

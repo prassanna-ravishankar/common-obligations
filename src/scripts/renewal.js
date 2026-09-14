@@ -7,7 +7,7 @@ import { createNavigation } from "./reading/navigation.js";
 export function initRenewal() {
   const reduce = matchMedia("(prefers-reduced-motion: reduce)");
   const wide = matchMedia("(min-width: 1050px) and (min-height: 850px)");
-  const questions = createQuestions();
+  const questions = createQuestions(document, schedule);
   const statements = createStatements();
   const navigation = createNavigation();
   const thresholds = [...document.querySelectorAll("[data-fresh-threshold]")];

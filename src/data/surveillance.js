@@ -9,6 +9,10 @@ export const stages = [
     conditions: [
       {
         title: "A faster path to use.",
+        summary:
+          "Let investigators decide where cameras are needed so they can start looking for stolen cars sooner.",
+        tradeoff:
+          "The same organisation decides whether watching a neighbourhood is justified. Residents have less say before collection starts.",
         benefit:
           "The operator can deploy quickly and adapt collection to investigative needs.",
         cost: "The same organisation defines the purpose and decides whether its own collection is proportionate.",
@@ -17,6 +21,10 @@ export const stages = [
       },
       {
         title: "A purpose people can challenge.",
+        summary:
+          "Require someone outside the investigation team to approve the purpose, the limits and when camera use must be reviewed.",
+        tradeoff:
+          "Residents get a chance to challenge the decision, but useful investigations may wait. The reviewer needs real expertise and authority.",
         benefit:
           "Independent authorisation can establish a specific purpose, limits on collection, and a review date before deployment.",
         cost: "Review takes time and resources. Its value depends on the reviewer’s competence, legitimacy, and authority.",
@@ -35,6 +43,10 @@ export const stages = [
     conditions: [
       {
         title: "A wider field of view.",
+        summary:
+          "Let authorised investigators search across camera networks to follow a vehicle beyond one street or town.",
+        tradeoff:
+          "That reach can also expose someone’s daily movements to searches they never expected. More access creates more opportunities for misuse.",
         benefit:
           "Broad authorised access can help investigators connect sightings across locations and organisations.",
         cost: "More access expands the opportunity for misuse and for searches beyond the purpose residents originally understood.",
@@ -43,6 +55,10 @@ export const stages = [
       },
       {
         title: "Access has to be justified.",
+        summary:
+          "Require a reason for each wider search, restrict who can make it, and let an outside reviewer check the records.",
+        tradeoff:
+          "Checks can slow urgent work. Emergency exceptions or an overloaded reviewer can also leave people unprotected.",
         benefit:
           "Purpose-bound permissions, independent review, and audited searches can make access more accountable.",
         cost: "Permissions create friction. Emergency exceptions and reviewer workload can weaken the check.",
@@ -61,6 +77,10 @@ export const stages = [
     conditions: [
       {
         title: "Judgment stays with the operator.",
+        summary:
+          "Let investigators decide how to use a match alongside the other information they have.",
+        tradeoff:
+          "A weak match can start to look like proof. If it is wrong, the person identified may have to uncover the mistake.",
         benefit:
           "Investigators can respond quickly using the result alongside their existing practices and expertise.",
         cost: "An uncertain match can acquire more authority than the evidence supports, especially under pressure.",
@@ -69,6 +89,10 @@ export const stages = [
       },
       {
         title: "A second basis for action.",
+        summary:
+          "Require supporting evidence before acting on a match, and give the person affected a way to challenge it.",
+        tradeoff:
+          "Finding that evidence takes time, and it can be wrong too. An appeal may arrive only after someone has been harmed.",
         benefit:
           "Requiring independent supporting evidence and a workable appeal can reduce reliance on an incorrect result.",
         cost: "Corroboration takes time and can itself be flawed. An appeal may arrive after harm has already occurred.",

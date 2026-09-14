@@ -1,18 +1,55 @@
 import { clamp, ease, timing, trackProgress, seek } from "./timing.js";
 import { paintComparison } from "./comparisons.js";
 
-export function createQuestions(root = document) {
+export function createQuestions(root = document, invalidate = () => {}) {
   const decks = [...root.querySelectorAll("[data-question-sequence]")].map(
     (el) => ({
       el,
       panes: [...el.querySelectorAll("[data-question]")],
+      readingMode: false,
     }),
   );
+  function releaseForReading(deck, summary, previousY) {
+    deck.readingMode = true;
+    deck.el.setAttribute("data-reading-mode", "");
+    deck.el.removeAttribute("data-question-staged");
+    for (const pane of deck.panes) {
+      pane.inert = false;
+      pane.removeAttribute("aria-hidden");
+      pane.style.removeProperty("opacity");
+      const comparison = pane.querySelector("[data-reading-sequence]");
+      comparison.removeAttribute("data-staged");
+      comparison.style.removeProperty("--question-arrival");
+      comparison.querySelector(".reading-bypass").hidden = true;
+      paintComparison(comparison, 1);
+    }
+    // Preserve the control the reader just opened, despite removing scroll travel
+    // and restoring the preceding questions to normal document flow.
+    scrollBy(0, summary.getBoundingClientRect().top - previousY);
+    invalidate();
+  }
   function jump(deck, index, together = false) {
     const local = together ? 0.78 : 0.08;
     seek(deck.el, (index + local) / deck.panes.length);
   }
   for (const deck of decks) {
+    deck.el.querySelectorAll("[data-reasoning]").forEach((details) => {
+      const summary = details.querySelector("summary");
+      let anchorY;
+      summary.addEventListener("click", () => {
+        anchorY = summary.getBoundingClientRect().top;
+      });
+      details.addEventListener("toggle", () => {
+        if (details.open && deck.el.hasAttribute("data-question-staged")) {
+          releaseForReading(
+            deck,
+            summary,
+            anchorY ?? summary.getBoundingClientRect().top,
+          );
+        }
+        anchorY = undefined;
+      });
+    });
     deck.el.querySelectorAll("[data-question-jump]").forEach((button) => {
       button.hidden = deck.panes.length < 2;
       button.addEventListener("click", () => {
@@ -44,17 +81,19 @@ export function createQuestions(root = document) {
   }
   return {
     setup(enabled) {
-      for (const { el, panes } of decks) {
-        el.toggleAttribute("data-question-staged", enabled);
+      for (const deck of decks) {
+        const { el, panes } = deck;
+        const canStage = enabled && !deck.readingMode;
+        el.toggleAttribute("data-question-staged", canStage);
         panes.forEach((pane) => {
           pane.inert = false;
           pane.removeAttribute("aria-hidden");
           pane
             .querySelector("[data-reading-sequence]")
-            .toggleAttribute("data-staged", enabled);
+            .toggleAttribute("data-staged", canStage);
         });
         const contentHeight = Math.max(...panes.map((p) => p.scrollHeight));
-        const fits = enabled && contentHeight + 40 < innerHeight - timing.rail;
+        const fits = canStage && contentHeight + 40 < innerHeight - timing.rail;
         el.style.setProperty("--art-clearance", `${contentHeight + 50}px`);
         el.toggleAttribute("data-question-staged", fits);
         const travel = panes.reduce(

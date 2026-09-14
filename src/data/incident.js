@@ -9,6 +9,10 @@ export const incidentDecisions = [
     options: [
       {
         name: "Restrict the affected activity",
+        summary:
+          "Stop the activity known to be affected while unrelated work continues. Focus the response where the failure has been found.",
+        tradeoff:
+          "The same weakness may exist elsewhere. A narrow repair can leave other people exposed if the first discovery is mistaken for the whole problem.",
         benefit:
           "Contain the known route while unrelated work continues. A narrower intervention preserves useful research and focuses the response.",
         cost: "A shared weakness may remain active elsewhere. A quick patch can mistake the first visible failure for the full extent of the incident.",
@@ -19,6 +23,10 @@ export const incidentDecisions = [
       },
       {
         name: "Pause related activity",
+        summary:
+          "Pause work that shares the suspected weakness while responders find out how far the problem reaches.",
+        tradeoff:
+          "Useful work stops too. The pause needs a clear scope, someone responsible for reviewing it, and conditions for restarting.",
         benefit:
           "Stop runs sharing the suspected exposure while responders establish its extent. This creates room to investigate before further external actions occur.",
         cost: "The pause can delay useful work, including defensive research. An unclear scope or end condition can make it broader and longer than necessary.",
@@ -39,6 +47,10 @@ export const incidentDecisions = [
     options: [
       {
         name: "Examine the known failures",
+        summary:
+          "Investigate the failures already found so affected people can get answers and repairs sooner.",
+        tradeoff:
+          "Other failures may never have been detected. People missed by the original investigation could still be waiting for answers.",
         benefit:
           "Prioritise the observed incident to deliver actionable findings and repairs quickly.",
         cost: "Starting only from detected failures can miss runs that escaped monitoring or were excluded from the original review.",
@@ -49,6 +61,10 @@ export const incidentDecisions = [
       },
       {
         name: "Review related activity",
+        summary:
+          "Look across related systems and records for similar failures, including activity that the first review did not examine.",
+        tradeoff:
+          "A wider search takes time and can expose sensitive information. Missing records still limit what investigators can establish.",
         benefit:
           "Reconcile the inventory of runs with the records actually examined. Search for similar failures across related versions and environments.",
         cost: "A wider review takes time and access to sensitive records. Incomplete logs still limit what it can establish.",
@@ -69,6 +85,10 @@ export const incidentDecisions = [
     options: [
       {
         name: "Internal validation",
+        summary:
+          "Let the team closest to the system test the repair and restart work with tighter limits.",
+        tradeoff:
+          "The organisation benefits from restarting. It may repeat earlier assumptions, while affected outsiders struggle to challenge its evidence.",
         benefit:
           "The team closest to the system can retest quickly and restore useful work under narrower permissions.",
         cost: "The organisation benefits from restarting and may repeat assumptions that failed before. Outside parties may struggle to challenge the evidence.",
@@ -79,6 +99,10 @@ export const incidentDecisions = [
       },
       {
         name: "Independent examination",
+        summary:
+          "Ask an outside team to examine the investigation and test whether the repair supports restarting.",
+        tradeoff:
+          "Outside review takes time and access. Reviewers can miss problems too; a separate decision is still needed about who may approve the restart.",
         benefit:
           "An outside evaluator can challenge the scope of the investigation and test whether the repair supports the claim being made.",
         cost: "Access and evaluation take time. Evaluators can miss failures, lack expertise, or depend financially on the organisations they assess.",

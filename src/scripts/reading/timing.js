@@ -1,9 +1,9 @@
 // Shared geometry and editorial pacing. Values are scroll fractions, except svh/ms.
 export const timing = {
   rail: 64,
-  perspectiveSvh: 140,
-  togetherSvh: 100,
-  questionSvh: 100,
+  perspectiveSvh: 110,
+  togetherSvh: 80,
+  questionSvh: 80,
   questionIntro: 0.16,
   questionReadingEnd: 0.84,
   questionExit: 0.9,

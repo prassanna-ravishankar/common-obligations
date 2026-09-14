@@ -1,6 +1,8 @@
 # Common Obligations
 
-An interactive visual essay on AI power and accountability. By Prassanna Ravishankar.
+An interactive visual essay on AI, provision, ownership and accountable power. By Prassanna Ravishankar.
+
+The opening asks how greater productive capability becomes better lives. `Provision.astro` introduces ownership, a share in the benefits and public voice before the six concrete scenarios. The six obligations are a practical floor, not a complete economic programme. Conditional economic examples are arguments, not forecasts. The full essay develops the same framing; no new imagery or motion system is required for this editorial layer.
 
 ## Develop
 
@@ -42,12 +44,14 @@ On wide, tall screens, ten comparison sequences use natural scroll to shift atte
 
 `scripts/renewal.js` only coordinates motion preferences and a single scroll/resize scheduler. The `scripts/reading/` modules separately own questions, perspective emphasis, statement dwell and navigation; `timing.js` is the shared pacing configuration. `styles/reading-sequences.css` owns staging and transitions, while chapter imagery remains in the existing visual styles. Question transitions enhance only when the complete longest slide fits; mobile, short screens, no-JS and motion-off retain normal document flow. There is no wheel interception or nested reading scroll.
 
+Each perspective requires `summary` and `tradeoff` (together no more than 65 words) alongside its existing detailed fields. `Argument.astro` shows that first-read layer and a native “Reasoning and limits” disclosure. Opening reasoning releases only its scenario from pinning, preserves the control’s viewport position and focus, and keeps that scenario in normal flow for the rest of the visit. The central perspective/together/question distances are 110/80/80 svh. The coordination example distinguishes Amodei’s proposed reviewer rights from implementation and authority to require a response; refresh its dated source note when updating those claims.
+
 ```sh
 npx playwright install chromium
 npm run check
 ```
 
-This checks formatting, builds and runs ten desktop/mobile browser checks, including every authored option without JavaScript, incident origins, source/anchor preservation, layered scroll behavior, keyboard navigation, narrow-screen overflow and social-image validation. `npm run format` formats source files.
+This checks formatting, builds and runs eighteen desktop/mobile browser checks, including the central economic framing, every authored option without JavaScript, concise summaries, disclosure focus/position preservation, incident origins, source/anchor preservation, layered scroll behavior, keyboard navigation, narrow-screen overflow and social-image validation. `npm run format` formats source files.
 
 To test the production container:
 

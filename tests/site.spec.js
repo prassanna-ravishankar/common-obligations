@@ -9,7 +9,131 @@ import {
 } from "../src/data/scenarios.js";
 import { incidentDecisions } from "../src/data/incident.js";
 import sources from "./original-sources.json" with { type: "json" };
+import { timing } from "../src/scripts/reading/timing.js";
 const route = "/";
+test("economic framing is central, accessible without motion and consistent with the essay", async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto(route);
+  await page.locator(".fresh-start").click();
+  await expect(page).toHaveURL(/#provision$/);
+  const provision = page.locator("#provision");
+  await expect(provision).toBeInViewport();
+  await expect(provision.locator("article")).toHaveCount(3);
+  await expect(provision).toContainText("Who gets a share?");
+  expect(
+    await provision.evaluate((e) =>
+      Boolean(
+        e.compareDocumentPosition(document.querySelector("#decisions")) &
+        Node.DOCUMENT_POSITION_FOLLOWING,
+      ),
+    ),
+  ).toBe(true);
+  await provision.getByRole("link").click();
+  await page.locator(".full-essay > summary").click();
+  await expect(page.locator("#economy-essay")).toBeVisible();
+  await expect(page.locator("#essay-content")).toContainText(
+    "not a complete economic programme",
+  );
+  await expect(page.locator("#obligations")).toContainText(
+    "a floor, not a complete answer",
+  );
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  ).toBe(true);
+});
+test("first-read summaries are concise and coordination credits proposed safeguards accurately", async ({
+  page,
+}) => {
+  await page.goto(route);
+  const summaries = await page.locator("[data-focus]").evaluateAll((es) =>
+    es.map((e) => ({
+      summary: e.querySelector(".perspective-summary")?.textContent.trim(),
+      tradeoff: e.querySelector(".perspective-tradeoff")?.textContent.trim(),
+      detailed: e.querySelectorAll("[data-reasoning]").length,
+    })),
+  );
+  expect(summaries).toHaveLength(22);
+  for (const entry of summaries) {
+    expect(entry.summary).toBeTruthy();
+    expect(entry.tradeoff).toBeTruthy();
+    expect(
+      (entry.summary + " " + entry.tradeoff).split(/\s+/).length,
+    ).toBeLessThanOrEqual(65);
+    expect(entry.detailed).toBe(1);
+  }
+  await expect(page.locator(".fresh-opening-copy > p")).toHaveText(
+    "AI could help us produce more. Who gets a share, who holds the power, and who gets to decide?",
+  );
+  await expect(page.locator("#race")).toContainText("Outside review");
+  await expect(page.locator("#race")).toContainText(
+    "Review with required follow-up",
+  );
+  await expect(page.locator(".coordination-example")).toContainText(
+    "not, by itself",
+  );
+  await expect(page.locator("#race")).toContainText(
+    "without Anthropic’s editorial control",
+  );
+  await expect(page.locator("#race")).toContainText(
+    "not a condition this site places on who deserves protection",
+  );
+  await expect(page.locator(".coordination-example a")).toHaveAttribute(
+    "href",
+    "https://darioamodei.com/post/we-must-pace-the-frontier",
+  );
+  expect([
+    timing.perspectiveSvh,
+    timing.togetherSvh,
+    timing.questionSvh,
+  ]).toEqual([110, 80, 80]);
+});
+
+test("opening reasoning preserves focus and position and permanently releases only that scenario", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1600, height: 1100 });
+  for (const [id, p, column] of [
+    ["surveillance-0", 0.15, 1],
+    ["surveillance-1", 0.55, 1],
+    ["incident-resume", 0.9, 0],
+  ]) {
+    await page.goto(route + "?reading=" + id);
+    await expect(page.locator("[data-question-staged]")).toHaveCount(6);
+    const track = page.locator(`[data-reading-sequence="${id}"]`);
+    await progress(page, track, p);
+    const summary = track.locator("[data-reasoning] > summary").nth(column);
+    await summary.focus();
+    const y = await summary.evaluate((e) => e.getBoundingClientRect().top);
+    await expect(
+      track.locator("[data-focus]").nth(column).locator(".perspective-summary"),
+    ).toHaveCSS("opacity", "1");
+    await page.keyboard.press("Enter");
+    const deck = page.locator("[data-reading-mode]");
+    await expect(deck).toHaveCount(1);
+    await expect(page.locator("[data-question-staged]")).toHaveCount(5);
+    await expect(summary).toBeFocused();
+    await expect
+      .poll(async () =>
+        Math.abs(
+          (await summary.evaluate((e) => e.getBoundingClientRect().top)) - y,
+        ),
+      )
+      .toBeLessThan(2);
+    await expect(deck.locator("[data-question][inert]")).toHaveCount(0);
+    await expect(summary.locator("..")).toHaveAttribute("open", "");
+    await page.keyboard.press("Enter");
+    await page.setViewportSize({ width: 1500, height: 1050 });
+    await expect(deck).not.toHaveAttribute("data-question-staged");
+    await page.locator("[data-motion-toggle]").click();
+    await page.locator("[data-motion-toggle]").click();
+    await expect(deck).not.toHaveAttribute("data-question-staged");
+    await page.setViewportSize({ width: 1600, height: 1100 });
+  }
+});
 async function progress(page, track, p) {
   await track.evaluate((e, p) => {
     const deck = e.closest("[data-question-sequence]");
@@ -85,10 +209,9 @@ test("perspectives keep their regions, resolve together in the same DOM, and rev
     for (const i of [...Array(n).keys(), 0]) {
       await progress(page, track, (0.8 * (i + 0.4)) / n);
       await expect(track).toHaveAttribute("data-focused", String(i));
-      await expect(track.locator('[data-focus="' + i + '"] dl')).toHaveCSS(
-        "opacity",
-        "1",
-      );
+      await expect(
+        track.locator('[data-focus="' + i + '"] .perspective-summary'),
+      ).toHaveCSS("opacity", "1");
       regions.push(
         await track.locator("[data-focus]").evaluateAll((es) =>
           es.map((e) => {
@@ -100,7 +223,9 @@ test("perspectives keep their regions, resolve together in the same DOM, and rev
     }
     await progress(page, track, 0.9);
     await expect(track).toHaveAttribute("data-focused", "all");
-    for (const column of await track.locator("[data-focus] dl").all())
+    for (const column of await track
+      .locator("[data-focus] .perspective-summary")
+      .all())
       await expect(column).toHaveCSS("opacity", "1");
     const finalRegions = await track.locator("[data-focus]").evaluateAll((es) =>
       es.map((e) => {
