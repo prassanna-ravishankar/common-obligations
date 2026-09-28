@@ -1,4 +1,4 @@
-// Shared geometry and editorial pacing. Values are scroll fractions, except svh/ms.
+// Shared geometry and editorial pacing. Values are scroll fractions, except svh.
 export const timing = {
   rail: 64,
   perspectiveSvh: 110,
@@ -7,7 +7,6 @@ export const timing = {
   questionIntro: 0.16,
   questionReadingEnd: 0.84,
   questionExit: 0.9,
-  statementDwellMs: 400,
 };
 export const clamp = (x) => Math.min(1, Math.max(0, x));
 export const ease = (a, b, p) => {

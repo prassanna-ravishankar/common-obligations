@@ -136,6 +136,8 @@ Scroll-linked transforms and staged comparisons apply at 1050px × 850px and abo
 
 Motion tokens live on `:root`: `--ease-out` `cubic-bezier(0.23, 1, 0.32, 1)` for entering and responding, `--ease-in-out` `cubic-bezier(0.77, 0, 0.175, 1)` for on-screen movement, `--duration-ui` 200ms and `--duration-disclosure` 280ms. Interface responses stay under 300ms. Scroll-linked motion is scrubbed, so it follows the reader rather than playing on a timer.
 
+Scroll-linked motion must composite. Transform each artwork plane's own `<svg>` element, never an element inside an SVG: moving an SVG child re-rasterises the whole print on every frame. Artwork origins and offsets stay authored in the 1536 × 1024 viewBox and convert to CSS pixels through `--s`, which follows the `xMidYMid slice` fit. Reveal with `transform` or `opacity`, not an animated `mask-image`; the race horizon rises by scaling a paper veil. Statement emphasis is scrubbed by position and complete whenever the sentence is held. No motion runs on a timer.
+
 ## Shapes
 
 The prevailing interface geometry is square and unboxed: flat rectangular actions, fine straight rules and open text columns. Native radio circles remain native. Architectural apertures, diagonal masks and curved thread paths supply the expressive geometry rather than a generalized rounded-card system.

@@ -387,7 +387,7 @@ test("fresh assets, anchors and social metadata resolve", async ({
   expect(dimensions).toEqual([1200, 630]);
 });
 
-test("questions dissolve on a shared stage and statements reveal after dwelling", async ({
+test("questions dissolve on a shared stage and statement emphasis follows scroll", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 1600, height: 1100 });
@@ -430,11 +430,24 @@ test("questions dissolve on a shared stage and statements reveal after dwelling"
   await page.goto(route + "?statement-check");
   await expect(page.locator("[data-statement-staged]")).toHaveCount(2);
   const statement = page.locator('[data-statement][data-next="release"]');
+  // Still rising from the lower edge: emphasis not yet settled.
+  await statement.evaluate((e) =>
+    scrollTo(0, e.getBoundingClientRect().top + scrollY - innerHeight * 0.45),
+  );
+  await expect(statement.locator("em")).toHaveCSS("opacity", "0");
+  // Held in its reading position: the sentence is complete, with no waiting.
   await statement.evaluate((e) =>
     scrollTo(0, e.getBoundingClientRect().top + scrollY - 64),
   );
+  await expect(statement.locator("em")).toHaveCSS("opacity", "1");
+  // Scrubbed, so reversible: scrolling back hides it again.
+  await statement.evaluate((e) =>
+    scrollTo(0, e.getBoundingClientRect().top + scrollY - innerHeight * 0.45),
+  );
   await expect(statement.locator("em")).toHaveCSS("opacity", "0");
-  await expect(statement).toHaveAttribute("data-revealed", "");
+  await statement.evaluate((e) =>
+    scrollTo(0, e.getBoundingClientRect().top + scrollY - 64),
+  );
   await expect(statement.locator("em")).toHaveCSS("opacity", "1");
   await statement.evaluate((e) =>
     scrollTo(

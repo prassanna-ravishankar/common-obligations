@@ -44,8 +44,11 @@
   color: var(--muted);
 }
 .scene-art--hero .scene-image-plane {
-  transform-origin: 65% 90%;
-  transform: translateY(calc((var(--scene-progress, 0.5) - 0.5) * -35px))
+  /* viewBox (998.4, 921.6), formerly 65% 90% */
+  transform-origin: calc(50% + 230.4 * var(--s)) calc(50% + 409.6 * var(--s));
+  transform: translateY(
+      calc((var(--scene-progress, 0.5) - 0.5) * -35 * var(--s))
+    )
     scale(1.035);
 }
 .section,
@@ -181,8 +184,10 @@
   padding: 5px 0;
 }
 .scene-art--defense .scene-image-plane {
-  transform-origin: 70% 75%;
-  transform: translateX(calc(var(--scene-progress, 0.5) * -90px)) scale(1.12);
+  /* viewBox (1075.2, 768), formerly 70% 75% */
+  transform-origin: calc(50% + 307.2 * var(--s)) calc(50% + 256 * var(--s));
+  transform: translateX(calc(var(--scene-progress, 0.5) * -90 * var(--s)))
+    scale(1.12);
 }
 #discovery .chapter-heading {
   padding: 85px 6vw 0 0;
@@ -208,12 +213,15 @@
 .scene-art--discovery .scene-image-plane {
   transform: none;
 }
+.scene-art svg.scene-cover-plane {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
 .scene-cover-plane {
-  transform-box: view-box;
-  transform-origin: 0 0;
   transform: translate(
-    calc(var(--scene-progress, 0.5) * -150px),
-    calc(var(--scene-progress, 0.5) * -65px)
+    calc(var(--scene-progress, 0.5) * -150 * var(--s)),
+    calc(var(--scene-progress, 0.5) * -65 * var(--s))
   );
   opacity: calc(0.75 - var(--scene-progress, 0.5) * 0.6);
 }
@@ -385,13 +393,24 @@
   max-width: 55ch;
   margin: 32px auto 0;
 }
+/* The horizon rises by scaling a paper veil, which composites. The threshold
+   is isolated with a transparent backdrop, so paper at alpha 1 − m over the
+   print equals the print at alpha m over paper: this matches the former
+   animated mask, solid to 25% + 40% × progress from the bottom and fading out
+   by the top. */
 .scene-art--race {
-  mask-image: linear-gradient(
-    to top,
-    #000,
-    #000 calc(25% + var(--scene-progress, 0.5) * 40%),
-    transparent 100%
-  );
+  mask-image: none;
+}
+.chapter-threshold > .scene-art--race::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, transparent, var(--paper));
+  transform-origin: top;
+  transform: scaleY(calc(0.75 - var(--scene-progress, 0.5) * 0.4));
+}
+body.reading-motion .chapter-threshold > .scene-art--race::after {
+  will-change: transform;
 }
 .race-argument {
   max-width: 75ch;
@@ -695,6 +714,7 @@
     inset: 48% 0 0;
   }
   #discovery .scene-art svg {
+    --svg-w: 135cqw;
     width: 135%;
     margin-left: 0;
   }

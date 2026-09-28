@@ -186,6 +186,7 @@ svg {
   mix-blend-mode: multiply;
   pointer-events: none;
   overflow: clip;
+  container-type: size;
   mask-image: linear-gradient(
     to bottom,
     transparent,
@@ -199,18 +200,29 @@ svg {
   width: 100%;
   height: 100%;
   max-width: none;
+  /* The figure clips; the print keeps its sliced overflow as it moves. */
+  overflow: visible;
+  /* One 1536 × 1024 viewBox unit in CSS px under xMidYMid slice. Artwork
+     origins and offsets are authored in viewBox units and converted with it. */
+  --s: max(calc(var(--svg-w, 100cqw) / 1536), calc(100cqh / 1024));
+}
+/* Scroll transforms sit on the <svg> element so they composite. Moving an
+   element inside an SVG re-rasterises the whole print on every frame. */
+body.reading-motion :is(.scene-image-plane, .scene-cover-plane) {
+  will-change: transform;
 }
 .scene-image-plane {
-  transform-box: view-box;
-  transform-origin: 75% 75%;
+  /* viewBox (1152, 768), formerly 75% 75% of the view box */
+  transform-origin: calc(50% + 384 * var(--s)) calc(50% + 256 * var(--s));
 }
 .scene-art--surveillance .scene-image-plane {
   transform: scale(calc(1.22 - var(--scene-progress, 0.5) * 0.22));
 }
 .scene-art--release .scene-image-plane {
-  transform-origin: 67% 60%;
+  /* viewBox (1029.12, 614.4), formerly 67% 60% */
+  transform-origin: calc(50% + 261.12 * var(--s)) calc(50% + 102.4 * var(--s));
   transform: scale(calc(1 + var(--scene-progress, 0.5) * 0.13))
-    translateY(calc(var(--scene-progress, 0.5) * -15px));
+    translateY(calc(var(--scene-progress, 0.5) * -15 * var(--s)));
 }
 #release .chapter-threshold {
   height: 100svh;
@@ -522,6 +534,7 @@ summary > svg {
     mask-image: linear-gradient(transparent, #000 38%, #000 90%, transparent);
   }
   .scene-art--surveillance svg {
+    --svg-w: 150cqw;
     width: 150%;
     margin-left: -50%;
   }
