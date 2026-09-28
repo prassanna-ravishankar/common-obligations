@@ -170,3 +170,66 @@ test("timeline and comparison gates remain distinct; static modes retain all con
       })),
   ).toEqual({ transform: "none", opacity: "1" });
 });
+
+test("the axis draws where the reader is looking, in beats", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto("/");
+  await expect(page.locator("#timeline")).toHaveClass(/timeline-motion/);
+  const axis = page.locator("[data-timeline-axis]");
+  const place = (fraction) =>
+    axis.evaluate(
+      (e, f) =>
+        scrollTo(0, e.getBoundingClientRect().top + scrollY - innerHeight * f),
+      fraction,
+    );
+  // Drawn fraction of a wiped layer, read from its computed clip. The line wipes
+  // the full width; the arcs wipe only their own span (--arc-from to --arc-to).
+  const drawn = (layer) =>
+    page.locator(layer).evaluate((e) => {
+      const clip = getComputedStyle(e).clipPath;
+      if (clip === "none") return 1;
+      const edge = 100 - Number(clip.match(/inset\(\S+ ([\d.]+)%/)[1]);
+      if (!e.matches(".axis-layer--arcs")) return edge / 100;
+      const figure = getComputedStyle(e.closest("[data-timeline-axis]"));
+      const from = Number(figure.getPropertyValue("--arc-from"));
+      const to = Number(figure.getPropertyValue("--arc-to"));
+      return (edge - from) / (to - from);
+    });
+  const dot = page.locator(".axis-dot").last();
+
+  // Entering the lower quarter: nothing drawn yet, but marks are never absent.
+  await place(0.8);
+  await expect.poll(() => drawn(".axis-layer--line")).toBeLessThan(0.05);
+  await expect.poll(() => drawn(".axis-layer--arcs")).toBeLessThan(0.05);
+  expect(
+    Number(await dot.evaluate((e) => getComputedStyle(e).opacity)),
+  ).toBeGreaterThanOrEqual(0.3);
+
+  // Mid-screen, where the reader is: visibly in progress, not already done.
+  await place(0.5);
+  await expect
+    .poll(() =>
+      page
+        .locator("#timeline")
+        .evaluate((e) =>
+          Number(e.style.getPropertyValue("--timeline-progress")),
+        ),
+    )
+    .toBeGreaterThan(0.2);
+  const mid = Number(
+    await page
+      .locator("#timeline")
+      .evaluate((e) => e.style.getPropertyValue("--timeline-progress")),
+  );
+  expect(mid).toBeLessThan(0.8);
+  expect(await drawn(".axis-layer--line")).toBeGreaterThan(0.5);
+  expect(await drawn(".axis-layer--arcs")).toBeLessThan(0.95);
+
+  // Upper quarter: complete.
+  await place(0.2);
+  await expect.poll(() => drawn(".axis-layer--line")).toBe(1);
+  await expect.poll(() => drawn(".axis-layer--arcs")).toBeGreaterThan(0.99);
+  await expect(dot).toHaveCSS("opacity", "1");
+});

@@ -62,6 +62,19 @@ const arcs = marks
       d: `M${from} ${BASE}C${from} ${lift} ${to} ${lift} ${to} ${BASE}`,
     };
   });
+// Scroll phases, as fractions of --timeline-progress. The line wipes first and
+// each mark lands as the line reaches it; the arcs then sweep their own span,
+// starting just left of the first arc so no stroke shows before its beat.
+const LINE_END = 0.55;
+const landsAt = (left) => ((left / 100) * LINE_END).toFixed(4);
+const arcFrom = Math.min(
+  ...marks
+    .filter((m) => m.occurred)
+    .map((m) => (m.occurred.from + m.occurred.to) / 2),
+);
+const arcTo = Math.max(
+  ...marks.filter((m) => m.occurred).map((m) => m.position),
+);
 const months = [
   "2026-01",
   "2026-02",
@@ -116,7 +129,12 @@ const highlightStyle = `<style>@media (hover:hover){${highlight}}</style>`;
     </div>
   </header>
   <div class="timeline-record">
-    <figure class="timeline-axis" aria-hidden="true" data-timeline-axis>
+    <figure
+      class="timeline-axis"
+      aria-hidden="true"
+      data-timeline-axis
+      style={`--line-end:${LINE_END};--arc-from:${(arcFrom - 0.6).toFixed(2)};--arc-to:${(arcTo + 1).toFixed(2)}`}
+    >
       <div class="axis-plot">
         <svg
           class="axis-layer axis-layer--line"
@@ -153,13 +171,13 @@ const highlightStyle = `<style>@media (hover:hover){${highlight}}</style>`;
                 <span
                   class="axis-span"
                   data-mark={event.id}
-                  style={`left:${occurred.from}%;width:${occurred.to - occurred.from}%`}
+                  style={`left:${occurred.from}%;width:${occurred.to - occurred.from}%;--at:${landsAt(occurred.from)}`}
                 />
               )}
               <span
                 class="axis-dot"
                 data-mark={event.id}
-                style={`left:${position}%;--level:${level}`}
+                style={`left:${position}%;--level:${level};--at:${landsAt(position)}`}
               />
             </>
           ))
@@ -458,21 +476,42 @@ const highlightStyle = `<style>@media (hover:hover){${highlight}}</style>`;
     }
   }
 
-  /* A left-to-right wipe: the line draws first, then the arcs travel from
-     occurrence to disclosure. Dash offsets are unreliable on stretched strokes. */
+  /* Scrubbed in three beats, all from --timeline-progress. The line wipes left
+     to right; each dot and occurrence bar lands as the line reaches it (never
+     below 30%, so the chart is never empty at rest); then the arcs sweep from
+     occurrence to disclosure across their own span. Clip-path wipes, because
+     dash offsets are unreliable on stretched strokes. */
+  /* Derived on the figure, where --line-end and the arc span are defined. */
+  .timeline-motion .timeline-axis {
+    --line-t: clamp(0, var(--timeline-progress, 0) / var(--line-end), 1);
+    --arc-t: clamp(0, (var(--timeline-progress, 0) - var(--line-end)) / 0.4, 1);
+  }
   .timeline-motion .axis-layer--line {
-    clip-path: inset(
-      0 calc((1 - clamp(0, var(--timeline-progress, 0) * 2, 1)) * 100%) 0 0
-    );
+    clip-path: inset(0 calc((1 - var(--line-t)) * 100%) 0 0);
   }
   .timeline-motion .axis-layer--arcs {
     clip-path: inset(
       0
         calc(
-          (1 - clamp(0, (var(--timeline-progress, 0) - 0.35) * 1.8, 1)) * 100%
+          100% -
+            (
+              var(--arc-from) + (var(--arc-to) - var(--arc-from)) * var(--arc-t)
+            ) *
+            1%
         )
         0 0
     );
+  }
+  .timeline-motion :is(.axis-dot, .axis-span) {
+    --land: clamp(0, (var(--timeline-progress, 0) - var(--at)) / 0.06, 1);
+    opacity: calc(0.3 + var(--land) * 0.7);
+  }
+  .timeline-motion .axis-dot {
+    scale: calc(0.55 + var(--land) * 0.45);
+  }
+  .timeline-motion .axis-span {
+    transform-origin: left;
+    scale: calc(0.3 + var(--land) * 0.7) 1;
   }
 
   .timeline-events {
@@ -595,6 +634,10 @@ const highlightStyle = `<style>@media (hover:hover){${highlight}}</style>`;
   @media (prefers-reduced-motion: reduce), (max-height: 699px) {
     .timeline-motion .axis-layer {
       clip-path: none;
+    }
+    .timeline-motion :is(.axis-dot, .axis-span) {
+      opacity: 1;
+      scale: none;
     }
   }
 </style>
