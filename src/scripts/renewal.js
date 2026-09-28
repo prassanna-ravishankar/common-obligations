@@ -21,18 +21,18 @@ export function initRenewal() {
   let paused = false,
     queued = false;
   const enabled = () => !paused && !reduce.matches && wide.matches;
+  const progress = new Map();
   function update() {
     queued = false;
     thresholds.forEach((el) => {
       const r = el.getBoundingClientRect();
-      el.style.setProperty(
-        "--scene-progress",
-        String(
-          enabled()
-            ? clamp((innerHeight - r.top) / (innerHeight + r.height))
-            : 0.5,
-        ),
-      );
+      const p = enabled()
+        ? clamp((innerHeight - r.top) / (innerHeight + r.height)).toFixed(4)
+        : "0.5";
+      // Offscreen scenes settle at 0 or 1; skip writes that would only recalc style.
+      if (progress.get(el) === p) return;
+      progress.set(el, p);
+      el.style.setProperty("--scene-progress", p);
     });
     timeline.update();
     questions.update();
@@ -46,6 +46,7 @@ export function initRenewal() {
     }
   }
   function setup() {
+    document.documentElement.classList.toggle("motion-paused", paused);
     document.body.classList.toggle("reading-motion", enabled());
     questions.setup(enabled());
     statements.setup(enabled());

@@ -27,6 +27,11 @@
   --line: #c6bfb0;
   --serif: "Instrument Serif", Georgia, serif;
   --sans: "DM Sans", Arial, sans-serif;
+  /* Motion tokens. UI responses stay under 300ms; editorial reveals may run longer. */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --duration-ui: 200ms;
+  --duration-disclosure: 280ms;
 }
 * {
   box-sizing: border-box;
@@ -586,10 +591,68 @@ summary > svg {
     margin-top: 70px;
   }
 }
+/* Interface motion. Responses are short and ease out; nothing here gates reading. */
+:root {
+  interpolate-size: allow-keywords;
+}
+a {
+  transition: color var(--duration-ui) ease;
+}
+summary > svg,
+.chapter-chooser summary svg {
+  transition: rotate var(--duration-ui) var(--ease-out);
+}
+details[open] > summary > svg,
+.chapter-chooser[open] summary svg {
+  rotate: 45deg;
+}
+/* Disclosures unfold where supported; elsewhere they open instantly. Staged
+   reasoning disclosures stay instant: their release measures final layout. */
+:is(.obligation-list details, .evidence)::details-content {
+  block-size: 0;
+  overflow: clip;
+  transition:
+    block-size var(--duration-disclosure) var(--ease-out),
+    content-visibility var(--duration-disclosure) allow-discrete;
+}
+:is(.obligation-list details, .evidence)[open]::details-content {
+  block-size: auto;
+}
+.chapter-chooser[open] nav {
+  transform-origin: top right;
+  transition:
+    opacity var(--duration-ui) var(--ease-out),
+    translate var(--duration-ui) var(--ease-out);
+  @starting-style {
+    opacity: 0;
+    translate: 0 -6px;
+  }
+}
+.fresh-start svg {
+  transition: translate var(--duration-ui) var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .fresh-start:hover svg {
+    translate: 4px 0;
+  }
+}
 @media (prefers-reduced-motion: reduce) {
   .scene-image-plane {
     transform: none !important;
   }
+  .chapter-chooser[open] nav,
+  .fresh-start svg {
+    transition: none;
+  }
+  :is(.obligation-list details, .evidence)::details-content {
+    transition: none;
+  }
+}
+/* The manual pause stops interface transitions as well as scroll-linked art. */
+.motion-paused *,
+.motion-paused ::details-content {
+  transition: none !important;
+  animation: none !important;
 }
 @media print {
   .fresh-header,

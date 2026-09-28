@@ -1,6 +1,19 @@
 import { scenarios } from "../../data/scenarios.js";
 
+// A link to a collapsed obligation or the essay opens it on arrival.
+function openTarget(hash = location.hash) {
+  const target = hash.length > 1 && document.getElementById(hash.slice(1));
+  const details = target?.closest?.("details");
+  if (details && !details.open) details.open = true;
+}
+
 export function createNavigation() {
+  addEventListener("hashchange", () => openTarget());
+  document.addEventListener("click", (e) => {
+    const link = e.target.closest?.('a[href^="#"]');
+    if (link && link.hash === location.hash) openTarget(link.hash);
+  });
+  openTarget();
   document
     .querySelectorAll(".chapter-chooser a")
     .forEach((a) =>

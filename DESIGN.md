@@ -122,6 +122,8 @@ Desktop comparison options share equal-width columns with a 36px gap and a fine 
 
 The chapter navigation remains sticky at the viewport top, with a 68px summary height, reduced to 60px on mobile. Its expanded links use four columns on desktop and two below 1000px. Keep anchor offsets clear of this control. Never introduce independently scrolling reading panels.
 
+The timeline is horizontal by drawing, not by scrolling. A full-width axis runs January to September on two labelled linear segments (the scale widens at September, and the break is drawn). Dots mark publication or disclosure; rust bars mark when an event occurred, to the month; rust arcs join the two. The axis is an `aria-hidden` overview: every date and caveat it shows is also in the entries. Entries read oldest first in three columns, two below 1000px and one below 700px, each keeping its full date caveat and inline obligation pairing.
+
 ## Elevation & Depth
 
 The interface has no box-shadow vocabulary. Depth comes from engraved imagery, multiply-blended distance layers, overlapping opaque paper, diagonal clipping and SVG thread placement.
@@ -130,13 +132,15 @@ The hero combines a distant landscape, SVG threads and a transparent foreground 
 
 **The Optional Motion Rule.** Artwork motion enhances natural scrolling; reading and comparison state never depend on it.
 
-Scroll-linked transforms and temporary chapter-art pinning apply only above 1000px width, at least 700px height, with motion enabled and no reduced-motion preference. Mobile and reduced-motion modes retain static compositions and all content. The manual motion control also disables animation and transitions. Do not animate reading paragraphs.
+Scroll-linked transforms and staged comparisons apply at 1050px × 850px and above; the timeline's axis draw uses its own 1001px × 700px gate. Both require motion enabled and no reduced-motion preference, and both run from the one scroll scheduler in `renewal.js`. Mobile and reduced-motion modes retain static compositions and all content, with the axis fully drawn. The manual motion control also disables animation and transitions. Do not animate reading paragraphs.
+
+Motion tokens live on `:root`: `--ease-out` `cubic-bezier(0.23, 1, 0.32, 1)` for entering and responding, `--ease-in-out` `cubic-bezier(0.77, 0, 0.175, 1)` for on-screen movement, `--duration-ui` 200ms and `--duration-disclosure` 280ms. Interface responses stay under 300ms. Scroll-linked motion is scrubbed, so it follows the reader rather than playing on a timer.
 
 ## Shapes
 
 The prevailing interface geometry is square and unboxed: flat rectangular actions, fine straight rules and open text columns. Native radio circles remain native. Architectural apertures, diagonal masks and curved thread paths supply the expressive geometry rather than a generalized rounded-card system.
 
-Disclosure marks are inline, stroke-based SVG crosses, sized 24px with a 1.4 stroke; an open disclosure rotates the mark 45 degrees.
+Disclosure marks are inline, stroke-based SVG crosses, sized 24px with a 1.4 stroke; an open disclosure rotates the mark 45 degrees over `--duration-ui`. Obligation and evidence disclosures unfold over `--duration-disclosure` where `::details-content` is supported and open instantly elsewhere. Reasoning disclosures inside staged comparisons stay instant, because releasing a staged comparison measures its final layout. A link to a collapsed obligation opens it on arrival.
 
 ## Components
 

@@ -29,6 +29,7 @@ export const timelineEvents = [
     limit:
       "September 8 dates EFF’s disclosure announcement; the patient reports are from March 2026. These are clinicians’ accounts, not individual court findings. CMS requires clinical review of denials; delays span the whole process, not just an AI model.",
     occurredOn: "2026-03",
+    occurredLabel: "Patients’ reports",
     obligations: [1, 6],
     source: {
       publisher: "EFF · records obtained from CMS",
@@ -82,6 +83,7 @@ export const timelineEvents = [
     limit:
       "September 9 is the assessment date: the missed incident occurred in January 2026 and was found in August. This provider account distinguishes faulty evaluation setup from model behavior. More disclosure does not establish a rising incident rate.",
     occurredOn: "2026-01",
+    occurredLabel: "Missed incident",
     obligations: [4, 5],
     source: {
       publisher: "Anthropic",

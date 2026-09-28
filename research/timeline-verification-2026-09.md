@@ -70,6 +70,6 @@ The proposed SAFA body, September 25 government-site incidents and September 26 
 
 ## Presentation decisions
 
-The current six entries use descending publication/event dates. They do not represent complete coverage or imply equal intervals. Each contains visible date-kind, attribution, limitations and an inline obligation explanation. Links to the later native obligation disclosures are enhancements: without JavaScript the summary is reachable and keyboard-operable, while the explanation already travels with the event. No automatic opening is promised.
+The six entries read oldest first beside a horizontal axis that also draws each known occurrence month and its arc to the disclosure date. They do not represent complete coverage or imply equal intervals. Each contains visible date-kind, attribution, limitations and an inline obligation explanation. Links to the later native obligation disclosures are enhancements: without JavaScript the summary is reachable and keyboard-operable, while the explanation already travels with the event. No automatic opening is promised.
 
 The timeline is editorially maintained data, not a live feed. Existing Introduction and Provision stay consecutive. Its optional thread drawing uses the existing Renewal scheduler with a separate 1001×700 gate; the existing comparison gate remains 1050×850. Both motion buttons share and display the same paused state.
