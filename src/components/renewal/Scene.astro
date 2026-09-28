@@ -16,34 +16,40 @@ const available = [
       class={`scene-art scene-art--${kind}`}
       aria-label="Abstract conceptual illustration"
     >
+      {/* Each moving plane is its own <svg> so scroll transforms composite
+          instead of re-rasterising the print. */}
       <svg
+        class="scene-image-plane"
         viewBox="0 0 1536 1024"
         preserveAspectRatio="xMidYMid slice"
         aria-hidden="true"
       >
-        <g class="scene-image-plane">
+        <image
+          href={`/assets/renewal/${kind}-v1.webp`}
+          x="0"
+          y="0"
+          width="1536"
+          height="1024"
+          preserveAspectRatio="none"
+        />
+      </svg>
+      {kind === "discovery" && (
+        <svg
+          class="scene-cover-plane"
+          viewBox="0 0 1536 1024"
+          preserveAspectRatio="xMidYMid slice"
+          aria-hidden="true"
+        >
           <image
-            href={`/assets/renewal/${kind}-v1.webp`}
+            href="/assets/renewal/discovery-veil-v2.webp"
             x="0"
             y="0"
             width="1536"
             height="1024"
             preserveAspectRatio="none"
           />
-        </g>
-        {kind === "discovery" && (
-          <g class="scene-cover-plane">
-            <image
-              href="/assets/renewal/discovery-veil-v2.webp"
-              x="0"
-              y="0"
-              width="1536"
-              height="1024"
-              preserveAspectRatio="none"
-            />
-          </g>
-        )}
-      </svg>
+        </svg>
+      )}
     </figure>
   )
 }
