@@ -1,4 +1,5 @@
 ---
+import { obligationSummaries } from "../../data/obligations.js";
 import DisclosureIcon from "../DisclosureIcon.astro";
 ---
 
@@ -14,9 +15,8 @@ import DisclosureIcon from "../DisclosureIcon.astro";
     <details id="obligation-1">
       <summary
         ><span class="number">01</span><div class="obligation-label">
-          <h3>Keep responsibility traceable.</h3><p>
-            Know who is responsible, including when work passes between
-            companies.
+          <h3>{obligationSummaries[1].title}</h3><p>
+            {obligationSummaries[1].explanation}
           </p>
         </div><DisclosureIcon /></summary
       ><div class="obligation-body">
@@ -39,8 +39,8 @@ import DisclosureIcon from "../DisclosureIcon.astro";
     <details id="obligation-2">
       <summary
         ><span class="number">02</span><div class="obligation-label">
-          <h3>Match power with evidence.</h3><p>
-            Ask for stronger safety evidence when a system can do more harm.
+          <h3>{obligationSummaries[2].title}</h3><p>
+            {obligationSummaries[2].explanation}
           </p>
         </div><DisclosureIcon /></summary
       ><div class="obligation-body">
@@ -64,9 +64,8 @@ import DisclosureIcon from "../DisclosureIcon.astro";
     <details id="obligation-3">
       <summary
         ><span class="number">03</span><div class="obligation-label">
-          <h3>Make scrutiny independent.</h3><p>
-            Let qualified outsiders challenge the claims—and report what they
-            find.
+          <h3>{obligationSummaries[3].title}</h3><p>
+            {obligationSummaries[3].explanation}
           </p>
         </div><DisclosureIcon /></summary
       ><div class="obligation-body">
@@ -90,9 +89,8 @@ import DisclosureIcon from "../DisclosureIcon.astro";
     <details id="obligation-4">
       <summary
         ><span class="number">04</span><div class="obligation-label">
-          <h3>Bound autonomy. Prepare for failure.</h3><p>
-            Limit what a system can do, and prepare to contain and repair
-            failures.
+          <h3>{obligationSummaries[4].title}</h3><p>
+            {obligationSummaries[4].explanation}
           </p>
         </div><DisclosureIcon /></summary
       ><div class="obligation-body">
@@ -116,8 +114,8 @@ import DisclosureIcon from "../DisclosureIcon.astro";
     <details id="obligation-5">
       <summary
         ><span class="number">05</span><div class="obligation-label">
-          <h3>Share what goes wrong.</h3><p>
-            Tell others about failures in time for them to protect themselves.
+          <h3>{obligationSummaries[5].title}</h3><p>
+            {obligationSummaries[5].explanation}
           </p>
         </div><DisclosureIcon /></summary
       ><div class="obligation-body">
@@ -140,8 +138,8 @@ import DisclosureIcon from "../DisclosureIcon.astro";
     <details id="obligation-6">
       <summary
         ><span class="number">06</span><div class="obligation-label">
-          <h3>Give affected people recourse.</h3><p>
-            Give people a way to challenge a decision and get harm put right.
+          <h3>{obligationSummaries[6].title}</h3><p>
+            {obligationSummaries[6].explanation}
           </p>
         </div><DisclosureIcon /></summary
       ><div class="obligation-body">

@@ -1,0 +1,247 @@
+---
+import { timelineEvents, timelineReview } from "../../data/timeline.js";
+import { obligationSummaries } from "../../data/obligations.js";
+const date = (value) =>
+  new Date(`${value}T12:00:00Z`).toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "UTC",
+  });
+const events = [...timelineEvents].sort((a, b) => b.date.localeCompare(a.date));
+---
+
+<section
+  id="timeline"
+  class="timeline"
+  aria-labelledby="timeline-title"
+  data-timeline
+>
+  <header class="timeline-heading">
+    <h2 id="timeline-title">The argument<br />meets <em>events.</em></h2>
+    <div class="timeline-intro">
+      <p>
+        New capabilities. Reported failures. Promises of scrutiny. Read recent
+        events beside the responsibilities this proposal asks for.
+      </p>
+      <p class="timeline-meta">
+        September 2026 · Sources checked <time datetime={timelineReview}
+          >{date(timelineReview)}</time
+        >. A selected record, updated by hand.
+      </p>
+      <div class="timeline-actions">
+        <a href="#introduction">Continue to the argument</a>
+        <button type="button" hidden data-motion-toggle aria-pressed="false"
+          >Pause motion</button
+        >
+      </div>
+    </div>
+  </header>
+  <div class="timeline-record">
+    <svg
+      class="timeline-thread"
+      viewBox="0 0 20 1000"
+      preserveAspectRatio="none"
+      aria-hidden="true"
+      fill="none"><path d="M10 0V1000" pathLength="1"></path></svg
+    >
+    <ol class="timeline-events">
+      {
+        events.map((event) => (
+          <li id={`timeline-${event.id}`} class="timeline-event">
+            <article aria-labelledby={`timeline-title-${event.id}`}>
+              <p class="timeline-date">
+                <>
+                  <time datetime={event.date}>{date(event.date)}</time>
+                  <span>{event.dateKind}</span>
+                </>
+              </p>
+              <h3 id={`timeline-title-${event.id}`}>{event.title}</h3>
+              <p>{event.summary}</p>
+              <p class="timeline-limit">{event.limit}</p>
+              <a class="timeline-source" href={event.source.url}>
+                {event.source.publisher}: {event.source.title}
+              </a>
+            </article>
+            <div class="timeline-obligations">
+              {event.obligations.map((number) => (
+                <div>
+                  <h4>
+                    <a href={`#obligation-${number}`}>
+                      {obligationSummaries[number].title}
+                    </a>
+                  </h4>
+                  <p>{obligationSummaries[number].explanation}</p>
+                </div>
+              ))}
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+  <p class="timeline-end">
+    <a href="#introduction">Continue to the argument</a>
+  </p>
+</section>
+<style>
+  .timeline {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 100px 6% 80px;
+    min-height: 100svh;
+    scroll-margin-top: 80px;
+  }
+  .timeline-heading {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 7%;
+    align-items: end;
+    padding-bottom: 72px;
+  }
+  .timeline-heading h2 {
+    font-size: clamp(52px, 6.5vw, 94px);
+  }
+  .timeline-intro {
+    max-width: 52ch;
+  }
+  .timeline-meta {
+    color: var(--muted);
+    font-size: 14px;
+  }
+  .timeline-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 26px;
+    margin-top: 24px;
+  }
+  .timeline-actions a,
+  .timeline-actions button {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-size: 14px;
+  }
+  .timeline-actions button[hidden] {
+    display: none;
+  }
+  .timeline-actions button {
+    background: none;
+    border: 0;
+    border-bottom: 1px solid var(--line);
+    padding: 8px 0;
+  }
+  .timeline-record {
+    position: relative;
+  }
+  .timeline-thread {
+    position: absolute;
+    top: 0;
+    left: 61%;
+    height: 100%;
+    width: 20px;
+    pointer-events: none;
+    color: var(--accent);
+  }
+  .timeline-thread path {
+    stroke: currentColor;
+    stroke-width: 1;
+    vector-effect: non-scaling-stroke;
+  }
+  .timeline-motion .timeline-thread path {
+    stroke-dasharray: 1;
+    stroke-dashoffset: calc(1 - var(--timeline-progress, 0));
+  }
+  .timeline-events {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .timeline-event {
+    display: grid;
+    grid-template-columns: 57% 31%;
+    gap: 12%;
+    padding: 42px 0 48px;
+    border-top: 1px solid var(--line);
+    scroll-margin-top: 80px;
+  }
+  .timeline-event article {
+    background: var(--paper);
+  }
+  .timeline-date {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 18px;
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+  .timeline-date time {
+    color: var(--ink);
+  }
+  .timeline-event h3 {
+    font-size: clamp(30px, 3vw, 44px);
+    margin-bottom: 22px;
+  }
+  .timeline-limit {
+    color: var(--muted);
+    font-size: 16px;
+  }
+  .timeline-source {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 8px 0;
+    font-size: 14px;
+    overflow-wrap: anywhere;
+  }
+  .timeline-obligations {
+    padding-top: 42px;
+  }
+  .timeline-obligations > div + div {
+    margin-top: 30px;
+  }
+  .timeline-obligations h4 {
+    font-size: 27px;
+    line-height: 1.15;
+    margin-bottom: 12px;
+  }
+  .timeline-obligations p {
+    font-size: 15px;
+    color: var(--muted);
+  }
+  .timeline-end {
+    border-top: 1px solid var(--line);
+    padding-top: 32px;
+  }
+  @media (max-width: 1000px) {
+    .timeline {
+      padding-top: 64px;
+    }
+    .timeline-heading {
+      grid-template-columns: 1fr;
+      gap: 28px;
+      padding-bottom: 40px;
+    }
+    .timeline-event {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+    .timeline-thread {
+      display: none;
+    }
+    .timeline-obligations {
+      padding: 0 0 0 20px;
+      border-left: 1px solid var(--accent);
+    }
+    .timeline-obligations h4 {
+      font-size: 25px;
+    }
+  }
+  @media (prefers-reduced-motion: reduce), (max-height: 699px) {
+    .timeline-motion .timeline-thread path {
+      stroke-dasharray: none;
+      stroke-dashoffset: 0;
+    }
+  }
+</style>

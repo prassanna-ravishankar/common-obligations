@@ -128,8 +128,8 @@ test("opening reasoning preserves focus and position and permanently releases on
     await page.keyboard.press("Enter");
     await page.setViewportSize({ width: 1500, height: 1050 });
     await expect(deck).not.toHaveAttribute("data-question-staged");
-    await page.locator("[data-motion-toggle]").click();
-    await page.locator("[data-motion-toggle]").click();
+    await page.locator(".reading-rail [data-motion-toggle]").click();
+    await page.locator(".reading-rail [data-motion-toggle]").click();
     await expect(deck).not.toHaveAttribute("data-question-staged");
     await page.setViewportSize({ width: 1600, height: 1100 });
   }
@@ -309,9 +309,9 @@ test("fresh mobile, reduced motion, pause, origin changes and chapter navigation
   await page.setViewportSize({ width: 1600, height: 1100 });
   await page.goto(route);
   await expect(page.locator("[data-staged]")).toHaveCount(10);
-  await page.locator("[data-motion-toggle]").click();
+  await page.locator(".reading-rail [data-motion-toggle]").click();
   await expect(page.locator("[data-staged]")).toHaveCount(0);
-  await page.locator("[data-motion-toggle]").click();
+  await page.locator(".reading-rail [data-motion-toggle]").click();
   await expect(page.locator("[data-staged]")).toHaveCount(10);
   await page.emulateMedia({ reducedMotion: "reduce" });
   await expect(page.locator("[data-staged]")).toHaveCount(0);

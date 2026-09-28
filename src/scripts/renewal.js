@@ -1,3 +1,4 @@
+import { createTimeline } from "./reading/timeline.js";
 import { clamp } from "./reading/timing.js";
 import { createQuestions } from "./reading/questions.js";
 import { createStatements } from "./reading/statements.js";
@@ -6,12 +7,17 @@ import { createNavigation } from "./reading/navigation.js";
 // One scroll/resize scheduler; modules own their elements and state.
 export function initRenewal() {
   const reduce = matchMedia("(prefers-reduced-motion: reduce)");
+  // Reading stages need more room than the decorative timeline. Keep these gates distinct.
+  const timelineWide = matchMedia(
+    "(min-width: 1001px) and (min-height: 700px)",
+  );
+  const timeline = createTimeline();
   const wide = matchMedia("(min-width: 1050px) and (min-height: 850px)");
   const questions = createQuestions(document, schedule);
   const statements = createStatements();
   const navigation = createNavigation();
   const thresholds = [...document.querySelectorAll("[data-fresh-threshold]")];
-  const motion = document.querySelector("[data-motion-toggle]");
+  const motion = [...document.querySelectorAll("[data-motion-toggle]")];
   let paused = false,
     queued = false;
   const enabled = () => !paused && !reduce.matches && wide.matches;
@@ -28,6 +34,7 @@ export function initRenewal() {
         ),
       );
     });
+    timeline.update();
     questions.update();
     statements.update();
     navigation.update();
@@ -42,16 +49,20 @@ export function initRenewal() {
     document.body.classList.toggle("reading-motion", enabled());
     questions.setup(enabled());
     statements.setup(enabled());
-    if (motion) {
-      motion.textContent = paused ? "Enable motion" : "Pause motion";
-      motion.setAttribute("aria-pressed", String(paused));
+    timeline.setup(!paused && !reduce.matches && timelineWide.matches);
+    for (const button of motion) {
+      button.hidden = false;
+      button.textContent = paused ? "Enable motion" : "Pause motion";
+      button.setAttribute("aria-pressed", String(paused));
     }
     schedule();
   }
-  motion?.addEventListener("click", () => {
-    paused = !paused;
-    setup();
-  });
+  motion.forEach((button) =>
+    button.addEventListener("click", () => {
+      paused = !paused;
+      setup();
+    }),
+  );
   addEventListener("scroll", schedule, { passive: true });
   addEventListener("resize", setup);
   reduce.addEventListener("change", setup);
