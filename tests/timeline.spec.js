@@ -59,18 +59,20 @@ test("no-JS timeline carries its obligation explanation and links to an operable
   await completeRecord(page);
   await expect(page.locator("#timeline")).not.toHaveClass(/timeline-motion/);
   await expect(page.locator("#timeline [data-motion-toggle]")).toBeHidden();
-  const link = page.locator('#timeline-enzyme-system a[href="#obligation-2"]');
+  const link = page.locator(
+    '#timeline-authors-allocation a[href="#obligation-6"]',
+  );
   await expect(link.locator("../..")).toContainText(
-    obligationSummaries[2].explanation,
+    obligationSummaries[6].explanation,
   );
   await link.click();
-  await expect(page).toHaveURL(/#obligation-2$/);
-  const summary = page.locator("#obligation-2 > summary");
+  await expect(page).toHaveURL(/#obligation-6$/);
+  const summary = page.locator("#obligation-6 > summary");
   await expect(summary).toBeInViewport();
   await summary.focus();
   await page.keyboard.press("Enter");
-  await expect(page.locator("#obligation-2")).toHaveAttribute("open", "");
-  await expect(page.locator("#obligation-2 .obligation-body")).toBeVisible();
+  await expect(page.locator("#obligation-6")).toHaveAttribute("open", "");
+  await expect(page.locator("#obligation-6 .obligation-body")).toBeVisible();
   await context.close();
 });
 

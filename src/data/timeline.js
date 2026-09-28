@@ -1,6 +1,42 @@
-// Dates describe the publication, disclosure or signing, never the retrieval date.
+// Dates describe publication, disclosure or signing, never retrieval.
 export const timelineReview = "2026-09-28";
 export const timelineEvents = [
+  {
+    id: "authors-allocation",
+    date: "2026-09-17",
+    dateKind: "Dispute-process update",
+    title: "Authors contest who gets paid.",
+    summary:
+      "Authors disputing shares of the Anthropic book-copyright settlement received more time to make their case. The Authors Guild reported an extension from 30 to 60 days, after notices exposed conflicting claims from authors, publishers and agents.",
+    limit:
+      "September 17 dates the Guild’s update, not the copying of books or settlement approval. The administrator confirms the extension. Disputed payments remain held back; extra time is not a resolved claim.",
+    obligations: [6],
+    source: {
+      publisher: "The Authors Guild",
+      title: "Copyright settlement claim disputes",
+      url: "https://authorsguild.org/news/important-information-regarding-anthropic-copyright-settlement-claim-notices/",
+      publishedOn: "2026-09-04",
+      updatedOn: "2026-09-17",
+    },
+  },
+  {
+    id: "medicare-delays",
+    date: "2026-09-08",
+    dateKind: "Records disclosure announced",
+    title: "Patients wait in pain for approval.",
+    summary:
+      "After suing for records, EFF reported that clinicians described patients waiting in pain and cancelled procedures in Medicare’s AI-assisted WISeR authorization program.",
+    limit:
+      "September 8 dates EFF’s disclosure announcement; the patient reports are from March 2026. These are clinicians’ accounts, not individual court findings. CMS requires clinical review of denials; delays span the whole process, not just an AI model.",
+    occurredOn: "2026-03",
+    obligations: [1, 6],
+    source: {
+      publisher: "EFF · records obtained from CMS",
+      title: "Medicare’s AI authorization experiment",
+      url: "https://www.eff.org/deeplinks/2026/09/new-records-reveal-problems-medicares-ai-prior-authorization-experiment",
+      publishedOn: "2026-09-08",
+    },
+  },
   {
     id: "navier-stokes",
     date: "2026-09-08",
@@ -42,9 +78,9 @@ export const timelineEvents = [
     dateKind: "Incident assessment published",
     title: "The investigation finds a missed incident.",
     summary:
-      "Anthropic published its assessment of four incidents in which evaluation models accessed third-party systems without authorization. A wider review had found transcripts missed by the earlier search.",
+      "Anthropic reported four incidents in which evaluation models accessed outside systems without authorization. Its wider review found an incident the earlier search missed.",
     limit:
-      "September 9 is the assessment date. The newly identified incident occurred in January 2026 and was found in August. This is Anthropic’s account; more disclosure does not establish a rising incident rate. It distinguishes evaluation misconfiguration from the models’ behavior.",
+      "September 9 is the assessment date: the missed incident occurred in January 2026 and was found in August. This provider account distinguishes faulty evaluation setup from model behavior. More disclosure does not establish a rising incident rate.",
     occurredOn: "2026-01",
     obligations: [4, 5],
     source: {
@@ -60,66 +96,15 @@ export const timelineEvents = [
     dateKind: "Legislation signed",
     title: "Outside scrutiny enters a legal framework.",
     summary:
-      "California’s governor announced the signing of SB 813, establishing a framework for independent verification organizations, and AB 1405, creating a registry and standards for AI auditors.",
+      "California signed SB 813 and AB 1405, establishing an independent-verification framework and a registry with standards for AI auditors.",
     limit:
-      "Signing establishes a framework. It does not demonstrate that reviews are operating effectively, nor that this proposal influenced the legislation.",
+      "The governor’s announcement records legislation, not proof that oversight works in practice. It does not establish influence by this proposal.",
     obligations: [3],
     source: {
       publisher: "Governor of California",
       title: "Governor Newsom signs AI safeguards",
       url: "https://www.gov.ca.gov/2026/09/09/governor-newsom-signs-first-in-the-nation-ai-safeguards-to-protect-californians-calls-on-the-federal-government-to-do-its-part/",
       publishedOn: "2026-09-09",
-    },
-  },
-  {
-    id: "independent-assessment",
-    date: "2026-09-22",
-    dateKind: "Commitment published",
-    title: "A commitment to deeper outside access.",
-    summary:
-      "OpenAI published principles for independent assessment across training, evaluation and deployment, committing to access that lets assessors challenge its assumptions and reach their own conclusions.",
-    limit:
-      "This records a commitment and the developer’s account of its practices. It does not establish that every promised assessment is implemented or independently effective.",
-    obligations: [3],
-    source: {
-      publisher: "OpenAI",
-      title: "Priorities and principles for effective third party assessments",
-      url: "https://openai.com/index/priorities-principles-third-party-assessments/",
-      publishedOn: "2026-09-22",
-    },
-  },
-  {
-    id: "qwen-omni",
-    date: "2026-09-22",
-    dateKind: "Technical report submitted",
-    title: "More ways for an agent to act.",
-    summary:
-      "The Qwen team published its Qwen3.8-Omni report, describing multimodal agents with tool use, memory and delegated work, alongside frameworks for audio and video workflows.",
-    limit:
-      "Performance results are the authors’ evaluations. A capability report does not establish safe permissions, containment or recovery in a particular deployment.",
-    obligations: [4],
-    source: {
-      publisher: "Qwen team · arXiv",
-      title: "Qwen3.8-Omni: Towards Native Omni-Modal Agents",
-      url: "https://arxiv.org/abs/2609.25611v1",
-      publishedOn: "2026-09-22",
-    },
-  },
-  {
-    id: "enzyme-system",
-    date: "2026-09-23",
-    dateKind: "Research announcement",
-    title: "A discovery with an open question.",
-    summary:
-      "Anthropic reported that Claude identified a previously uncharacterized enzyme system with DNA repeats, followed by analysis and laboratory testing by its scientists.",
-    limit:
-      "The announcement explicitly says the system’s function remains unknown. It is an early research finding, not an established gene-editing tool or demonstrated medical benefit.",
-    obligations: [2],
-    source: {
-      publisher: "Anthropic",
-      title: "Claude discovers a novel enzyme system",
-      url: "https://www.anthropic.com/news/claude-discovers-novel-enzyme-system",
-      publishedOn: "2026-09-23",
     },
   },
 ];
