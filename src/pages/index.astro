@@ -13,7 +13,11 @@ const whyNow = await Promise.all(
 );
 ---
 
-<Base description={home.description}>
+<Base
+  description={home.description}
+  image="/og/home-v1.png"
+  imageAlt={home.claim}
+>
   <section class="hero page" aria-labelledby="claim">
     <div class="hero-text">
       <h1 id="claim">{home.claim}</h1>

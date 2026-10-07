@@ -247,3 +247,19 @@ test("reduced motion: no tour, no pause control needed", async ({
   await page.waitForTimeout(6500);
   expect(await read.textContent()).toBe(first);
 });
+
+test("every page's social card exists at 1200x630", async ({
+  page,
+  request,
+}) => {
+  for (const path of pages) {
+    await page.goto(path);
+    const url = new URL(
+      await page.locator('meta[property="og:image"]').getAttribute("content"),
+    );
+    const res = await request.get(url.pathname);
+    expect(res.status(), url.pathname).toBe(200);
+    const png = await res.body();
+    expect([png.readUInt32BE(16), png.readUInt32BE(20)]).toEqual([1200, 630]);
+  }
+});

@@ -30,7 +30,12 @@ const sources = await Promise.all(d.sources.map(source));
 const { prev, next } = await neighbours(o);
 ---
 
-<Base title={d.title.replace(/\.$/, "")} description={d.short}>
+<Base
+  title={d.title.replace(/\.$/, "")}
+  description={d.short}
+  image={`/og/${d.slug}-v1.png`}
+  imageAlt={d.short}
+>
   <article class="obligation page">
     <header class="head">
       <div class="head-text">
