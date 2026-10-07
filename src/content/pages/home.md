@@ -11,8 +11,8 @@ whyNow:
   heading: Why now
   lede: Recent events, read beside the responsibilities this proposal asks for. Each is dated by when it was reported, and says when it happened if that was earlier.
   events:
+    - australia-medicare
     - medicare-delays
-    - cyber-assessment
     - authors-allocation
 obligationsIntro:
   heading: Six obligations

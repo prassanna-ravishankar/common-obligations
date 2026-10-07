@@ -86,7 +86,7 @@ Rules applied: primary sources only; publication day stated by the source; retri
 ### Held out
 
 - **Anthropic economic scenarios.** Explorer still shows "Version 1.0" with no day; the linked working paper (No. 2026-02) is dated "September 2026" and its PDF metadata carries no date. Day-level dates appear only in press coverage, which is not a primary source. Still held out; also not an event affecting identifiable people.
-- **Florida Attorney General, motion for temporary injunction against OpenAI and Sam Altman.** Primary: release dated 28 September 2026 and the motion, "E-Filed 09/28/2026", Case No. 26000295GCAXMX, Highlands County. It asks the court to require third-party approved safety guardrails, among other relief, citing the Hugging Face, RubyGems and Australian incidents. Held out: a filing states allegations and requested relief, not findings or oversight in operation, and listing it beside obligation 3 risks implying support. For Prassanna to decide; ship only if the court rules.
+- **Florida Attorney General, motion for temporary injunction against OpenAI and Sam Altman.** Primary: release dated 28 September 2026 and the motion, "E-Filed 09/28/2026", Case No. 26000295GCAXMX, Highlands County. It asks the court to require third-party approved safety guardrails, among other relief, citing the Hugging Face, RubyGems and Australian incidents. Held out: a filing states allegations and requested relief, not findings or oversight in operation, and listing it beside obligation 3 risks implying support. Prassanna, 8 October: not pursued.
 
 ### Rejected
 
@@ -100,3 +100,5 @@ Rules applied: primary sources only; publication day stated by the source; retri
 ### Existing sources rechecked
 
 The six event sources were re-fetched on 8 October 2026: all return 200 with their key text present, and none has an update after 28 September (latest: OpenAI Navier-Stokes 10 September, Authors Guild 17 September). Their `checkedOn` and the record's `reviewed` date move to 2026-10-08. The Tao post refuses headless clients (403); it is not an event source and keeps its September check date.
+
+Home "Why now": Prassanna asked for the Australia access to lead. It replaces `cyber-assessment`, which carries the same obligations (4, 5) and stays in the record.
