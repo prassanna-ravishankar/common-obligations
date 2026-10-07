@@ -28,6 +28,18 @@ for (const name of names) {
   await page.waitForFunction(
     () => document.querySelector("#stage > svg")?.childElementCount > 0,
   );
+  // Staggered tweens can still be landing on a slow machine: capture only once
+  // the drawing has stayed the same for half a second.
+  await page.waitForFunction(
+    () => {
+      const now = document.querySelector("#stage > svg").outerHTML;
+      const w = /** @type {any} */ (window);
+      if (now !== w.__last) [w.__last, w.__since] = [now, performance.now()];
+      return performance.now() - w.__since >= 500;
+    },
+    null,
+    { polling: 100 },
+  );
   const svg = await page.evaluate(() => {
     const s = document.querySelector("#stage > svg").cloneNode(true);
     s.removeAttribute("style");
