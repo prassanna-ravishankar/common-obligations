@@ -6,3 +6,4 @@ charts/
 docs/CONTEXT.md
 playwright-report/
 test-results/
+.agents/
