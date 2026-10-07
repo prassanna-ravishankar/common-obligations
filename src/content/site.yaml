@@ -1,0 +1,13 @@
+- id: site
+  name: Common Obligations
+  url: https://commonobligations.org
+  author: Prassanna Ravishankar
+  authorUrl: https://prassanna.io
+  byline: An independent proposal by Prassanna Ravishankar.
+  nav:
+    - label: Obligations
+      href: /#obligations
+    - label: Record
+      href: /record/
+    - label: Essay
+      href: /essay/

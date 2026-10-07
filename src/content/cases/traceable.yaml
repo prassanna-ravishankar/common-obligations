@@ -1,0 +1,43 @@
+id: traceable
+obligation: 1
+title: The discovery
+question: Researchers can check a result. Can they build on it?
+situation: Researchers receive a new mathematical result. They can check the proof, but struggle to understand its ideas or use them in their own work. Finding a result, checking the proof and sharing the ideas are three different contributions. What should the team claiming the breakthrough help others learn, and who gets credit for which part?
+decisions:
+  - id: publication
+    prompt: What should accompany the result?
+    context: Checking that a proof follows its rules is not the same as explaining why it works. This comparison asks how a team should share its work; it does not certify any particular proof.
+    options:
+      - name: Publish the verified result
+        summary: Publish the result and its proof promptly, so other researchers can check the work and start using it.
+        tradeoff: A proof can be checkable without being understandable. Explaining and maintaining the work may fall to people who received neither credit nor funding.
+        benefit: Make the claim and its proof available promptly so others can check it and begin working with it.
+        cost: A technically checkable artefact may remain difficult to understand. Exposition and maintenance can fall to people who did not receive the credit or funding.
+        people: Specialists may gain an early result; students and neighbouring fields may lack a usable explanation.
+        evidence: The precise theorem and assumptions, reproducible verification instructions, dependency versions, limitations, and provenance of the work.
+      - name: Develop it with the community
+        summary: Share explanations, examples and support alongside the proof, so other researchers can understand the ideas and build on them.
+        tradeoff: That work takes time and may delay publication. Requiring approval from established experts can also exclude new contributors.
+        benefit: Pair verification with readable exposition, expert collaboration, peer review, and examples that reveal reusable ideas.
+        cost: This takes time and resources and can delay publication. Requiring established experts to approve everything can also entrench existing gatekeepers.
+        people: Researchers and learners gain more usable knowledge; contributors need credit and support for the work of explanation.
+        evidence: An accountable author, contribution records, talks and explanatory materials, independent review, and a supported handoff when authors cannot finish the work.
+accounts:
+  - title: A claimed solution.
+    label: Provider account
+    disclosed: 8 September 2026
+    paragraphs:
+      - OpenAI published a claimed Navier-Stokes solution with a Lean formalization. Publishing a formalization is not the same as this site independently checking the theorem, its assumptions, or its correspondence to the prize problem.
+      - The company also discusses concurrent work and possible indirect contributions from de-identified product-use data. Its account does not establish improper use of another researcher’s work. Correctness, provenance, permission and credit remain distinct questions.
+    source: openai-navier-stokes
+  - title: Understanding is the purpose.
+    label: Researcher’s post
+    disclosed: 7 September 2026
+    paragraphs:
+      - In a post on related Alpöge and Buckmaster work, Terence Tao emphasises developing mathematical understanding and insight, describing problem-solving as a proxy for that goal. He highlights the effort to make AI-assisted arguments readable.
+      - That post predates OpenAI’s announcement. It is not a verdict on OpenAI’s proof.
+    source: tao-blowup
+notes:
+  - Understanding is not a requirement that every reader personally reconstruct every proof. The practical question is whether a community has the materials, expertise and support to inspect and develop it. These are proposed responsibilities, not a certification of scientific merit.
+inference: An accountable research claim should include a plan for explanation, scrutiny and continued stewardship, with a record of who contributed what.
+takeaway: A breakthrough should leave others able to build.

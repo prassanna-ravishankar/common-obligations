@@ -11,16 +11,27 @@ assert.equal(home.status, 200, "homepage status");
 assert.match(home.headers.get("content-type"), /text\/html/);
 const html = await home.text();
 assert.match(html, /Common Obligations/);
-assert.match(html, /id="essay-content"/);
+assert.match(html, /data-hairline="switchyard"/);
 assert.match(home.headers.get("cache-control"), /no-cache/);
 const paths = [...html.matchAll(/(?:src|href)="([^"]+)"/g)]
   .map((match) => match[1])
-  .filter((path) => path.startsWith("/_astro/") || path.startsWith("/assets/"));
-assert.ok(
-  paths.length >= 6,
-  "compiled CSS, JavaScript and chapter images exist",
-);
-for (const path of ["/", "/health", "/favicon.svg", ...new Set(paths)]) {
+  .filter((path) => /^\/(_astro|assets|fonts)\//.test(path));
+assert.ok(paths.length >= 4, "compiled CSS, JavaScript and fonts exist");
+const obligations = [
+  "traceable",
+  "evidence",
+  "scrutiny",
+  "autonomy",
+  "failures",
+  "recourse",
+].map((slug) => `/obligations/${slug}/`);
+for (const path of [
+  "/",
+  "/health",
+  "/favicon.svg",
+  ...obligations,
+  ...new Set(paths),
+]) {
   const response = await get(path);
   assert.equal(response.status, 200, path);
   assert.ok(

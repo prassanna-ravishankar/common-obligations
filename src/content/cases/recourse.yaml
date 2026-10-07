@@ -1,0 +1,75 @@
+id: recourse
+obligation: 6
+title: The watching city
+question: A stolen car is found. Who else is being watched?
+situation: An investigator is looking for a stolen car. A camera can help find it. Connect enough cameras, and the same tool can follow the daily movements of people who are not suspected of anything.
+decisions:
+  - id: collection
+    prompt: Who decides what gets collected?
+    context: A camera records a vehicle passing a street. Investigators look for a car connected to a reported theft.
+    options:
+      - name: Operator discretion
+        summary: Let investigators decide where cameras are needed so they can start looking for stolen cars sooner.
+        tradeoff: The same organisation decides whether watching a neighbourhood is justified. Residents have less say before collection starts.
+        benefit: The operator can deploy quickly and adapt collection to investigative needs.
+        cost: The same organisation defines the purpose and decides whether its own collection is proportionate.
+        people: Investigators gain flexibility. Residents have fewer opportunities to shape collection before it begins.
+        thesis: A faster path to use.
+      - name: Independent check
+        summary: Require someone outside the investigation team to approve the purpose, the limits and when camera use must be reviewed.
+        tradeoff: Residents get a chance to challenge the decision, but useful investigations may wait. The reviewer needs real expertise and authority.
+        benefit: Independent authorisation can establish a specific purpose, limits on collection, and a review date before deployment.
+        cost: Review takes time and resources. Its value depends on the reviewer’s competence, legitimacy, and authority.
+        people: Residents gain a point of intervention. Investigators may face delays, including for valuable uses.
+        thesis: A purpose people can challenge.
+  - id: connection
+    prompt: Who can search across the network?
+    context: Records from many cameras become searchable together. A local tool can reveal movement across a much larger area.
+    options:
+      - name: Operator discretion
+        summary: Let authorised investigators search across camera networks to follow a vehicle beyond one street or town.
+        tradeoff: That reach can also expose someone’s daily movements to searches they never expected. More access creates more opportunities for misuse.
+        benefit: Broad authorised access can help investigators connect sightings across locations and organisations.
+        cost: More access expands the opportunity for misuse and for searches beyond the purpose residents originally understood.
+        people: Investigators gain reach. People captured by the cameras can face scrutiny far beyond a single location.
+        thesis: A wider field of view.
+      - name: Independent check
+        summary: Require a reason for each wider search, restrict who can make it, and let an outside reviewer check the records.
+        tradeoff: Checks can slow urgent work. Emergency exceptions or an overloaded reviewer can also leave people unprotected.
+        benefit: Purpose-bound permissions, independent review, and audited searches can make access more accountable.
+        cost: Permissions create friction. Emergency exceptions and reviewer workload can weaken the check.
+        people: Residents gain protections against casual searches. Investigators must explain the need for broader access.
+        thesis: Access has to be justified.
+  - id: consequence
+    prompt: What turns a result into evidence?
+    context: A search result enters an investigation. Someone must decide how much weight it deserves before taking action.
+    options:
+      - name: Operator discretion
+        summary: Let investigators decide how to use a match alongside the other information they have.
+        tradeoff: A weak match can start to look like proof. If it is wrong, the person identified may have to uncover the mistake.
+        benefit: Investigators can respond quickly using the result alongside their existing practices and expertise.
+        cost: An uncertain match can acquire more authority than the evidence supports, especially under pressure.
+        people: Investigators retain discretion. A wrongly identified person may bear the cost of discovering the mistake.
+        thesis: Judgment stays with the operator.
+      - name: Independent check
+        summary: Require supporting evidence before acting on a match, and give the person affected a way to challenge it.
+        tradeoff: Finding that evidence takes time, and it can be wrong too. An appeal may arrive only after someone has been harmed.
+        benefit: Requiring independent supporting evidence and a workable appeal can reduce reliance on an incorrect result.
+        cost: Corroboration takes time and can itself be flawed. An appeal may arrive after harm has already occurred.
+        people: Affected people gain a route to challenge. Operators need resources and authority to investigate and repair errors.
+        thesis: A second basis for action.
+accounts:
+  - title: Useful does not settle legitimate.
+    label: Provider account
+    paragraphs:
+      - Flock offers automated licence plate recognition and a national network of plate readers. Its trust materials describe its approach to privacy and customer controls. Those are the provider’s account of its safeguards, rather than independent proof of how every deployment operates.
+      - The scenario here is a general policy comparison, not a claim that every Flock customer lacks these checks. Plate recognition and facial recognition are different technologies. Both raise questions about who can search, for which purposes, and with what recourse.
+    source: flock-trust
+  - title: A documented failure.
+    label: Legal representatives’ account
+    occurred: "2020"
+    paragraphs:
+      - Robert Williams was wrongfully arrested in Detroit in 2020 after police relied on an incorrect facial-recognition result. The 2024 settlement introduced requirements for independent supporting evidence and an audit of past cases. The account and settlement links come from his legal representatives.
+    source: aclu-williams
+inference: A safeguard has to govern how a result becomes an action. Better matching alone cannot decide whether a use is justified.
+takeaway: Ask whether a use is justified before it becomes ordinary.

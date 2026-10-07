@@ -1,0 +1,228 @@
+---
+import { getEntry, render } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import FigureSlot from "../../components/next/FigureSlot.astro";
+import Register from "../../components/next/Register.astro";
+import Case from "../../components/next/Case.astro";
+import EventEntry from "../../components/next/EventEntry.astro";
+import {
+  events,
+  href,
+  neighbours,
+  obligations,
+  pad,
+  source,
+  type Obligation,
+} from "../../lib/content";
+
+export async function getStaticPaths() {
+  return (await obligations()).map((o) => ({
+    params: { slug: o.data.slug },
+    props: { o },
+  }));
+}
+const { o } = Astro.props as { o: Obligation };
+const d = o.data;
+const { Content } = await render(o);
+const caseEntry = (await getEntry(d.case))!;
+const record = await events(d.number);
+const sources = await Promise.all(d.sources.map(source));
+const { prev, next } = await neighbours(o);
+---
+
+<Base title={d.title.replace(/\.$/, "")} description={d.short}>
+  <article class="obligation page">
+    <header class="head">
+      <div class="head-text">
+        <p class="mono num">
+          <a href="/#obligations">Obligation {pad(d.number)} of 06</a>
+        </p>
+        <h1>{d.title}</h1>
+        <p class="short">{d.short}</p>
+        <p class="prevents"><span class="mono">Prevents</span> {d.prevents}</p>
+      </div>
+      <FigureSlot
+        name={d.figure}
+        label={d.short}
+        number={d.number}
+        parts={d.parts}
+        size="large"
+      />
+    </header>
+
+    <section class="asks" id="asks" aria-labelledby="asks-title">
+      <Register kind="proposed" />
+      <h2 id="asks-title">What it asks</h2>
+      <div class="prose measure"><Content /></div>
+    </section>
+
+    <section
+      class="compliance"
+      id="compliance"
+      aria-labelledby="compliance-title"
+    >
+      <Register kind="proposed" />
+      <h2 id="compliance-title">What compliance looks like</h2>
+      <ul class="ticks measure">{d.evidence.map((e) => <li>{e}</li>)}</ul>
+    </section>
+
+    <Case entry={caseEntry} />
+
+    <section class="record" id="record" aria-labelledby="record-title">
+      <Register kind="reported" />
+      <h2 id="record-title">On the record</h2>
+      {
+        record.length ? (
+          record.map((e) => <EventEntry event={e} showObligations={false} />)
+        ) : (
+          <p class="muted">
+            No dated events in the record bear on this obligation yet.
+          </p>
+        )
+      }
+      <p class="more"><a href="/record/">The full record</a></p>
+    </section>
+
+    <section class="limits" id="limits" aria-labelledby="limits-title">
+      <Register kind="proposed" />
+      <h2 id="limits-title">Where it can fail</h2>
+      <ul class="measure">{d.failure.map((f) => <li>{f}</li>)}</ul>
+      <dl class="objections">
+        {
+          d.objections.map((x) => (
+            <div>
+              <dt>{x.claim}</dt>
+              <dd>{x.answer}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </section>
+
+    <section class="sources" id="sources" aria-labelledby="sources-title">
+      <h2 id="sources-title">Sources</h2>
+      <ol class="mono">
+        {
+          sources.map((s) => (
+            <li>
+              <a href={s.data.url}>
+                {s.data.publisher}: {s.data.title}
+              </a>
+              {s.data.checkedOn && (
+                <span class="muted"> checked {s.data.checkedOn}</span>
+              )}
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <nav class="prevnext mono" aria-label="Other obligations">
+      {
+        prev ? (
+          <a href={href(prev)} rel="prev">
+            {pad(prev.data.number)} {prev.data.title}
+          </a>
+        ) : (
+          <span />
+        )
+      }
+      {
+        next ? (
+          <a href={href(next)} rel="next">
+            {pad(next.data.number)} {next.data.title}
+          </a>
+        ) : (
+          <span />
+        )
+      }
+    </nav>
+  </article>
+</Base>
+
+<style>
+  .head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--space-6);
+    align-items: center;
+    padding-block: var(--space-7) var(--space-5);
+  }
+  .num a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  h1 {
+    margin-block: var(--space-3) var(--space-5);
+  }
+  .short {
+    font-size: var(--step-1);
+    max-width: 34ch;
+  }
+  .prevents {
+    margin-top: var(--space-5);
+    padding-top: var(--space-4);
+    border-top: var(--rule);
+    color: var(--muted);
+    max-width: 48ch;
+  }
+  .prevents .mono {
+    color: var(--ink);
+    margin-right: var(--space-2);
+  }
+  section {
+    padding-top: var(--space-8);
+  }
+  h2 {
+    margin-bottom: var(--space-5);
+  }
+  .prose :global(p + p) {
+    margin-top: var(--space-4);
+  }
+  .ticks,
+  .limits ul {
+    padding-left: 1.1em;
+    display: grid;
+    gap: var(--space-3);
+  }
+  .objections {
+    margin-top: var(--space-6);
+  }
+  .objections div {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+    gap: var(--space-6);
+    padding-block: var(--space-5);
+    border-top: var(--rule);
+  }
+  .objections dt {
+    font-weight: 500;
+  }
+  .more {
+    border-top: var(--rule);
+    padding-top: var(--space-4);
+  }
+  .sources ol {
+    padding-left: 1.6em;
+    display: grid;
+    gap: var(--space-2);
+    overflow-wrap: anywhere;
+  }
+  .prevnext {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-5);
+    margin-top: var(--space-8);
+    padding-top: var(--space-5);
+    border-top: var(--rule-strong);
+  }
+  .prevnext a[rel="next"] {
+    text-align: right;
+  }
+  @media (max-width: 860px) {
+    .head,
+    .objections div {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

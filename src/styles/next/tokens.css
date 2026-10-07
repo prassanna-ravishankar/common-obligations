@@ -1,0 +1,67 @@
+/* The only file with raw colours, fonts and scales. Everything else uses these tokens. */
+@font-face {
+  font-family: "Geist";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/fonts/geist-v1.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Geist Mono";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/fonts/geist-mono-v1.woff2") format("woff2");
+}
+:root {
+  color-scheme: light dark;
+
+  /* Ground and ink follow the Hairline palette, so figures sit on the page itself. */
+  --plate: light-dark(#ffffff, #08090a);
+  --ink: light-dark(#232327, #d0d6e0);
+  --muted: light-dark(#5f5f66, #9a9ea8);
+  --edge: light-dark(#a4a4ac, #5b5d64);
+  --mid: light-dark(#c3c3c9, #3e3e44);
+  --lo: light-dark(#e0e0e4, #29292d);
+  --wash: light-dark(#f6f6f7, #0f1012);
+  /* The single accent: links and the figure's one bright stroke. */
+  --accent: light-dark(#9f3e26, #d9774f);
+
+  --hairline-plate: var(--plate);
+  --hairline-hi: var(--accent);
+  --hairline-edge: var(--edge);
+  --hairline-mid: var(--mid);
+  --hairline-lo: var(--lo);
+  --hairline-stroke: 0.9;
+
+  --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, "SF Mono", monospace;
+
+  /* Fluid type, ratio about 1.25. */
+  --step--1: clamp(0.8125rem, 0.79rem + 0.1vw, 0.875rem);
+  --step-0: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
+  --step-1: clamp(1.2rem, 1.13rem + 0.35vw, 1.4rem);
+  --step-2: clamp(1.45rem, 1.3rem + 0.75vw, 1.95rem);
+  --step-3: clamp(1.8rem, 1.5rem + 1.5vw, 2.8rem);
+  --step-4: clamp(2.3rem, 1.75rem + 2.75vw, 4rem);
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2.25rem;
+  --space-7: 3.5rem;
+  --space-8: 5.5rem;
+  --space-9: 8rem;
+
+  --page-max: 76rem;
+  --gutter: clamp(1rem, 4vw, 3rem);
+  --measure: 66ch;
+  --rule: 1px solid var(--lo);
+  --rule-strong: 1px solid var(--mid);
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+  --duration-ui: 200ms;
+}

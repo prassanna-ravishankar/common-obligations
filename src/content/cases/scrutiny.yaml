@@ -1,0 +1,42 @@
+id: scrutiny
+obligation: 3
+title: The race to lead
+question: An outside team finds a serious risk. What happens next?
+situation: Two labs find a reason to spend longer testing. Neither wants to be the only one that waits. A government may see leadership as a source of security, prosperity and influence, and slowing down alone could surrender those advantages without reducing a rival’s risks. But a failure can harm people across borders, including countries that had little say. Shared checks and agreed responses could make it easier to wait without acting alone.
+decisions:
+  - id: agreement
+    prompt: An outside team finds a serious risk. What happens next?
+    context: These arrangements can work together. The difference is whether a finding comes with an agreed duty to respond.
+    options:
+      - name: Outside review
+        thesis: A finding people can examine.
+        summary: Give an outside team access to the work and the right to report concerns. Its findings can prompt repairs and help other labs and the public judge the risks.
+        tradeoff: Finding a problem does not decide what must happen next. Without an agreed response, a lab may keep going while competitors wait.
+        benefit: Ongoing outside review can detect overlooked failures, challenge internal assumptions and inform the public. Publication rights matter even before a binding shared response exists.
+        cost: Reviewers need expertise, access and independence. Reporting alone does not establish who must respond, what action is required or how a dispute will be resolved.
+      - name: Review with required follow-up
+        thesis: A finding with a response attached.
+        summary: Agree in advance who must respond to a serious finding, what they can require, and how the decision can be challenged. Give competing labs the same obligations.
+        tradeoff: The decision-maker can be wrong or favour powerful companies. Restrictions need evidence, clear limits and a route to appeal; international enforcement remains difficult.
+        benefit: Independent review and specified response duties can make shared restraint more credible. Contracts, purchasing requirements or public rules can assign responsibilities, while the appropriate authority decides on proportionate action.
+        cost: Required follow-up is not automatic acceptance of a reviewer’s recommendation or an unchecked power to stop work. Decisions need reasons, appeal and review deadlines. States may refuse scrutiny, and hidden activity can escape verification.
+accounts:
+  - title: A concrete proposal, not just a call to slow down.
+    label: Provider’s commitment
+    disclosed: September 2026
+    paragraphs:
+      - Dario Amodei committed Anthropic to bringing outside reviewers inside the company, with continuing access comparable to internal risk teams and the right to publish key findings without the company’s editorial control, subject to limited redactions for security, legal privilege, commercial sensitivity and third-party confidentiality.
+      - These are announced intentions for an arrangement to be established, not proof of its implementation. They do not establish that reviewers have stop-work authority, or that a binding agreement between companies has been signed. Amodei also couples pacing with preserving a US and allied lead over China; that is his position, not a condition this proposal places on who deserves protection.
+    source: amodei-pace
+  - title: What international oversight can build on.
+    label: Existing institutions
+    paragraphs:
+      - The IAEA’s safeguards rely on technical verification under agreements accepted by states. An AI institution would likewise need a basis for access, a defined remit and legitimate authority.
+      - The UN established an AI scientific panel and global dialogue in August 2025. Assessment and discussion are valuable functions; they do not themselves confer global enforcement powers.
+    source: iaea-safeguards
+    also:
+      - un-ai-panel
+notes:
+  - Neither arrangement guarantees safety. Some companies or states may refuse to participate, and checks can miss hidden activity. People outside the leading companies and countries need a voice in setting the terms.
+inference: The test of any institution is whether it can obtain evidence, act on it, resist pressure, and be held accountable itself.
+takeaway: Let outsiders see the risk. Make someone answer it.

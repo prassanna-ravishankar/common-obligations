@@ -1,0 +1,134 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: var(--space-6);
+}
+body {
+  margin: 0;
+  background: var(--plate);
+  color: var(--ink);
+  font: 400 var(--step-0) / 1.6 var(--font-sans);
+  font-feature-settings: "ss01";
+  text-rendering: optimizeLegibility;
+}
+h1,
+h2,
+h3,
+h4,
+p,
+ul,
+ol,
+dl,
+dd,
+figure,
+blockquote {
+  margin: 0;
+}
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.12;
+  text-wrap: balance;
+}
+h1 {
+  font-size: var(--step-4);
+  letter-spacing: -0.035em;
+  line-height: 1.04;
+}
+h2 {
+  font-size: var(--step-3);
+  letter-spacing: -0.03em;
+}
+h3 {
+  font-size: var(--step-2);
+}
+h4 {
+  font-size: var(--step-1);
+}
+p {
+  text-wrap: pretty;
+}
+a {
+  color: var(--accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  transition: color var(--duration-ui) ease;
+}
+a:hover {
+  color: var(--ink);
+}
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+img,
+svg {
+  max-width: 100%;
+}
+[hidden] {
+  display: none !important;
+}
+
+/* Mono is the voice of fact: dates, numbers, sources, read-outs. */
+.mono {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  letter-spacing: 0;
+}
+.muted {
+  color: var(--muted);
+}
+
+.page {
+  width: min(100% - 2 * var(--gutter), var(--page-max));
+  margin-inline: auto;
+}
+.measure {
+  max-width: var(--measure);
+}
+.skip {
+  position: absolute;
+  left: var(--gutter);
+  top: -100px;
+  padding: var(--space-2) var(--space-3);
+  background: var(--plate);
+  z-index: 10;
+}
+.skip:focus {
+  top: var(--space-3);
+}
+
+/* Native disclosures, one style everywhere. */
+details > summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+details > summary::-webkit-details-marker {
+  display: none;
+}
+details > summary::after {
+  content: "+";
+  font-family: var(--font-mono);
+  color: var(--accent);
+  transition: rotate var(--duration-ui) var(--ease-out);
+}
+details[open] > summary::after {
+  rotate: 45deg;
+}
+@media (prefers-reduced-motion: reduce) {
+  details > summary::after,
+  a {
+    transition: none;
+  }
+}

@@ -7,3 +7,7 @@ docs/CONTEXT.md
 playwright-report/
 test-results/
 .agents/
+hairline/kit/
+src/hairline/snapshots/
+src/styles/next/hairline.css
+hairline/figures/

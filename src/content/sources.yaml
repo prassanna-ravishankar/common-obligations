@@ -1,0 +1,118 @@
+- id: flock-trust
+  publisher: Flock Safety
+  title: Trust and privacy materials
+  url: https://www.flocksafety.com/trust
+  kind: provider
+- id: aclu-williams
+  publisher: ACLU
+  title: Settlement in Robert Williams v. City of Detroit
+  url: https://www.aclu.org/press-releases/civil-rights-advocates-achieve-the-nations-strongest-police-department-policy-on-facial-recognition-technology
+  kind: advocate
+- id: ftc-rite-aid
+  publisher: US Federal Trade Commission
+  title: Rite Aid banned from using AI facial recognition
+  url: https://www.ftc.gov/news-events/news/press-releases/2023/12/rite-aid-banned-using-ai-facial-recognition-after-ftc-says-retailer-deployed-technology-without
+  kind: regulator
+- id: anthropic-glasswing
+  publisher: Anthropic
+  title: Project Glasswing
+  url: https://www.anthropic.com/glasswing
+  kind: provider
+- id: openai-navier-stokes
+  publisher: OpenAI
+  title: On the Navier-Stokes Millennium Prize Problem
+  url: https://openai.com/index/navier-stokes-solution/
+  kind: provider
+  publishedOn: "2026-09-08"
+  updatedOn: "2026-09-10"
+  checkedOn: "2026-09-28"
+- id: tao-blowup
+  publisher: Terence Tao
+  title: Finite time blowup with smooth forcing term
+  url: https://terrytao.wordpress.com/2026/09/07/finite-time-blowup-with-smooth-forcing-term-for-the-incompressible-porous-medium-boussinesq-and-incompressible-euler-equations/
+  kind: researcher
+  publishedOn: "2026-09-07"
+- id: openai-hf-incident
+  publisher: OpenAI
+  title: The Hugging Face incident and the road ahead
+  url: https://openai.com/index/hugging-face-incident-and-the-road-ahead/
+  kind: provider
+  publishedOn: "2026-08-26"
+- id: reuters-anthropic-fourth
+  publisher: Reuters
+  title: Anthropic reports fourth cybersecurity incident with early version of Claude
+  url: https://www.reuters.com/legal/litigation/anthropic-reports-fourth-cybersecurity-incident-with-early-version-claude-2026-09-09/
+  kind: press
+  publishedOn: "2026-09-09"
+- id: amodei-pace
+  publisher: Dario Amodei
+  title: We Must Pace the Frontier
+  url: https://darioamodei.com/post/we-must-pace-the-frontier
+  kind: provider
+  checkedOn: "2026-09-14"
+- id: iaea-safeguards
+  publisher: IAEA
+  title: Basics of IAEA safeguards
+  url: https://www.iaea.org/topics/basics-of-iaea-safeguards
+  kind: institution
+- id: un-ai-panel
+  publisher: United Nations
+  title: AI scientific panel and global dialogue
+  url: https://www.un.org/global-digital-compact/en/ai
+  kind: institution
+- id: oecd-principles
+  publisher: OECD
+  title: AI Principles
+  url: https://www.oecd.org/en/topics/sub-issues/ai-principles.html
+  kind: institution
+- id: nist-rmf
+  publisher: NIST
+  title: AI Risk Management Framework
+  url: https://www.nist.gov/itl/ai-risk-management-framework
+  kind: institution
+- id: openai-alien-mind
+  publisher: OpenAI
+  title: An Alien Mind
+  url: https://openai.com/index/an-alien-mind/
+  kind: provider
+- id: osi-osaid
+  publisher: Open Source Initiative
+  title: Open Source AI Definition
+  url: https://opensource.org/ai/open-source-ai-definition
+  kind: institution
+- id: authors-allocation-source
+  publisher: The Authors Guild
+  title: Copyright settlement claim disputes
+  url: https://authorsguild.org/news/important-information-regarding-anthropic-copyright-settlement-claim-notices/
+  kind: event
+  publishedOn: "2026-09-04"
+  updatedOn: "2026-09-17"
+  checkedOn: "2026-09-28"
+- id: medicare-delays-source
+  publisher: EFF, records obtained from CMS
+  title: Medicare’s AI authorization experiment
+  url: https://www.eff.org/deeplinks/2026/09/new-records-reveal-problems-medicares-ai-prior-authorization-experiment
+  kind: event
+  publishedOn: "2026-09-08"
+  checkedOn: "2026-09-28"
+- id: alphagenome-source
+  publisher: Google DeepMind
+  title: AlphaGenome Atlas
+  url: https://deepmind.google/blog/alphagenome-atlas-a-predictive-map-of-every-possible-dna-letter-change-in-the-human-genome/
+  kind: event
+  publishedOn: "2026-09-08"
+  checkedOn: "2026-09-28"
+- id: cyber-assessment-source
+  publisher: Anthropic
+  title: An alignment assessment of recent cybersecurity incidents
+  url: https://www.anthropic.com/research/alignment-assessment-cybersecurity-incidents
+  kind: event
+  publishedOn: "2026-09-09"
+  checkedOn: "2026-09-28"
+- id: california-source
+  publisher: Governor of California
+  title: Governor Newsom signs AI safeguards
+  url: https://www.gov.ca.gov/2026/09/09/governor-newsom-signs-first-in-the-nation-ai-safeguards-to-protect-californians-calls-on-the-federal-government-to-do-its-part/
+  kind: event
+  publishedOn: "2026-09-09"
+  checkedOn: "2026-09-28"

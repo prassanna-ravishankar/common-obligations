@@ -1,0 +1,42 @@
+id: failures
+obligation: 5
+title: The defensive advantage
+question: A small team protects software we depend on. Who helps them?
+situation: "A small team maintains software that many people depend on. An AI tool could help them find security flaws, but it could help an attacker find them too. The maintainer needs more than a list of flaws: people using the software are protected only when someone can check the findings, make repairs and get those repairs installed."
+decisions:
+  - id: access
+    prompt: Who can use the capability?
+    context: These are compatible policy ingredients, not exhaustive alternatives. A supported programme can use vetting and later broaden access.
+    options:
+      - name: Broad access
+        summary: Give defenders access to tools that find security flaws, including small teams the provider might otherwise overlook.
+        tradeoff: Attackers may use the same capability. Finding a flaw also does not give a maintainer the time or money to fix it.
+        benefit: Defenders can examine their own systems without waiting for a provider to select them. Small teams can investigate neglected software.
+        cost: The same capability may accelerate exploitation. Access alone does not give maintainers time or resources to repair what is found.
+        people: Small defenders gain access; users of vulnerable systems bear exposure if exploitation outruns patching.
+        evidence: Authorised testing boundaries, measured defensive outcomes, abuse monitoring where feasible, and a coordinated disclosure process.
+      - name: Vetted access
+        summary: Give selected defenders access first, so they can find and repair weaknesses before the tools become widely available.
+        tradeoff: The provider decides who gets help. Less-connected maintainers may be left protecting important software without the same tools.
+        benefit: A staged programme can give selected defenders time to investigate and repair flaws before broader availability.
+        cost: The provider becomes a gatekeeper. Selection can favour well-connected organisations and exclude people protecting less visible systems.
+        people: Selected participants gain a head start; excluded maintainers depend on others to find and communicate their risks.
+        evidence: Published eligibility criteria, time-limited restrictions, an appeal route, and evidence that findings reach affected maintainers.
+      - name: Supported maintainer access
+        summary: Give maintainers the tools, computing resources and repair funding they need to protect the software people depend on.
+        tradeoff: Someone still chooses who receives support. Users benefit only when repairs reach them, and the tools can still be misused.
+        benefit: Pair scoped access with compute, triage support, and repair funding for maintainers responsible for widely used dependencies.
+        cost: Choosing recipients remains a power. Funding can create dependency, and additional access still carries misuse risk.
+        people: Maintainers gain capacity to act; downstream users benefit only if fixes are adopted. Neglected projects still need representation.
+        evidence: Transparent selection, conflict disclosures, support for under-resourced projects, patch validation, and uptake rather than bug counts alone.
+accounts:
+  - title: Finding a flaw starts another obligation.
+    label: Provider account
+    paragraphs:
+      - Anthropic describes Claude Mythos Preview identifying vulnerabilities and developing exploits, and presents Project Glasswing as an effort to give defenders an advantage. Its published examples include flaws it says were reported to maintainers and patched. These are the provider’s account of capabilities and outcomes.
+      - Finding a vulnerability, exploiting one, and introducing a new flaw in generated code are different behaviours. None establishes the others by itself.
+    source: anthropic-glasswing
+notes:
+  - When should a finding become public? Confidential notification can give maintainers a window to patch. That window needs an owner, support and a review date; indefinite secrecy leaves users unable to judge their exposure. A public advisory helps users respond and scrutinise the process, while publishing actionable exploit details too early may increase exposure. Separate urgent notification, mitigation advice and later technical disclosure.
+inference: Defensive access should be judged by protection delivered, including whether maintainers can validate and distribute repairs. More findings alone need not mean safer systems.
+takeaway: Access should lead to protection.

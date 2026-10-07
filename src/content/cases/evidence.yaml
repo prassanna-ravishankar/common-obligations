@@ -1,0 +1,43 @@
+id: evidence
+obligation: 2
+title: The release decision
+question: It can suggest an action. Is it ready to carry one out?
+situation: A person asks an AI assistant for help with a payment. Suggesting what to do is one thing; permission to move their money is another. The same underlying model gains different opportunities for harm once it has tools and permissions. What should the developer show before people rely on it to act?
+decisions:
+  - id: release
+    prompt: What should happen before wider release?
+    context: People want useful tools sooner. They also need reasons to trust what those tools can do.
+    options:
+      - name: Developer decides
+        thesis: Benefits arrive sooner.
+        summary: Let the developer decide when its system is ready. The team knows the technology and can make useful tools available sooner.
+        tradeoff: It also benefits from releasing the system. People outside the company may be unable to check its evidence or challenge the decision.
+        benefit: Developers know their systems intimately. Letting them assess readiness can bring useful capabilities to people sooner and avoid an expensive external bottleneck.
+        cost: The organisation making the case for release also benefits from it. External parties may be unable to examine the evidence or challenge the decision.
+        dependsOn: The quality of internal testing, honest disclosure, and credible consequences for misleading claims.
+      - name: Outside evaluation
+        thesis: The claims face a challenge.
+        summary: Ask an outside team to test the system and challenge the developer’s assumptions before more people rely on it.
+        tradeoff: Review takes time and money. Reviewers can make mistakes, and expensive checks can shut out smaller builders.
+        benefit: An independent evaluator can test assumptions the developer missed and give affected parties a stronger basis for trust.
+        cost: Evaluation can delay useful access and impose costs that favour large companies. Evaluators can also make mistakes or be influenced by the firms they assess.
+        dependsOn: Meaningful access, competent evaluators, transparent methods, manageable costs, and a process for appealing decisions.
+      - name: Limited deployment
+        thesis: Learn within boundaries.
+        summary: Start with a limited release, restricting what the system can do while learning how it behaves in real use.
+        tradeoff: Small trials can still cause serious harm. They need clear stopping rules, not an assumption that a pilot is safe.
+        benefit: A limited release can expose a system to realistic conditions while restricting permissions, access, and the scale of possible harm.
+        cost: A small deployment can still cause serious harm. A pilot can become permanent, and limited access may privilege a small group.
+        dependsOn: Enforceable boundaries, informed participation where possible, incident reporting, and explicit criteria for expanding or stopping.
+accounts:
+  - title: Testing is an obligation with human stakes.
+    label: Regulator’s allegations
+    disclosed: December 2023
+    paragraphs:
+      - The FTC alleged that Rite Aid’s facial-recognition system generated thousands of false-positive matches and that the retailer failed to adequately test accuracy before deployment. The agency described customers being wrongly accused and proposed a five-year ban on surveillance facial recognition as part of a settlement.
+      - This is an account of the agency’s allegations and announced proposed settlement, not a claim that every allegation was adjudicated.
+    source: ftc-rite-aid
+notes:
+  - Openness and deployment control are separate questions. Open weights are not automatically open source; a closed API is not automatically safe. Openly released weights can enable outside research and adaptation, but copies can persist after release. Provider-controlled access can support limits, updates and withdrawal, but scrutiny then depends more heavily on the provider’s discretion.
+inference: Testing the product includes examining the actions people take because of its output.
+takeaway: Match the evidence to the authority granted.

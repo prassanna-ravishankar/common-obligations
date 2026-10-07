@@ -1,0 +1,27 @@
+---
+import { site as getSite } from "../../lib/content";
+const s = await getSite();
+---
+
+<footer class="colophon page">
+  <p>
+    {s.byline.replace(s.author + ".", "")}<a href={s.authorUrl}>{s.author}</a>.
+  </p>
+  <p class="mono muted">
+    Illustrations are line drawings that answer the pointer. They show objects,
+    not events.
+  </p>
+</footer>
+
+<style>
+  .colophon {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-4);
+    margin-top: var(--space-9);
+    padding-block: var(--space-6);
+    border-top: var(--rule);
+    font-size: var(--step--1);
+  }
+</style>

@@ -1,0 +1,89 @@
+---
+// The only layout. Every page sets its own title, description, canonical URL and card.
+import "../styles/next/tokens.css";
+import "../styles/next/base.css";
+import "../styles/next/hairline.css";
+import "../styles/next/transitions.css";
+import Header from "../components/next/Header.astro";
+import Footer from "../components/next/Footer.astro";
+import { site as getSite } from "../lib/content";
+interface Props {
+  title?: string;
+  description: string;
+  image?: string;
+  imageAlt?: string;
+  noindex?: boolean;
+}
+const s = await getSite();
+const {
+  title,
+  description,
+  image = "/assets/renewal/social-v1.jpg",
+  imageAlt = s.name,
+  noindex = false,
+} = Astro.props;
+const fullTitle = title ? `${title} | ${s.name}` : s.name;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const imageUrl = new URL(image, Astro.site).href;
+---
+
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <meta
+      name="theme-color"
+      content="#ffffff"
+      media="(prefers-color-scheme: light)"
+    />
+    <meta
+      name="theme-color"
+      content="#08090a"
+      media="(prefers-color-scheme: dark)"
+    />
+    <link rel="icon" href="/favicon.svg" />
+    <link
+      rel="preload"
+      href="/fonts/geist-v1.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/geist-mono-v1.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={s.name} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={imageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={imageAlt} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to the proposal</a>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+    <script>
+      import "../hairline/mount";
+    </script>
+  </body>
+</html>

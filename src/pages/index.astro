@@ -1,6 +1,287 @@
 ---
-import RenewalLayout from "../layouts/RenewalLayout.astro";
-import Site from "../components/renewal/Site.astro";
+import Base from "../layouts/Base.astro";
+import Figure from "../components/next/Figure.astro";
+import FigureSlot from "../components/next/FigureSlot.astro";
+import EventEntry from "../components/next/EventEntry.astro";
+import { getEntry } from "astro:content";
+import { href, obligations, pad } from "../lib/content";
+
+const home = (await getEntry("pages", "home"))!.data;
+const all = await obligations();
+const whyNow = await Promise.all(
+  home.whyNow!.events.map((ref) => getEntry(ref)),
+);
 ---
 
-<RenewalLayout><Site /></RenewalLayout>
+<Base description={home.description}>
+  <section class="hero page" aria-labelledby="claim">
+    <div class="hero-text">
+      <h1 id="claim">{home.claim}</h1>
+      <p class="standfirst">{home.standfirst}</p>
+      <p class="scope">{home.scope}</p>
+      <p><a class="cta" href="#obligations">Read the six obligations</a></p>
+    </div>
+    <Figure
+      name={home.figure!.name}
+      label={home.figure!.label}
+      parts={{
+        rest: "six obligations",
+        items: all.map((o) => `${pad(o.data.number)} ${o.data.slug}`),
+      }}
+    />
+  </section>
+
+  <section class="why page" id="why-now" aria-labelledby="why-title">
+    <header class="section-head">
+      <h2 id="why-title">{home.whyNow!.heading}</h2>
+      <p class="measure muted">{home.whyNow!.lede}</p>
+    </header>
+    {whyNow.map((e) => e && <EventEntry event={e} />)}
+    <p class="more"><a href="/record/">The full record</a></p>
+  </section>
+
+  <section class="six page" id="obligations" aria-labelledby="six-title">
+    <header class="section-head">
+      <h2 id="six-title">{home.obligationsIntro!.heading}</h2>
+      <p class="measure muted">{home.obligationsIntro!.lede}</p>
+    </header>
+    <ol class="rows">
+      {
+        all.map((o) => (
+          <li class="row">
+            <a
+              class="row-figure"
+              href={href(o)}
+              tabindex="-1"
+              aria-hidden="true"
+            >
+              <FigureSlot
+                name={o.data.figure}
+                label={o.data.short}
+                number={o.data.number}
+                parts={o.data.parts}
+              />
+            </a>
+            <div class="row-text">
+              <p class="mono num">{pad(o.data.number)}</p>
+              <h3>
+                <a href={href(o)}>{o.data.title}</a>
+              </h3>
+              <p>{o.data.short}</p>
+              <p class="prevents">
+                <span class="mono">Prevents</span> {o.data.prevents}
+              </p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <section class="objections page" aria-labelledby="objections-title">
+    <h2 id="objections-title">{home.objections!.heading}</h2>
+    <dl>
+      {
+        home.objections!.items.map((x) => (
+          <div>
+            <dt>{x.claim}</dt>
+            <dd>{x.answer}</dd>
+          </div>
+        ))
+      }
+    </dl>
+  </section>
+
+  <section class="ask page" id="ask" aria-labelledby="ask-title">
+    <header class="section-head">
+      <h2 id="ask-title">{home.ask!.heading}</h2>
+      <p class="measure muted">{home.ask!.lede}</p>
+    </header>
+    {
+      home.ask!.groups.map((g) => (
+        <div class="ask-group">
+          <h3 class="mono">{g.who}</h3>
+          <ul>
+            {g.items.map((i) => (
+              <li>{i}</li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+  </section>
+
+  <section class="further page" aria-labelledby="further-title">
+    <h2 id="further-title" class="visually-hidden">
+      {home.furtherReading!.heading}
+    </h2>
+    <a href="/record/">
+      <span class="mono">The record</span>
+      <span>{home.furtherReading!.record}</span>
+    </a>
+    <a href="/essay/">
+      <span class="mono">The essay</span>
+      <span>{home.furtherReading!.essay}</span>
+    </a>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+    gap: var(--space-6);
+    align-items: center;
+    padding-block: var(--space-7) var(--space-6);
+  }
+  .hero :global(.figure) {
+    margin-right: calc(-1 * var(--space-6));
+  }
+  .hero h1 {
+    font-size: clamp(2.1rem, 1.5rem + 2.4vw, 3.4rem);
+    max-width: 18ch;
+  }
+  .standfirst {
+    font-size: var(--step-1);
+    margin-top: var(--space-5);
+    max-width: 36ch;
+  }
+  .scope {
+    margin-top: var(--space-5);
+    padding-top: var(--space-4);
+    border-top: var(--rule);
+    color: var(--muted);
+    font-size: var(--step--1);
+    max-width: 52ch;
+  }
+  .cta {
+    display: inline-block;
+    margin-top: var(--space-5);
+    font-weight: 500;
+  }
+  section.page {
+    margin-top: var(--space-8);
+  }
+  .section-head {
+    margin-bottom: var(--space-5);
+  }
+  .section-head h2 {
+    margin-bottom: var(--space-3);
+  }
+  .more {
+    border-top: var(--rule);
+    padding-top: var(--space-4);
+  }
+  .rows {
+    list-style: none;
+    padding: 0;
+  }
+  .row {
+    display: grid;
+    grid-template-columns: minmax(12rem, 18rem) minmax(0, 1fr);
+    gap: var(--space-6);
+    align-items: center;
+    padding-block: var(--space-5);
+    border-top: var(--rule);
+  }
+  .row-figure {
+    display: block;
+  }
+  .num {
+    color: var(--accent);
+  }
+  .row h3 {
+    margin-block: var(--space-1) var(--space-3);
+  }
+  .row h3 a {
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .row h3 a:hover {
+    color: var(--accent);
+  }
+  .row-text p {
+    max-width: 58ch;
+  }
+  .prevents {
+    margin-top: var(--space-3);
+    color: var(--muted);
+    font-size: var(--step--1);
+  }
+  .prevents .mono {
+    color: var(--ink);
+    margin-right: var(--space-2);
+  }
+  .objections dl {
+    margin-top: var(--space-5);
+  }
+  .objections div {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+    gap: var(--space-6);
+    padding-block: var(--space-5);
+    border-top: var(--rule);
+  }
+  .objections dt {
+    font-size: var(--step-1);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+  .ask-group {
+    display: grid;
+    grid-template-columns: minmax(10rem, 16rem) minmax(0, 1fr);
+    gap: var(--space-6);
+    padding-block: var(--space-5);
+    border-top: var(--rule);
+  }
+  .ask-group h3 {
+    font-size: var(--step--1);
+    font-weight: 500;
+    color: var(--accent);
+  }
+  .ask-group ul {
+    padding-left: 1.1em;
+    display: grid;
+    gap: var(--space-3);
+    max-width: 62ch;
+  }
+  .further {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-6);
+  }
+  .further a {
+    display: grid;
+    gap: var(--space-2);
+    padding-top: var(--space-4);
+    border-top: var(--rule-strong);
+    text-decoration: none;
+    color: var(--ink);
+  }
+  .further a .mono {
+    color: var(--accent);
+  }
+  .further a:hover span:last-child {
+    text-decoration: underline;
+  }
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+  @media (max-width: 860px) {
+    .hero,
+    .row,
+    .objections div,
+    .ask-group,
+    .further {
+      grid-template-columns: 1fr;
+      gap: var(--space-4);
+    }
+    .row-figure {
+      max-width: 18rem;
+    }
+  }
+</style>

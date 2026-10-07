@@ -1,0 +1,17 @@
+/* Cross-document view transitions: the figure on a home row grows into the
+   figure on its obligation page. No script; browsers without support just navigate. */
+@view-transition {
+  navigation: auto;
+}
+::view-transition-group(*) {
+  animation-duration: 420ms;
+  animation-timing-function: var(--ease-drawer);
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-hairline] {
+    view-transition-name: none !important;
+  }
+  ::view-transition-group(root) {
+    animation-duration: 160ms;
+  }
+}
