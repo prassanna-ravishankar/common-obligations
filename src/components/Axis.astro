@@ -1,0 +1,438 @@
+---
+// The record's axis: a drawn overview of every dated event. Every fact on it is
+// also in the entries below, so it is hidden from assistive technology.
+// Two honest linear segments: January to August compressed, September widened
+// so same-week events stay distinct; the break is drawn and captioned.
+import { month as monthName } from "../lib/dates";
+import type { Event } from "../lib/content";
+interface Props {
+  events: Event[];
+  review: string;
+}
+const { review } = Astro.props;
+const events = [...Astro.props.events].sort((a, b) =>
+  a.data.date.localeCompare(b.data.date),
+);
+const year = review.slice(0, 4);
+const short = (ym: string) => monthName(ym).split(" ")[0].slice(0, 3);
+const DAY = 864e5;
+const at = (iso: string) => Date.parse(`${iso}T00:00:00Z`);
+const [start, september, end] = [
+  `${year}-01-01`,
+  `${year}-09-01`,
+  `${year}-10-01`,
+].map(at);
+const BREAK = 38;
+const RESUME = 42;
+const x = (ms: number) =>
+  ms < september
+    ? ((ms - start) / (september - start)) * BREAK
+    : RESUME + ((ms - september) / (end - september)) * (100 - RESUME);
+const day = (iso: string) => x(at(iso) + DAY / 2);
+const nextMonth = (ym: string) => {
+  const [y, m] = ym.split("-").map(Number);
+  return m === 12 ? `${y + 1}-01` : `${y}-${String(m + 1).padStart(2, "0")}`;
+};
+// Geometry is in a 1000 x 180 box stretched to the axis width; strokes do not scale.
+const BASE = 132;
+const stack: Record<string, number> = {};
+const marks = events.map((e) => {
+  const d = e.data;
+  const level = (stack[d.date] = (stack[d.date] ?? -1) + 1);
+  const occurred = d.occurredOn
+    ? {
+        from: x(at(`${d.occurredOn}-01`)),
+        to: x(at(`${nextMonth(d.occurredOn)}-01`)),
+        label: d.occurredLabel,
+      }
+    : null;
+  return { id: e.id, ym: d.occurredOn, position: day(d.date), level, occurred };
+});
+const withOccurrence = marks.filter((m) => m.occurred);
+const arcs = withOccurrence.map((m, i, all) => {
+  const from = ((m.occurred!.from + m.occurred!.to) / 2) * 10,
+    to = m.position * 10;
+  const lift = BASE - 112 + (all.length - 1 - i) * 30;
+  return {
+    id: m.id,
+    d: `M${from} ${BASE}C${from} ${lift} ${to} ${lift} ${to} ${BASE}`,
+  };
+});
+// Scroll phases, as fractions of --timeline-progress: the line wipes, each mark
+// lands as the line reaches it, then the arcs sweep their own span.
+const LINE_END = 0.55;
+const landsAt = (left: number) => ((left / 100) * LINE_END).toFixed(4);
+const arcFrom = Math.min(
+  ...withOccurrence.map((m) => (m.occurred!.from + m.occurred!.to) / 2),
+);
+const arcTo = Math.max(...withOccurrence.map((m) => m.position));
+const months = Array.from(
+  { length: 8 },
+  (_, i) => `${year}-${String(i + 1).padStart(2, "0")}`,
+).map((ym) => ({
+  ym,
+  left: x(at(`${ym}-01`)),
+  label: short(ym),
+}));
+// Adjacent day labels are dropped on narrow screens; the entries carry every date.
+const days = [...new Set(events.map((e) => e.data.date))].map(
+  (iso, i, all) => ({
+    left: day(iso),
+    label: String(Number(iso.slice(8))),
+    near: i > 0 && at(iso) - at(all[i - 1]) < 3 * DAY,
+  }),
+);
+const reviewAt = day(review);
+const highlight = marks
+  .map(
+    (m) =>
+      `.record-body:has(#${m.id}:is(:hover,:focus-within)) [data-mark="${m.id}"]{--mark:1}`,
+  )
+  .join("");
+---
+
+<figure
+  class="timeline-axis"
+  aria-hidden="true"
+  data-timeline-axis
+  style={`--line-end:${LINE_END};--arc-from:${(arcFrom - 0.6).toFixed(2)};--arc-to:${(arcTo + 1).toFixed(2)}`}
+>
+  <div class="axis-plot">
+    <svg
+      class="axis-layer axis-layer--line"
+      viewBox="0 0 1000 180"
+      preserveAspectRatio="none"
+      fill="none"
+    >
+      <path
+        class="axis-line"
+        d={`M0 ${BASE}H${BREAK * 10 - 4}M${RESUME * 10 + 4} ${BASE}H${reviewAt * 10}`}
+      ></path>
+      <path class="axis-future" d={`M${reviewAt * 10} ${BASE}H1000`}></path>
+      <path
+        class="axis-break"
+        d={`M${BREAK * 10 + 2} ${BASE + 8}l10 -16M${BREAK * 10 + 16} ${BASE + 8}l10 -16`}
+      ></path>
+    </svg>
+    <svg
+      class="axis-layer axis-layer--arcs"
+      viewBox="0 0 1000 180"
+      preserveAspectRatio="none"
+      fill="none"
+    >
+      {arcs.map((a) => <path class="axis-arc" data-mark={a.id} d={a.d} />)}
+    </svg>
+    {
+      marks.map((m) => (
+        <>
+          {m.occurred && (
+            <span
+              class="axis-span"
+              data-mark={m.id}
+              style={`left:${m.occurred.from}%;width:${m.occurred.to - m.occurred.from}%;--at:${landsAt(m.occurred.from)}`}
+            />
+          )}
+          <span
+            class="axis-dot"
+            data-mark={m.id}
+            style={`left:${m.position}%;--level:${m.level};--at:${landsAt(m.position)}`}
+          />
+        </>
+      ))
+    }
+    <span class="axis-review" style={`left:${reviewAt}%`}
+      ><span>Sources checked</span></span
+    >
+  </div>
+  <div class="axis-scale">
+    {
+      months.map((mo) => {
+        const occ = marks.find((m) => m.ym === mo.ym);
+        return (
+          <span
+            class:list={["axis-month", { "axis-month--occurred": occ }]}
+            style={`left:${mo.left}%`}
+            data-mark={occ?.id}
+          >
+            {mo.label}
+            {occ && <small>{occ.occurred!.label}</small>}
+          </span>
+        );
+      })
+    }
+    <span class="axis-month axis-september" style={`left:${RESUME}%`}
+      >September</span
+    >
+    {
+      days.map((d) => (
+        <span
+          class:list={["axis-day", { "axis-day--near": d.near }]}
+          style={`left:${d.left}%`}
+        >
+          {d.label}
+        </span>
+      ))
+    }
+    <span class="axis-day axis-day--review" style={`left:${reviewAt}%`}
+      >{Number(review.slice(8))}</span
+    >
+  </div>
+  <figcaption class="axis-legend">
+    <span><i class="key-dot"></i>Published or announced</span>
+    <span><i class="key-span"></i>When it happened, known to the month</span>
+    <span><i class="key-arc"></i>The time between</span>
+    <span>The scale widens at September.</span>
+  </figcaption>
+  <Fragment set:html={`<style>@media (hover:hover){${highlight}}</style>`} />
+</figure>
+
+<style>
+  /* The axis: a drawn overview. Every fact on it is also in the entries. */
+  .timeline-axis {
+    margin: 0 0 72px;
+    --mark: 0;
+  }
+  .axis-plot {
+    position: relative;
+    height: 180px;
+  }
+  .axis-plot svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .axis-plot path {
+    vector-effect: non-scaling-stroke;
+  }
+  .axis-line {
+    stroke: var(--ink);
+    stroke-width: 1;
+  }
+  .axis-future {
+    stroke: var(--mid);
+    stroke-width: 1;
+    stroke-dasharray: 2 5;
+  }
+  .axis-break {
+    stroke: var(--muted);
+    stroke-width: 1;
+  }
+  .axis-arc {
+    stroke: var(--accent);
+    stroke-width: 1.2;
+  }
+  .axis-dot,
+  .axis-span {
+    position: absolute;
+    top: 132px;
+  }
+  /* A paper ring keeps stacked dots distinct where they touch the line. */
+  .axis-dot {
+    width: 17px;
+    height: 17px;
+    margin: -8.5px 0 0 -8.5px;
+    border: 3px solid var(--plate);
+    border-radius: 50%;
+    background: var(--ink);
+    translate: 0 calc(var(--level) * 17px);
+  }
+  .axis-span {
+    height: 5px;
+    margin-top: -2.5px;
+    background: var(--accent);
+  }
+  .axis-review {
+    position: absolute;
+    top: 118px;
+    height: 28px;
+    border-left: 1px solid var(--ink);
+  }
+  .axis-review span {
+    position: absolute;
+    bottom: calc(100% + 6px);
+    right: -1px;
+    font-size: 12px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .axis-scale {
+    position: relative;
+    height: 58px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .axis-scale > span {
+    position: absolute;
+    top: 6px;
+    white-space: nowrap;
+  }
+  .axis-scale > .axis-day {
+    translate: -50% 0;
+    color: var(--ink);
+  }
+  .axis-scale > .axis-day--review {
+    translate: -100% 0;
+    padding-right: 4px;
+  }
+  .axis-scale > .axis-september {
+    top: 28px;
+    color: var(--ink);
+  }
+  /* Occurrence labels wrap rather than run into the next month's. */
+  .axis-month small {
+    max-width: 9ch;
+    white-space: normal;
+    line-height: 1.3;
+    display: block;
+    font-size: 12px;
+    color: var(--accent);
+  }
+  .axis-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 30px;
+    padding-top: 20px;
+    border-top: 1px solid var(--mid);
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .axis-legend span {
+    display: inline-grid;
+    grid-template-columns: 20px auto;
+    align-items: center;
+    gap: 8px;
+  }
+  .axis-legend span:last-child {
+    display: inline;
+  }
+  .axis-legend span:last-child {
+    margin-left: auto;
+  }
+  .axis-legend i {
+    justify-self: center;
+  }
+  .key-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--ink);
+  }
+  .key-span {
+    width: 18px;
+    height: 5px;
+    background: var(--accent);
+  }
+  .key-arc {
+    width: 20px;
+    height: 10px;
+    border: 1.2px solid var(--accent);
+    border-bottom: 0;
+    border-radius: 10px 10px 0 0;
+  }
+
+  /* Hovering or focusing an entry finds its marks; everything else recedes. */
+  [data-mark] {
+    transition:
+      opacity 200ms var(--ease-out),
+      color 200ms var(--ease-out),
+      background-color 200ms var(--ease-out),
+      stroke 200ms var(--ease-out);
+  }
+  @media (hover: hover) {
+    .record-body:has(.event:is(:hover, :focus-within))
+      :is(.axis-dot, .axis-span, .axis-arc, .axis-month--occurred) {
+      opacity: calc(0.28 + var(--mark) * 0.72);
+    }
+    .record-body:has(.event:is(:hover, :focus-within)) .axis-dot[data-mark] {
+      background: color-mix(
+        in srgb,
+        var(--accent) calc(var(--mark) * 100%),
+        var(--ink)
+      );
+    }
+  }
+
+  /* Scrubbed in three beats, all from --timeline-progress. The line wipes left
+     to right; each dot and occurrence bar lands as the line reaches it (never
+     below 30%, so the chart is never empty at rest); then the arcs sweep from
+     occurrence to disclosure across their own span. Clip-path wipes, because
+     dash offsets are unreliable on stretched strokes. */
+  /* Derived on the figure, where --line-end and the arc span are defined. */
+  .axis-motion .timeline-axis {
+    --line-t: clamp(0, var(--timeline-progress, 0) / var(--line-end), 1);
+    --arc-t: clamp(0, (var(--timeline-progress, 0) - var(--line-end)) / 0.4, 1);
+  }
+  .axis-motion .axis-layer--line {
+    clip-path: inset(0 calc((1 - var(--line-t)) * 100%) 0 0);
+  }
+  .axis-motion .axis-layer--arcs {
+    clip-path: inset(
+      0
+        calc(
+          100% -
+            (
+              var(--arc-from) + (var(--arc-to) - var(--arc-from)) * var(--arc-t)
+            ) *
+            1%
+        )
+        0 0
+    );
+  }
+  .axis-motion :is(.axis-dot, .axis-span) {
+    --land: clamp(0, (var(--timeline-progress, 0) - var(--at)) / 0.06, 1);
+    opacity: calc(0.3 + var(--land) * 0.7);
+  }
+  .axis-motion .axis-dot {
+    scale: calc(0.55 + var(--land) * 0.45);
+  }
+  .axis-motion .axis-span {
+    transform-origin: left;
+    scale: calc(0.3 + var(--land) * 0.7) 1;
+  }
+
+  .axis-scale,
+  .axis-legend,
+  .axis-review span {
+    font-family: var(--font-mono);
+  }
+  @media (max-width: 1000px) {
+    .axis-month--occurred small {
+      max-width: 11ch;
+      white-space: normal;
+    }
+    .axis-legend span:last-child {
+      margin-left: 0;
+    }
+  }
+  @media (max-width: 700px) {
+    .timeline-axis {
+      margin-bottom: 52px;
+    }
+    .axis-dot {
+      width: 13px;
+      height: 13px;
+      margin: -6.5px 0 0 -6.5px;
+      border-width: 2px;
+      translate: 0 calc(var(--level) * 12px);
+    }
+    .axis-month:nth-child(even),
+    .axis-month--occurred small,
+    .axis-day--near {
+      display: none;
+    }
+    .axis-legend {
+      flex-direction: column;
+      gap: 8px;
+    }
+  }
+  @media (prefers-reduced-motion: reduce), (max-height: 699px) {
+    .axis-motion .axis-layer {
+      clip-path: none;
+    }
+    .axis-motion :is(.axis-dot, .axis-span) {
+      opacity: 1;
+      scale: none;
+    }
+  }
+</style>

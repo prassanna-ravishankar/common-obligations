@@ -1,0 +1,165 @@
+---
+import { getEntry, render } from "astro:content";
+import Base from "../layouts/Base.astro";
+import Register from "../components/Register.astro";
+import { source } from "../lib/content";
+
+const entry = (await getEntry("pages", "essay"))!;
+const page = entry.data;
+const { Content } = await render(entry);
+// The essay is HTML, so its sections come from its own h2 ids rather than markdown headings.
+const sections = [
+  ...(entry.body ?? "").matchAll(/<h2 id="([^"]+)">([\s\S]*?)<\/h2>/g),
+].map((m) => ({
+  slug: m[1],
+  text: m[2]
+    .replace(/<[^>]+>/g, "")
+    .replace(/\s+/g, " ")
+    .trim(),
+}));
+const words = (entry.body ?? "")
+  .replace(/<[^>]+>/g, " ")
+  .split(/\s+/)
+  .filter(Boolean).length;
+const minutes = Math.round(words / 190);
+const foundations = await Promise.all(
+  ["oecd-principles", "nist-rmf", "openai-alien-mind", "osi-osaid"].map((id) =>
+    source({ id }),
+  ),
+);
+---
+
+<Base
+  title={page.title}
+  description={page.description}
+  image="/og/essay-v1.png"
+  imageAlt={page.description}
+>
+  <article class="essay page" id="essay-content">
+    <header class="intro">
+      <Register kind="proposed" />
+      <h1>{page.title}</h1>
+      <p class="standfirst measure">{page.standfirst}</p>
+      <p class="mono muted">
+        About {minutes} minutes. Drafted 8 September 2026, reframed 15 September 2026.
+      </p>
+    </header>
+    <nav class="contents" aria-label="Sections of the essay">
+      <ol>
+        {
+          sections.map((h) => (
+            <li>
+              <a href={`#${h.slug}`}>{h.text}</a>
+            </li>
+          ))
+        }
+      </ol>
+    </nav>
+    <div class="body"><Content /></div>
+    <section class="editorial" aria-labelledby="editorial-title">
+      <h2 id="editorial-title">Sources and editorial approach</h2>
+      <p>
+        Common Obligations is a proposal by Prassanna Ravishankar, not an
+        established standard or certification. The cases on each obligation page
+        illustrate possible mechanisms and tradeoffs; their effects are not
+        simulated estimates. The line drawings show objects, not documented
+        incidents.
+      </p>
+      <p>
+        Sources are linked at the claims they support, using primary accounts
+        where available. Provider statements and advocates’ accounts are
+        identified as such, and event dates are kept apart from disclosure
+        dates. The economic examples are conditional arguments, not predictions
+        of employment, prices or the end of capitalism. The six obligations are
+        a practical minimum, not a complete economic programme.
+      </p>
+      <p class="mono">Further foundations</p>
+      <ul class="mono">
+        {
+          foundations.map((s) => (
+            <li>
+              <a href={s.data.url}>
+                {s.data.publisher}: {s.data.title}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+  </article>
+</Base>
+
+<style>
+  .intro {
+    padding-block: var(--space-7) var(--space-5);
+  }
+  h1 {
+    margin-bottom: var(--space-4);
+  }
+  .standfirst {
+    font-size: var(--step-1);
+    margin-bottom: var(--space-4);
+  }
+  .contents {
+    border-block: var(--rule);
+    padding-block: var(--space-4);
+    margin-bottom: var(--space-7);
+  }
+  .contents ol {
+    columns: 2 18rem;
+    column-gap: var(--space-6);
+    padding-left: 1.6em;
+    font-size: var(--step--1);
+  }
+  .contents li {
+    break-inside: avoid;
+    padding-block: var(--space-1);
+  }
+  .contents a {
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .contents a:hover {
+    color: var(--accent);
+  }
+  .body {
+    max-width: 68ch;
+    font-size: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
+    line-height: 1.8;
+  }
+  .body :global(h2) {
+    font-size: var(--step-2);
+    margin-block: var(--space-7) var(--space-4);
+    scroll-margin-top: var(--space-5);
+  }
+  .body :global(p + p) {
+    margin-top: var(--space-4);
+  }
+  .body :global(strong) {
+    font-weight: 600;
+  }
+  .editorial {
+    margin-top: var(--space-8);
+    padding-top: var(--space-5);
+    border-top: var(--rule-strong);
+    max-width: 68ch;
+    color: var(--muted);
+    font-size: var(--step--1);
+  }
+  .editorial h2 {
+    font-size: var(--step-1);
+    color: var(--ink);
+    margin-bottom: var(--space-4);
+  }
+  .editorial p + p {
+    margin-top: var(--space-3);
+  }
+  .editorial .mono {
+    margin-top: var(--space-5);
+    color: var(--ink);
+  }
+  .editorial ul {
+    padding-left: 1.1em;
+    margin-top: var(--space-2);
+  }
+</style>

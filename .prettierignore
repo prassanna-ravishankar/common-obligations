@@ -9,5 +9,5 @@ test-results/
 .agents/
 hairline/kit/
 src/hairline/snapshots/
-src/styles/next/hairline.css
+src/styles/hairline.css
 hairline/figures/

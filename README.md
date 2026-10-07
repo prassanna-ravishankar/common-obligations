@@ -1,8 +1,8 @@
 # Common Obligations
 
-An interactive visual essay on AI, provision, ownership and accountable power. By Prassanna Ravishankar.
+An independent proposal by Prassanna Ravishankar: the freedom to build powerful AI should come with obligations to the people it affects. Six obligations, each with its own page, an illustrative case that tests it, the dated record of events that bear on it, and a line drawing you can handle.
 
-The opening asks how greater productive capability becomes better lives. `Provision.astro` introduces ownership, a share in the benefits and public voice before the six concrete scenarios. The six obligations are a practical floor, not a complete economic programme. Conditional economic examples are arguments, not forecasts. The full essay develops the same framing; no new imagery or motion system is required for this editorial layer.
+Live at https://commonobligations.org.
 
 ## Develop
 
@@ -13,62 +13,20 @@ npm ci
 npm run dev
 ```
 
-Open http://localhost:4321. `npm run build` produces static files in `dist/`; `npm run preview` serves that output. Production runs nginx with no Node server.
+`npm run build` produces static files in `dist/`; production serves them with nginx, no Node server. See [docs/DEVELOPING.md](docs/DEVELOPING.md) for tests and checks, [docs/CONTENT.md](docs/CONTENT.md) for editing content, [PRODUCT.md](PRODUCT.md) for purpose and editorial rules, and [DESIGN.md](DESIGN.md) for the design system, figures and motion.
 
 ## Structure
 
-- `src/pages/index.astro`: chapter composition.
-- `src/layouts/RenewalLayout.astro`: current metadata, fonts, shell and script entry.
-- `src/components/chapters/`: independently editable narrative chapters.
-- `src/components/Essay.astro`: the complete long-form essay.
-- `src/data/`: authored comparisons rendered server-side for progressive scenic reading.
-- `src/components/ChapterFrame.astro`, `ScrollComparison.astro`, `renewal/`: current chapter, scene artwork and comparison grammar.
-- `src/scripts/`: optional chapter tracking, navigation and scroll-linked artwork.
-- `src/styles/renewal.css`, `renewal-world.css`, `src/scripts/renewal.js`: current visual system and optional scroll enhancement; other visual files are earlier iterations.
-- `public/assets/`: conceptual illustrations.
-- `tests/`: Playwright desktop/mobile browser journeys.
-- `deploy/`, `Dockerfile`, `charts/common-obligations/`: production server and deployment.
-- `.github/workflows/site.yml`: CI and deployment.
-
-Keep comparisons conditional and authored, not forecasts or simulated estimates. Preserve attribution and distinguish allegations from findings. Images are conceptual illustrations. See [project context](docs/CONTEXT.md) and [artwork provenance](docs/ARTWORK.md).
-
-Every comparison renders in HTML and works without JavaScript. Instrument Serif and DM Sans are self-hosted under `public/fonts/`, with licences and system fallbacks. The abstract redesign is local and awaits approval before publication; see [redesign brief](docs/REDESIGN.md) and [abstract artwork provenance](docs/ABSTRACT-ASSETS.md).
-
-On wide, tall screens, ten comparison sequences use natural scroll to shift attention between fixed halves or thirds, then resolve all perspectives in the same composition before it unpins. Each argument appears once; there is no repeated comparison section. Six distinct scene treatments alternate rich abstract prints, woven texture, transparent paper and minimal linework, with different movement for each. Text has no background panels. A keyboard-focus-only bypass skips to the complete composition; mobile, short viewports, reduced motion, manual pause and no JavaScript show complete static reading. Current artwork and prompt sidecars are in `public/assets/renewal/`; social sharing uses `social-v1.jpg` (1200 × 630). `/prototype/` and `/composition/` redirect to the main site. `/renewal/` is a noindex copy.
-
-## Validate
-
-### Changing the reading experience
-
-`components/renewal/QuestionSequence.astro` supplies one shared scene for a scenario's `data-question` articles. `Comparison.astro` renders each argument once into fixed regions. `Statement.astro` supplies the quiet sentence-to-next-chapter handoff. Chapter files retain their authored content and evidence.
-
-`scripts/renewal.js` only coordinates motion preferences and a single scroll/resize scheduler. The `scripts/reading/` modules separately own questions, perspective emphasis, statement dwell and navigation; `timing.js` is the shared pacing configuration. `styles/reading-sequences.css` owns staging and transitions, while chapter imagery remains in the existing visual styles. Question transitions enhance only when the complete longest slide fits; mobile, short screens, no-JS and motion-off retain normal document flow. There is no wheel interception or nested reading scroll.
-
-Each perspective requires `summary` and `tradeoff` (together no more than 65 words) alongside its existing detailed fields. `Argument.astro` shows that first-read layer and a native “Reasoning and limits” disclosure. Opening reasoning releases only its scenario from pinning, preserves the control’s viewport position and focus, and keeps that scenario in normal flow for the rest of the visit. The central perspective/together/question distances are 110/80/80 svh. The coordination example distinguishes Amodei’s proposed reviewer rights from implementation and authority to require a response; refresh its dated source note when updating those claims.
-
-```sh
-npx playwright install chromium
-npm run check
-```
-
-This checks formatting, builds and runs eighteen desktop/mobile browser checks, including the central economic framing, every authored option without JavaScript, concise summaries, disclosure focus/position preservation, incident origins, source/anchor preservation, layered scroll behavior, keyboard navigation, narrow-screen overflow and social-image validation. `npm run format` formats source files.
-
-To test the production container:
-
-```sh
-npm run build
-docker build --platform linux/amd64 -t common-obligations:local .
-docker run --rm --name common-obligations-local -p 8080:80 common-obligations:local
-```
-
-In another terminal:
-
-```sh
-node scripts/smoke.mjs http://localhost:8080
-PLAYWRIGHT_BASE_URL=http://localhost:8080 npm test
-```
-
-CI tests nginx's Content Security Policy, assets, cache headers and 404 behavior as well as browser interactions. HTML revalidates, hashed assets are immutable, and unversioned illustrations cache for a day.
+- `src/content/`: all copy (obligations, cases, events, sources, pages), validated by `src/content.config.ts`.
+- `src/pages/`: home, the six obligation pages, the record, the essay, 404, sitemap and robots.
+- `src/layouts/Base.astro`: the only layout.
+- `src/components/`: the shared components every page is built from.
+- `src/styles/`: tokens, base styles, the figures' generated CSS, view transitions.
+- `hairline/kit/`: the vendored Hairline engine and its check tools (MIT); `hairline/figures/`: the seven figures.
+- `src/hairline/`: figure hydration and the build-time rest-pose snapshots.
+- `scripts/`: snapshots, social cards, content lint, smoke checks.
+- `tests/`: Playwright, desktop and mobile, run against the nginx container in CI.
+- `deploy/`, `Dockerfile`, `charts/common-obligations/`: production server and deployment. `.github/workflows/site.yml`: CI and deployment.
 
 ## Deploy
 
@@ -90,11 +48,3 @@ Repository secrets `GCP_WIF_PROVIDER` and `GCP_WIF_SERVICE_ACCOUNT` select Workl
 Clusterkit owns the namespace, ReferenceGrant, deployment identity, Origin CA certificate, Cloudflare settings, and www DNS record. Its Terraform registration must be applied before the first deployment. This app owns the Deployment, Service, apex HTTPRoute and www → apex 301 redirect HTTPRoute. Only the apex belongs in the GCLB gate because the redirect route has no backend.
 
 Two small Spot replicas run nginx. With an authenticated cluster context, inspect `helm history common-obligations -n common-obligations`, then roll back using `helm rollback common-obligations <revision> -n common-obligations --wait`. Verify using `node scripts/smoke.mjs https://commonobligations.org --www`.
-
-## Validation scope
-
-The refactor passed the static build, Helm lint, Linux amd64 container build, HTTP smoke checks, eight browser journeys against nginx, and desktop/mobile screenshot inspection. Print rendering and a full accessibility audit remain separate work.
-
-## Scenario navigation
-
-`src/data/scenarios.js` drives the six-scenario index and chapter navigation, grouped as who may act, who benefits, and who answers. `PolicyComparison.astro` renders surveillance, release, defensive-access, discovery and coordination options with scroll-guided perspectives and static alternatives. The incident origin selector changes stage context and evidence for illustrative supply-chain compromise. Every comparison works without JavaScript; factual claims retain adjacent sources.

@@ -12,6 +12,11 @@ assert.match(home.headers.get("content-type"), /text\/html/);
 const html = await home.text();
 assert.match(html, /Common Obligations/);
 assert.match(html, /data-hairline="switchyard"/);
+assert.match(
+  await (await get("/essay/")).text(),
+  /id="economy-essay"/,
+  "essay page",
+);
 assert.match(home.headers.get("cache-control"), /no-cache/);
 const paths = [...html.matchAll(/(?:src|href)="([^"]+)"/g)]
   .map((match) => match[1])
@@ -30,6 +35,8 @@ for (const path of [
   "/health",
   "/favicon.svg",
   ...obligations,
+  "/record/",
+  "/essay/",
   ...new Set(paths),
 ]) {
   const response = await get(path);
@@ -46,11 +53,20 @@ for (const path of [
     assert.match(response.headers.get("cache-control"), /immutable/);
   console.log("OK", path);
 }
-assert.equal(
-  (await get("/does-not-exist")).status,
-  404,
-  "unknown pages return 404",
-);
+const missing = await get("/does-not-exist");
+assert.equal(missing.status, 404, "unknown pages return 404");
+assert.match(await missing.text(), /Not found/, "the site's own 404 page");
+for (const old of ["/renewal", "/renewal/", "/prototype/", "/composition"]) {
+  const r = await get(old);
+  assert.equal(r.status, 301, old);
+  assert.equal(
+    r.headers.get("location"),
+    "/",
+    `${old} redirects without host or port`,
+  );
+}
+for (const path of ["/sitemap.xml", "/robots.txt"])
+  assert.equal((await get(path)).status, 200, path);
 if (process.argv.includes("--www")) {
   const url = new URL("/?source=smoke", origin);
   url.hostname = "www." + url.hostname;

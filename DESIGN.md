@@ -1,186 +1,38 @@
----
-name: Common Obligations
-description: Crossing — an architectural visual essay on ivory paper.
-colors:
-  paper: "#f1eee5"
-  ink: "#24231f"
-  muted: "#625f56"
-  line: "#c6bfb0"
-  accent: "#9f3e26"
-typography:
-  display:
-    fontFamily: '"Instrument Serif", Georgia, serif'
-    fontSize: "clamp(72px, 8.9vw, 148px)"
-    fontWeight: 400
-    lineHeight: 0.96
-    letterSpacing: "-0.035em"
-  headline:
-    fontFamily: '"Instrument Serif", Georgia, serif'
-    fontSize: "clamp(48px, 6vw, 88px)"
-    fontWeight: 400
-    lineHeight: 1.08
-    letterSpacing: "-0.025em"
-  title:
-    fontFamily: '"Instrument Serif", Georgia, serif'
-    fontSize: "clamp(30px, 3vw, 44px)"
-    fontWeight: 400
-    lineHeight: 1.08
-    letterSpacing: "-0.025em"
-  body:
-    fontFamily: '"DM Sans", Arial, sans-serif'
-    fontSize: "17px"
-    lineHeight: 1.65
-  comparison-body:
-    fontFamily: '"DM Sans", Arial, sans-serif'
-    fontSize: "16px"
-    lineHeight: 1.75
-  comparison-label:
-    fontFamily: '"DM Sans", Arial, sans-serif'
-    fontSize: "13px"
-    fontWeight: 600
-    lineHeight: 1.5
-spacing:
-  control-gap: "8px"
-  compact: "20px"
-  column-gap: "36px"
-  section-gap: "45px"
-  gutter: "6%"
-components:
-  primary-link:
-    backgroundColor: "{colors.accent}"
-    textColor: "{colors.paper}"
-    padding: "14px 24px"
-  primary-link-hover:
-    backgroundColor: "{colors.ink}"
-    textColor: "{colors.paper}"
-  motion-button:
-    textColor: "{colors.ink}"
-    padding: "10px 0"
-  chapter-navigation:
-    backgroundColor: "{colors.paper}"
-    textColor: "{colors.ink}"
-    padding: "0 6%"
-  comparison-radio:
-    textColor: "{colors.ink}"
-    size: "17px"
-  evidence-disclosure:
-    textColor: "{colors.ink}"
-    padding: "22px 0"
----
+# Design: Six objects
 
-# Design System: Common Obligations
+The site reads like a careful technical document. Each obligation is an object you can handle: a Hairline figure, an isometric line drawing that answers the pointer. The figures are the only images.
 
-## Overview
+## Tokens
 
-**Creative North Star: "Crossing"**
+`src/styles/tokens.css` is the only file with raw colours, fonts and scales.
 
-Crossing combines ivory paper, charcoal engraved architecture and rust threads with expressive serif typography. The atmosphere is reflective and spacious: abstract boundaries and suspended fragments give the argument a material setting, while clear paper supports sustained reading.
-
-Depth belongs to the illustrations. Semantic text, restrained native controls and unboxed comparisons remain calm and legible. The recurring thread is a visual motif; conceptual imagery never stands in for evidence.
-
-**Key Characteristics:**
-
-- Ivory reading surfaces and charcoal text.
-- Engraved architectural imagery with precise rust SVG threads.
-- Expressive serif headings paired with quiet sans-serif reading.
-- Natural page flow, native controls and optional motion.
-
-## Colors
-
-One rust accent organizes a warm neutral palette. Frontmatter contains the normative values, drawn from the root properties in foundation.css.
-
-### Primary
-
-- **Rust** (`accent`): italic emphasis, primary action, active controls, focus outlines, thread strokes and occasional full-bleed closing emphasis.
-
-### Neutral
-
-- **Ivory Paper** (`paper`): page background and opaque reading surfaces.
-- **Charcoal Ink** (`ink`): primary text and engraved architectural character; also the primary action's hover surface.
-- **Muted Stone** (`muted`): supporting explanations, comparison descriptions and attribution.
-- **Paper Seam** (`line`): fine separators between controls, options and disclosure rows.
-
-**The Clear Paper Rule.** Place reading text on opaque paper where artwork passes behind its composition.
-
-Measured contrast on paper is 13.56:1 for ink, 5.50:1 for muted text and 5.67:1 for rust. Seams are decorative separators, not a substitute for visible control state.
-
-## Typography
-
-Instrument Serif supplies display and heading roles with Georgia as fallback. DM Sans supplies body copy, navigation, controls and factual labels with Arial as fallback. Both families are self-hosted as WOFF2; Instrument Serif has actual regular and italic faces, and DM Sans is variable.
-
-The type ramp pairs large, closely spaced, regular-weight serif headings with compact sans-serif controls and generous body leading. Use the frontmatter hierarchy rather than introducing a third family.
-
-**The Semantic Type Rule.** Keep headings and argument text as semantic HTML, and use the real italic serif face for expressive emphasis.
-
-Comparison descriptions use the comparison-body role with a maximum measure of 65ch; chapter paragraphs can reach 75ch. Full-essay reading uses 18px type with 1.85 leading in a 710px column. On small screens the default body becomes 16px. Display sizes contract fluidly, with the mobile display clamp at 59px–78px and chapter headings at 43px–60px.
+- **Ground and ink** follow the Hairline palette so figures sit on the page itself: plate `#ffffff` / `#08090a`, ink `#232327` / `#d0d6e0`, muted `#5f5f66` / `#9a9ea8`, edge, mid and lo greys for strokes and rules. Light and dark follow the system through `light-dark()`; there is no toggle and no pre-paint script.
+- **One accent.** Rust, `#9f3e26` light and `#d9774f` dark (6.6:1 and 6.4:1 on the ground), used for links, the figure's single bright stroke, numbers and the inference rule. Nothing else is coloured.
+- **Type.** Geist for everything readable; Geist Mono for facts: dates, numbers, sources, register labels and read-outs. Self-hosted variable woff2 with versioned names.
+- **Scale.** Fluid type steps at a ratio near 1.25, a 4px-based spacing scale, a 76rem page with a 66ch measure for reading.
 
 ## Layout
 
-Use normal vertical document flow. Major sections center within 1440px with 6% horizontal gutters; chapter reading content centers within 1160px. Short explanations generally stop at 65ch, longer chapter paragraphs at 75ch. Separators and whitespace organize content without enclosing every item in a card.
+Fine rules and space separate things; there are no cards, shadows or rounded containers. Each section type keeps one layout: a split hero, ledger rows for events (dates left, text right), figure rows for the six, claim and answer pairs for objections, side by side options for a decision (stacked below 860px), a single column for the essay. Every multi-column layout collapses to one column on phones.
 
-Desktop comparison options share equal-width columns with a 36px gap and a fine vertical separator. At 1000px and below, three-option comparisons use two columns with the third spanning the row. At 600px and below, comparisons and most reading grids become one column with horizontal separators. Obligation detail columns collapse at 800px. Selected single options use a maximum 75ch column.
+## Figures
 
-The chapter navigation remains sticky at the viewport top, with a 68px summary height, reduced to 60px on mobile. Its expanded links use four columns on desktop and two below 1000px. Keep anchor offsets clear of this control. Never introduce independently scrolling reading panels.
+Figures are Hairline figures (`hairline/kit`, MIT, vendored unchanged). Each is one object, one gesture and one variable, at most 200 lines, in `hairline/figures/`.
 
-The timeline is horizontal by drawing, not by scrolling. A full-width axis runs January to September on two labelled linear segments (the scale widens at September, and the break is drawn). Dots mark publication or disclosure; rust bars mark when an event occurred, to the month; rust arcs join the two. The axis is an `aria-hidden` overview: every date and caveat it shows is also in the entries. Entries read oldest first in three columns, two below 1000px and one below 700px, each keeping its full date caveat and inline obligation pairing.
+- **Read-outs say something useful.** Every choosable part of a figure is a real item from the argument; the read-out, in the corner outside the drawing, names that item. Labels come from the obligation's `parts` in content, passed to the figure through `data-parts` and `data-rest`. The accessible label is the obligation's short form, never a description of the drawing.
+- **Rest pose without JavaScript.** `scripts/hairline/snapshot.mjs` renders each figure's rest pose to `src/hairline/snapshots/` and the kernel's CSS to `src/styles/hairline.css`; `src/hairline/mount.ts` swaps in the live figure when the page is idle.
+- **Developing a figure.** Run the kit's loop until it passes, then look at the sheet: `node hairline/kit/look.mjs hairline/figures/<name>.js --answer x,y,z --edge x,y,z`. Then `npm run figures` to refresh snapshots and `node scripts/og.mjs` to refresh cards.
 
-## Elevation & Depth
+## Motion
 
-The interface has no box-shadow vocabulary. Depth comes from engraved imagery, multiply-blended distance layers, overlapping opaque paper, diagonal clipping and SVG thread placement.
+Three kinds, and nothing else:
 
-The hero combines a distant landscape, SVG threads and a transparent foreground portal. Chapter scenes use their own distinct raster bases and the shared vector threads; the foreground portal is emitted only for the hero. Do not infer additional chapter foregrounds from unused CSS selectors.
+1. **Figures.** They answer the pointer (a tap on touch). When idle they tour on their own, so the answer shows without a cursor: this needs `data-ambient` on the host, stops under reduced motion, and the header's Pause figures control stops it everywhere for the session. Motion runs in the kernel's single loop, which sleeps offscreen.
+2. **Page transitions.** Cross-document view transitions: an obligation's figure on the home page grows into the large figure on its page (`view-transition-name: fig-<name>`). No script; browsers without support simply navigate; reduced motion is a short crossfade.
+3. **The record's axis.** It draws in beats, scrubbed by scroll, while it crosses the reader's gaze (its top from 75% to 25% of the viewport): the line wipes, each mark lands as the line reaches it, then the arcs sweep from occurrence to disclosure. Only at 1001 by 700 and up; otherwise it is drawn.
 
-**The Optional Motion Rule.** Artwork motion enhances natural scrolling; reading and comparison state never depend on it.
+No text ever fades, slides or waits on a timer. No section is pinned, no scroll is captured, no panel scrolls on its own.
 
-Scroll-linked transforms and staged comparisons apply at 1050px × 850px and above; the timeline's axis draw uses its own 1001px × 700px gate. Both require motion enabled and no reduced-motion preference, and both run from the one scroll scheduler in `renewal.js`. Mobile and reduced-motion modes retain static compositions and all content, with the axis fully drawn. The axis draws while it crosses the reader's gaze (its top from 75% to 25% of the viewport), in three scrubbed beats: the line wipes, each dot and occurrence bar lands as the line reaches it (never below 30% opacity), then the arcs sweep from occurrence to disclosure. A test asserts the draw is still in progress when the axis sits mid-screen, so it cannot drift back to finishing before it is seen. The manual motion control also disables animation and transitions. Do not animate reading paragraphs.
+## Social cards
 
-Motion tokens live on `:root`: `--ease-out` `cubic-bezier(0.23, 1, 0.32, 1)` for entering and responding, `--ease-in-out` `cubic-bezier(0.77, 0, 0.175, 1)` for on-screen movement, `--duration-ui` 200ms and `--duration-disclosure` 280ms. Interface responses stay under 300ms. Scroll-linked motion is scrubbed, so it follows the reader rather than playing on a timer.
-
-Scroll-linked motion must composite. Transform each artwork plane's own `<svg>` element, never an element inside an SVG: moving an SVG child re-rasterises the whole print on every frame. Artwork origins and offsets stay authored in the 1536 × 1024 viewBox and convert to CSS pixels through `--s`, which follows the `xMidYMid slice` fit. Reveal with `transform` or `opacity`, not an animated `mask-image`; the race horizon rises by scaling a paper veil. Statement emphasis is scrubbed by position and complete whenever the sentence is held. No motion runs on a timer.
-
-## Shapes
-
-The prevailing interface geometry is square and unboxed: flat rectangular actions, fine straight rules and open text columns. Native radio circles remain native. Architectural apertures, diagonal masks and curved thread paths supply the expressive geometry rather than a generalized rounded-card system.
-
-Disclosure marks are inline, stroke-based SVG crosses, sized 24px with a 1.4 stroke; an open disclosure rotates the mark 45 degrees over `--duration-ui`. Obligation and evidence disclosures unfold over `--duration-disclosure` where `::details-content` is supported and open instantly elsewhere. Reasoning disclosures inside staged comparisons stay instant, because releasing a staged comparison measures its final layout. A link to a collapsed obligation opens it on arrival.
-
-## Components
-
-### Primary action
-
-A flat rust link with paper text and an inline SVG arrow. Hover changes the background to ink while preserving paper text. It has a minimum height of 50px; mobile reduces padding to 12px 18px and text to 14px.
-
-### Motion control
-
-A native button with no filled background and one fine lower rule. It has a minimum 44px target and a text state supplied by the motion controller. Preserve the explicit pause/resume affordance.
-
-### Chapter navigation
-
-A native details disclosure on paper with top and bottom rules. The current chapter is rust and semibold; links retain at least 44px height. Expansion stays in document flow and exposes the full navigation.
-
-### Comparison controls and columns
-
-Use fieldset, legend and labelled native radios. Radio inputs are rust-accented; checked policy labels also gain rust text and semibold weight. Control labels have a minimum 44px height. Render all authored options into HTML; native radio selection and CSS determine the visible subset without requiring JavaScript.
-
-Option columns remain unboxed, with serif titles, optional rust italic theses, sans-serif term labels and muted description text. Preserve the same readable layout when one option is selected.
-
-### Evidence and reading disclosures
-
-Use native details and summary with paper seams and inline SVG disclosure marks. Evidence summaries have a minimum 64px height. Expanded evidence can use two columns on desktop and one on mobile. Links inside evidence and essay text are underlined, with a 4px underline offset.
-
-### Chapter artwork and reading frame
-
-Combine a distinct conceptual base with the shared SVG thread motif. Overlay chapter headings on opaque paper and keep the following reading body in normal flow. Preserve the visible conceptual-illustration attribution and accessible figure description.
-
-All links, buttons, summaries and inputs use a rust 2px focus-visible outline offset by 6px. Keep focus visible even when the surrounding illustration is clipped.
-
-## Do's and Don'ts
-
-- Do use opaque paper to protect text from artwork.
-- Do retain semantic headings, native radio groups and native disclosures.
-- Do use distinct chapter illustrations with the recurring SVG thread motif.
-- Do preserve natural scrolling, visible keyboard focus and static reduced-motion compositions.
-- Don't turn comparison text into independently scrolling panels.
-- Don't present conceptual artwork or its thread as factual evidence or a causal relationship.
-- Don't introduce shadows or a rounded-card system into the flat reading interface.
-- Don't rasterize headings, controls or argument text.
+`node scripts/og.mjs` renders 1200 by 630 cards from the figures' snapshots and Geist into `public/og/<slug>-v1.png`. Bump the version when a card changes.

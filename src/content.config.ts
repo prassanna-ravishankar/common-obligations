@@ -142,6 +142,7 @@ const pages = defineCollection({
     description: prose,
     claim: prose.optional(),
     standfirst: prose.optional(),
+    reviewed: isoDay.optional(),
     figure: z.object({ name: figureName, label: prose }).optional(),
     scope: prose.optional(),
     whyNow: section.extend({ events: z.array(reference("events")) }).optional(),

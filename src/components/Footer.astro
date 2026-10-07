@@ -1,11 +1,27 @@
-<footer>
-  <a class="wordmark" href="#"
-    ><span class="mark">co<span>•</span></span><span
-      >COMMON<br />OBLIGATIONS</span
-    ></a
-  ><p>A proposal. An open question.<br />A future we have a part in.</p><a
-    href="https://prassanna.io"
-    target="_blank"
-    rel="noopener noreferrer">By Prassanna Ravishankar ↗</a
-  ><a href="#">Back to the beginning ↑</a>
+---
+import { site as getSite } from "../lib/content";
+const s = await getSite();
+---
+
+<footer class="colophon page">
+  <p>
+    {s.byline.replace(s.author + ".", "")}<a href={s.authorUrl}>{s.author}</a>.
+  </p>
+  <p class="mono muted">
+    Illustrations are line drawings that answer the pointer. They show objects,
+    not events.
+  </p>
 </footer>
+
+<style>
+  .colophon {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-4);
+    margin-top: var(--space-9);
+    padding-block: var(--space-6);
+    border-top: var(--rule);
+    font-size: var(--step--1);
+  }
+</style>

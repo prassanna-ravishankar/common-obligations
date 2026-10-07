@@ -1,0 +1,31 @@
+---
+// Without JavaScript an old fragment still finds a link to where its content went.
+import { LEGACY } from "../lib/legacy-anchors";
+const own = new Set(["obligations"]);
+---
+
+<div class="legacy">
+  {
+    Object.entries(LEGACY)
+      .filter(([id]) => !own.has(id))
+      .map(([id, to]) => (
+        <p id={id}>
+          This part of the proposal has moved. <a href={to}>Read it here</a>.
+        </p>
+      ))
+  }
+</div>
+
+<style>
+  .legacy p {
+    display: none;
+  }
+  .legacy p:target {
+    display: block;
+    width: min(100% - 2 * var(--gutter), var(--page-max));
+    margin: var(--space-4) auto 0;
+    padding: var(--space-3) var(--space-4);
+    border-left: 2px solid var(--accent);
+    background: var(--wash);
+  }
+</style>

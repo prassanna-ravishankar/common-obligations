@@ -1,17 +1,15 @@
 import { test, expect } from "@playwright/test";
 import { cases, events, home, obligations, sourceById } from "./content.js";
 
-const pages = ["/", ...obligations.map((o) => `/obligations/${o.slug}/`)];
+const pages = [
+  "/",
+  ...obligations.map((o) => `/obligations/${o.slug}/`),
+  "/record/",
+  "/essay/",
+];
 const original = (
   await import("./original-sources.json", { with: { type: "json" } })
 ).default;
-// Essay-only sources return with the essay page (phase 2 of the redesign).
-const essayOnly = [
-  "https://openai.com/index/an-alien-mind/",
-  "https://opensource.org/ai/open-source-ai-definition",
-  "https://www.nist.gov/itl/ai-risk-management-framework",
-  "https://www.oecd.org/en/topics/sub-issues/ai-principles.html",
-];
 
 test.describe("without JavaScript", () => {
   test.use({ javaScriptEnabled: false });
@@ -42,10 +40,9 @@ test.describe("without JavaScript", () => {
       for (const e of events.filter((e) => e.obligations.includes(o.number)))
         await expect(main).toContainText(e.limit);
       // The drawing is there before any script runs.
-      if (["paddock", "switchyard"].includes(o.figure))
-        expect(
-          await page.locator("[data-hairline] svg path").count(),
-        ).toBeGreaterThan(20);
+      expect(
+        await page.locator("[data-hairline] svg path").count(),
+      ).toBeGreaterThan(20);
       expect(
         await page.evaluate(
           () => document.documentElement.scrollWidth <= innerWidth,
@@ -191,7 +188,7 @@ test("every original source is still linked somewhere on the site", async ({
       .evaluateAll((as) => as.map((a) => a.href)))
       hrefs.add(h);
   }
-  const expected = original.filter((u) => !essayOnly.includes(u));
+  const expected = original;
   for (const url of expected) expect(hrefs, url).toContain(new URL(url).href);
   for (const id of Object.keys(sourceById))
     expect(sourceById[id].url).toMatch(/^https:\/\//);
@@ -261,5 +258,93 @@ test("every page's social card exists at 1200x630", async ({
     expect(res.status(), url.pathname).toBe(200);
     const png = await res.body();
     expect([png.readUInt32BE(16), png.readUInt32BE(20)]).toEqual([1200, 630]);
+  }
+});
+
+test("the record axis draws where the reader is looking, in beats", async ({
+  page,
+  isMobile,
+}) => {
+  test.skip(isMobile, "the axis animates at 1001 x 700 and up");
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto("/record/");
+  const axis = page.locator("[data-timeline-axis]");
+  const progress = () =>
+    page
+      .locator("[data-record]")
+      .evaluate((e) => Number(e.style.getPropertyValue("--timeline-progress")));
+  const place = (f) =>
+    axis.evaluate(
+      (e, f) =>
+        scrollTo(0, e.getBoundingClientRect().top + scrollY - innerHeight * f),
+      f,
+    );
+  await place(0.5);
+  await expect.poll(progress).toBeGreaterThan(0.2);
+  expect(await progress()).toBeLessThan(0.8);
+  await place(0.2);
+  await expect.poll(progress).toBe(1);
+});
+
+test("the essay is whole, with every section reachable from its contents", async ({
+  page,
+}) => {
+  await page.goto("/essay/");
+  const links = page.locator("nav.contents a");
+  expect(await links.count()).toBe(17);
+  for (const href of await links.evaluateAll((as) =>
+    as.map((a) => a.getAttribute("href")),
+  ))
+    await expect(page.locator(`[id="${href.slice(1)}"]`)).toHaveCount(1);
+  await expect(page.locator("#economy-essay")).toHaveCount(1);
+  expect((await page.locator(".body").innerText()).length).toBeGreaterThan(
+    20000,
+  );
+});
+
+test("old single-page links reach their new home, with or without JavaScript", async ({
+  page,
+  browser,
+}) => {
+  for (const [hash, to] of [
+    ["#obligation-4", /\/obligations\/autonomy\/$/],
+    ["#incident-contain", /\/obligations\/autonomy\/#decision-contain$/],
+    ["#timeline-medicare-delays", /\/record\/#medicare-delays$/],
+    ["#reading", /\/essay\/$/],
+  ]) {
+    await page.goto("/" + hash);
+    await expect(page).toHaveURL(to);
+  }
+  const nojs = await (
+    await browser.newContext({ javaScriptEnabled: false })
+  ).newPage();
+  await nojs.goto("/#obligation-4");
+  const stub = nojs.locator("#obligation-4");
+  await expect(stub).toBeVisible();
+  await expect(stub.locator("a")).toHaveAttribute(
+    "href",
+    "/obligations/autonomy/",
+  );
+  await nojs.goto("/");
+  await expect(nojs.locator("#obligation-4")).toBeHidden();
+});
+
+test("every obligation's figure tours through its own items", async ({
+  page,
+  isMobile,
+}) => {
+  test.skip(isMobile, "one viewport is enough for the tour");
+  test.setTimeout(120000);
+  for (const o of obligations) {
+    await page.goto(`/obligations/${o.slug}/`);
+    const host = page.locator(`.head [data-hairline=${o.figure}]`);
+    await expect(host).toHaveAttribute("data-hydrated", "");
+    const read = page.locator(".head [data-readout]");
+    await expect
+      .poll(() => read.textContent(), { timeout: 12000 })
+      .not.toBe(o.parts.rest);
+    expect([o.parts.rest, ...o.parts.items], o.slug).toContain(
+      await read.textContent(),
+    );
   }
 });

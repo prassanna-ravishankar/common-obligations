@@ -1,0 +1,124 @@
+---
+import { getEntry } from "astro:content";
+import Base from "../layouts/Base.astro";
+import Axis from "../components/Axis.astro";
+import Register from "../components/Register.astro";
+import EventEntry from "../components/EventEntry.astro";
+import { day } from "../lib/dates";
+import { events, href, obligations, pad } from "../lib/content";
+
+const page = (await getEntry("pages", "record"))!.data;
+const all = await events();
+const oldestFirst = [...all].reverse();
+const index = (await obligations()).map((o) => ({
+  o,
+  items: all.filter((e) => e.data.obligations.includes(o.data.number)),
+}));
+---
+
+<Base
+  title={page.title}
+  description={page.description}
+  image="/og/record-v1.png"
+  imageAlt={page.description}
+>
+  <section class="record page" data-record aria-labelledby="record-title">
+    <header class="intro">
+      <Register kind="reported" />
+      <h1 id="record-title">{page.claim}</h1>
+      <p class="standfirst measure">{page.standfirst}</p>
+      <p class="mono muted">
+        Sources checked <time datetime={page.reviewed}
+          >{day(page.reviewed!)}</time
+        >
+      </p>
+      <p class="scope measure">{page.scope}</p>
+    </header>
+    <div class="record-body">
+      <Axis events={all} review={page.reviewed!} />
+      <div class="entries">
+        {oldestFirst.map((e) => <EventEntry event={e} />)}
+      </div>
+    </div>
+    <section class="by-obligation" aria-labelledby="by-title">
+      <h2 id="by-title">By obligation</h2>
+      <ol>
+        {
+          index.map(({ o, items }) => (
+            <li id={`obligation-${o.data.number}`}>
+              <a class="ob" href={href(o)}>
+                <span class="mono">{pad(o.data.number)}</span> {o.data.title}
+              </a>
+              {items.length ? (
+                <ul>
+                  {items.map((e) => (
+                    <li>
+                      <a href={`#${e.id}`}>{e.data.title}</a>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p class="muted">No dated events yet.</p>
+              )}
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+  </section>
+</Base>
+
+<script>
+  import "../scripts/record-axis";
+</script>
+
+<style>
+  .intro {
+    padding-block: var(--space-7) var(--space-6);
+  }
+  h1 {
+    margin-bottom: var(--space-4);
+  }
+  .standfirst {
+    font-size: var(--step-1);
+    margin-bottom: var(--space-4);
+  }
+  .scope {
+    margin-top: var(--space-4);
+    padding-top: var(--space-4);
+    border-top: var(--rule);
+    color: var(--muted);
+    font-size: var(--step--1);
+  }
+  .by-obligation {
+    margin-top: var(--space-8);
+  }
+  .by-obligation h2 {
+    margin-bottom: var(--space-5);
+  }
+  .by-obligation > ol {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+    gap: var(--space-5) var(--space-6);
+  }
+  .by-obligation > ol > li {
+    border-top: var(--rule-strong);
+    padding-top: var(--space-3);
+  }
+  .ob {
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .ob .mono {
+    color: var(--accent);
+    margin-right: var(--space-2);
+  }
+  .by-obligation ul {
+    margin-top: var(--space-2);
+    padding-left: 1.1em;
+    font-size: var(--step--1);
+  }
+</style>

@@ -1,0 +1,109 @@
+---
+// One reported event. When it happened and when it was reported stay apart, and
+// the caveat is always shown in full.
+import { day, month } from "../lib/dates";
+import { obligations, pad, source, type Event } from "../lib/content";
+interface Props {
+  event: Event;
+  showObligations?: boolean;
+  headingLevel?: 3 | 4;
+}
+const { event, showObligations = true, headingLevel = 3 } = Astro.props;
+const e = event.data;
+const src = await source(e.source);
+const all = await obligations();
+const tagged = all.filter((o) => e.obligations.includes(o.data.number));
+const H = `h${headingLevel}`;
+---
+
+<article class="event" id={event.id}>
+  <dl class="dates mono">
+    <div>
+      <dt>{e.dateKind}</dt>
+      <dd><time datetime={e.date}>{day(e.date)}</time></dd>
+    </div>
+    {
+      e.occurredOn && (
+        <div class="occurred">
+          <dt>{e.occurredLabel}</dt>
+          <dd>
+            <time datetime={e.occurredOn}>{month(e.occurredOn)}</time>
+          </dd>
+        </div>
+      )
+    }
+  </dl>
+  <div class="body">
+    <H class="title">{e.title}</H>
+    <p>{e.summary}</p>
+    <p class="limit">{e.limit}</p>
+    <p class="meta mono">
+      <a href={src.data.url}>{src.data.publisher}: {src.data.title}</a>
+    </p>
+    {
+      showObligations && (
+        <ul class="tags mono" aria-label="Obligations it bears on">
+          {tagged.map((o) => (
+            <li>
+              <a href={`/obligations/${o.data.slug}/`}>
+                {pad(o.data.number)} {o.data.title}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </div>
+</article>
+
+<style>
+  .event {
+    display: grid;
+    grid-template-columns: minmax(10rem, 14rem) minmax(0, 1fr);
+    gap: var(--space-5) var(--space-6);
+    padding-block: var(--space-6);
+    border-top: var(--rule);
+  }
+  .dates {
+    display: grid;
+    gap: var(--space-3);
+    align-content: start;
+  }
+  .dates dt {
+    color: var(--muted);
+  }
+  .dates dd {
+    color: var(--ink);
+  }
+  .occurred dd {
+    color: var(--accent);
+  }
+  .title {
+    font-size: var(--step-1);
+    margin-bottom: var(--space-3);
+  }
+  .body > p + p {
+    margin-top: var(--space-3);
+  }
+  .limit {
+    color: var(--muted);
+    font-size: var(--step--1);
+    line-height: 1.6;
+  }
+  .meta {
+    overflow-wrap: anywhere;
+  }
+  .tags {
+    list-style: none;
+    padding: 0;
+    margin-top: var(--space-3);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-5);
+  }
+  @media (max-width: 720px) {
+    .event {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

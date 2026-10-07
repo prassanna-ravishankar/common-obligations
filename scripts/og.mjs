@@ -12,7 +12,7 @@ const out = process.argv[2] ?? root("public/og");
 mkdirSync(out, { recursive: true });
 const font = (f) =>
   `url(data:font/woff2;base64,${readFileSync(root(`public/fonts/${f}`)).toString("base64")})`;
-const css = readFileSync(root("src/styles/next/hairline.css"), "utf8");
+const css = readFileSync(root("src/styles/hairline.css"), "utf8");
 const snap = (name) => {
   try {
     return readFileSync(
@@ -34,6 +34,16 @@ const cards = [
     title: home.claim,
     line: "",
   },
+  ...["record", "essay"].map((slug) => {
+    const p = front(`pages/${slug}.md`);
+    return {
+      slug,
+      figure: "",
+      kicker: slug === "record" ? "Reported" : "The full argument",
+      title: p.title,
+      line: p.standfirst.split(". ")[0] + ".",
+    };
+  }),
   ...readdirSync(root("src/content/obligations")).map((f) => {
     const o = front(`obligations/${f}`);
     return {

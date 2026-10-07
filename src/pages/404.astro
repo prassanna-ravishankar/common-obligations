@@ -1,0 +1,24 @@
+---
+import Base from "../layouts/Base.astro";
+---
+
+<Base title="Not found" description="This page does not exist." noindex>
+  <section class="page missing">
+    <h1>Not found.</h1>
+    <p class="measure">
+      This page does not exist. The proposal starts on <a href="/"
+        >the home page</a
+      >, the dated events are in <a href="/record/">the record</a>, and the full
+      argument is in <a href="/essay/">the essay</a>.
+    </p>
+  </section>
+</Base>
+
+<style>
+  .missing {
+    padding-block: var(--space-8);
+  }
+  h1 {
+    margin-bottom: var(--space-4);
+  }
+</style>

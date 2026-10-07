@@ -1,0 +1,37 @@
+---
+// Names the kind of text a section holds, so the reader always knows whether
+// they are reading the proposal, an authored comparison, or a reported event.
+import { REGISTER } from "../lib/content";
+interface Props {
+  kind: keyof typeof REGISTER;
+}
+const { kind } = Astro.props;
+const notes = {
+  proposed: "What this proposal argues for.",
+  illustrative:
+    "An authored comparison of rules. It does not predict outcomes.",
+  reported: "Documented events, dated by when they were reported.",
+};
+---
+
+<p class:list={["register mono", kind]} title={notes[kind]}>
+  {REGISTER[kind]}
+</p>
+
+<style>
+  .register {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--muted);
+    margin-bottom: var(--space-3);
+  }
+  .register::before {
+    content: "";
+    width: 1.25rem;
+    border-top: 1px solid currentColor;
+  }
+  .reported {
+    color: var(--ink);
+  }
+</style>

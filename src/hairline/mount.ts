@@ -15,7 +15,12 @@ type Figure = {
 };
 const figures: Record<string, () => Promise<{ default: Figure }>> = {
   switchyard: () => import("virtual:hairline/figure/switchyard"),
+  relay: () => import("virtual:hairline/figure/relay"),
+  scaffold: () => import("virtual:hairline/figure/scaffold"),
+  loupe: () => import("virtual:hairline/figure/loupe"),
   paddock: () => import("virtual:hairline/figure/paddock"),
+  beacons: () => import("virtual:hairline/figure/beacons"),
+  hatches: () => import("virtual:hairline/figure/hatches"),
 };
 
 const live = new Map<HTMLElement, { destroy(): void }>();
@@ -65,6 +70,7 @@ const KEY = "figures-paused";
 const reduce = matchMedia("(prefers-reduced-motion: reduce)");
 function setPaused(paused: boolean) {
   hosts().forEach((h) => h.toggleAttribute("data-still", paused));
+  document.documentElement.toggleAttribute("data-still", paused);
   for (const b of document.querySelectorAll<HTMLButtonElement>(
     "[data-pause]",
   )) {

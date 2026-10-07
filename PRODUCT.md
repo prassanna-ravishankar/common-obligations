@@ -1,45 +1,36 @@
 # Common Obligations
 
-<!-- impeccable:product-schema 1 -->
+## Purpose
 
-## Platform
+An independent proposal by Prassanna Ravishankar: the freedom to build powerful AI should come with obligations to the people it affects. A reader with no background in AI governance should leave knowing six concrete obligations, why each matters, and what each asks of the people who build, buy and regulate these systems. They should be able to quote it.
 
-web
+## Readers
 
-## Users
+People affected by systems they did not choose, first. Engineers, buyers and policy readers second: they can go deeper on each obligation page, in the record and in the essay.
 
-Readers seeking an accessible account of AI power and accountability, including people who do not build or choose to use the systems affecting them. Engineers and other readers can inspect the deeper argument and evidence. This audience is recorded in docs/CONTEXT.md.
+## Structure
 
-## Product Purpose
+- `/` states the proposal on one page: the claim, its scope, why now, the six obligations, the strongest objections, and what it asks.
+- `/obligations/<slug>/` gives each obligation one canonical home: what it asks, what compliance looks like, the illustrative case that tests it, the documented accounts that case draws on, the dated record, where it can fail, and its sources.
+- `/record/` is the dated record of events the proposal cites.
+- `/essay/` is the full argument.
 
-An independent public proposal by Prassanna Ravishankar: the freedom to build powerful AI comes with responsibilities to affected people. Help readers understand choices, tradeoffs, evidence and six proposed obligations.
+The six scenarios of the earlier edition are the cases on the obligation pages, one each, with every option and its reasoning kept. They are no longer a sequence every reader walks through.
 
-## Positioning
+## Editorial invariants
 
-Examine one shared situation under different authored conditions. Comparisons expose benefits, costs, affected people and evidence to request; they are not simulated outcomes, forecasts, a game or a safety score.
+1. **Date honesty.** An event is dated by when it was reported, disclosed or signed. When it happened earlier, that is shown separately and labelled. Retrieval dates are never event dates.
+2. **Registers are named.** Every section says whether it is the proposal (Proposed), an authored comparison that predicts nothing (Illustrative), or a documented event (Reported).
+3. **No implied credit or endorsement.** A law, programme or company commitment is described, not enlisted as support for this proposal or as evidence that it caused anything.
+4. **Attribution.** Every factual claim links its source; provider statements and advocates' accounts are identified as such.
+5. **Plain language.** No jargon without a gloss. No em or en dashes anywhere, including titles.
+6. **Quotable units.** Each obligation has a one-sentence short form of at most 120 characters.
+7. **Substance belongs to the author.** Claims, obligation wording, objection answers, the ask and any dated fact change only with Prassanna's approval. Presentation does not need it.
 
-## Capabilities and Constraints
+## Access
 
-Six scenarios: surveillance, release readiness, defensive access, incident recovery, scientific discovery and international cooperation. Preserve their substantive arguments, source attribution, counterarguments and uncertainty, alongside the complete essay and six obligations. Do not invent adoption, endorsements or regulatory authority.
+Every page is complete without JavaScript, on a phone, in dark mode and under reduced motion. Figures self-tour only when motion is allowed and can be paused from the header.
 
-The implementation is an Astro static site deployed through Clusterkit. The current redesign remains local until the user approves publication. Preserve stable section anchors where practical.
+## Content lives in `src/content`
 
-## Brand Commitments
-
-The user approved abstract architectural imagery inspired by their LinkedIn poster: layered compositions, boundaries and threads, with overlapping parallax and vector elements. Retain the recognisable ivory, charcoal, rust and expressive serif character. Imagery is conceptual, not evidence of real events. One recurring thread is a visual motif, not a causal link between scenarios.
-
-## Evidence on Hand
-
-Scenario copy and adjacent citations in src/components/chapters/; authored conditions in src/data/; full essay in src/components/Essay.astro; conversation history in docs/CONTEXT.md. Provider accounts and reporting are distinguished from illustrative policy comparisons. Source preservation does not itself establish fresh verification.
-
-## Product Principles
-
-- Show who gains power and who bears its consequences.
-- Make strong objections and unresolved costs inspectable.
-- Keep responsibility proportional to actual authority and control.
-- Make the argument readable without interaction; let interaction support comparison.
-- Preserve user control over navigation and movement.
-
-## Accessibility & Inclusion
-
-Natural page scrolling without nested reading panes or scroll hijacking. Keyboard-operable controls, readable mobile layouts, reduced-motion and manual pause support, semantic text and access to comparisons without JavaScript.
+Schemas in `src/content.config.ts` enforce the invariants they can: no dashes, dates in ISO form, an occurrence label wherever an occurrence date is given, an event never occurring after it is reported, each obligation tied to exactly one case. See `docs/CONTENT.md`.

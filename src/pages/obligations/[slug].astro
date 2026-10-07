@@ -1,10 +1,10 @@
 ---
 import { getEntry, render } from "astro:content";
 import Base from "../../layouts/Base.astro";
-import FigureSlot from "../../components/next/FigureSlot.astro";
-import Register from "../../components/next/Register.astro";
-import Case from "../../components/next/Case.astro";
-import EventEntry from "../../components/next/EventEntry.astro";
+import FigureSlot from "../../components/FigureSlot.astro";
+import Register from "../../components/Register.astro";
+import Case from "../../components/Case.astro";
+import EventEntry from "../../components/EventEntry.astro";
 import {
   events,
   href,
@@ -85,7 +85,11 @@ const { prev, next } = await neighbours(o);
           </p>
         )
       }
-      <p class="more"><a href="/record/">The full record</a></p>
+      <p class="more">
+        <a href={`/record/#obligation-${d.number}`}
+          >This obligation in the full record</a
+        >
+      </p>
     </section>
 
     <section class="limits" id="limits" aria-labelledby="limits-title">

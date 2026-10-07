@@ -1,12 +1,85 @@
-<header class="site-header">
-  <a class="wordmark" href="#main" aria-label="Common Obligations home"
-    >Common<br />Obligations</a
+---
+import { site as getSite } from "../lib/content";
+const s = await getSite();
+const here = Astro.url.pathname;
+---
+
+<header class="masthead page">
+  <a
+    class="wordmark mono"
+    href="/"
+    aria-current={here === "/" ? "page" : undefined}>{s.name}</a
   >
   <nav aria-label="Main">
-    <a href="#decisions">Scenarios</a><a href="#obligations">The obligations</a
-    ><a href="#reading">Read the essay</a>
+    <ul>
+      {
+        s.nav.map((n) => (
+          <li>
+            <a
+              href={n.href}
+              aria-current={here === n.href ? "page" : undefined}
+            >
+              {n.label}
+            </a>
+          </li>
+        ))
+      }
+      <li>
+        <button
+          type="button"
+          class="pause mono"
+          data-pause
+          hidden
+          aria-pressed="false">Pause figures</button
+        >
+      </li>
+    </ul>
   </nav>
-  <button class="motion" aria-label="Pause animation" aria-pressed="false"
-    >Pause motion</button
-  >
 </header>
+
+<style>
+  .masthead {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-5);
+    min-height: 4rem;
+    border-bottom: var(--rule);
+    view-transition-name: masthead;
+  }
+  .wordmark {
+    font-size: var(--step-0);
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  ul {
+    list-style: none;
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-5);
+    padding: 0;
+    margin: 0;
+  }
+  nav a {
+    color: var(--ink);
+    text-decoration: none;
+    font-size: var(--step--1);
+  }
+  .pause {
+    font-size: var(--step--1);
+    color: var(--muted);
+    background: none;
+    border: 0;
+    border-bottom: 1px solid var(--lo);
+    padding: 0;
+    cursor: pointer;
+  }
+  .pause[aria-pressed="true"] {
+    color: var(--accent);
+  }
+  nav a:hover,
+  nav a[aria-current="page"] {
+    color: var(--accent);
+  }
+</style>
