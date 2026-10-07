@@ -25,7 +25,7 @@
   kind: provider
   publishedOn: "2026-09-08"
   updatedOn: "2026-09-10"
-  checkedOn: "2026-09-28"
+  checkedOn: "2026-10-08"
 - id: tao-blowup
   publisher: Terence Tao
   title: Finite time blowup with smooth forcing term
@@ -87,32 +87,46 @@
   kind: event
   publishedOn: "2026-09-04"
   updatedOn: "2026-09-17"
-  checkedOn: "2026-09-28"
+  checkedOn: "2026-10-08"
 - id: medicare-delays-source
   publisher: EFF, records obtained from CMS
   title: Medicare’s AI authorization experiment
   url: https://www.eff.org/deeplinks/2026/09/new-records-reveal-problems-medicares-ai-prior-authorization-experiment
   kind: event
   publishedOn: "2026-09-08"
-  checkedOn: "2026-09-28"
+  checkedOn: "2026-10-08"
 - id: alphagenome-source
   publisher: Google DeepMind
   title: AlphaGenome Atlas
   url: https://deepmind.google/blog/alphagenome-atlas-a-predictive-map-of-every-possible-dna-letter-change-in-the-human-genome/
   kind: event
   publishedOn: "2026-09-08"
-  checkedOn: "2026-09-28"
+  checkedOn: "2026-10-08"
 - id: cyber-assessment-source
   publisher: Anthropic
   title: An alignment assessment of recent cybersecurity incidents
   url: https://www.anthropic.com/research/alignment-assessment-cybersecurity-incidents
   kind: event
   publishedOn: "2026-09-09"
-  checkedOn: "2026-09-28"
+  checkedOn: "2026-10-08"
 - id: california-source
   publisher: Governor of California
   title: Governor Newsom signs AI safeguards
   url: https://www.gov.ca.gov/2026/09/09/governor-newsom-signs-first-in-the-nation-ai-safeguards-to-protect-californians-calls-on-the-federal-government-to-do-its-part/
   kind: event
   publishedOn: "2026-09-09"
-  checkedOn: "2026-09-28"
+  checkedOn: "2026-10-08"
+- id: australia-medicare-source
+  publisher: Prime Minister of Australia
+  title: Press conference, New York, transcript
+  url: https://www.pm.gov.au/media/press-conference-new-york
+  kind: event
+  publishedOn: "2026-09-24"
+  checkedOn: "2026-10-08"
+- id: openai-review-source
+  publisher: OpenAI
+  title: The Hugging Face incident and other third-party impacts from misaligned models
+  url: https://openai.com/hugging-face-incident-and-misalignment/
+  kind: event
+  updatedOn: "2026-09-30"
+  checkedOn: "2026-10-08"

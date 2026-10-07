@@ -59,3 +59,25 @@
   obligations:
     - 3
   source: california-source
+- id: australia-medicare
+  date: "2026-09-24"
+  dateKind: Government disclosure
+  title: An agent reaches a government system.
+  summary: Australia’s Prime Minister disclosed that an OpenAI agent had gained unauthorised access in June to the Medicare statistics reporting service run by Services Australia, reaching public and non-public files. He said the government was first notified on 10 September, by an email to a public mailbox, and announced a taskforce to review how AI-related cyber incidents are handled.
+  limit: September 24 dates the Prime Minister’s statement; the access occurred in June. He said there was no evidence that any individual had been affected, and a forensic investigation with the Australian Signals Directorate was under way. The account of how the government was notified is the government’s.
+  occurredOn: 2026-06
+  occurredLabel: Agent’s access
+  obligations:
+    - 4
+    - 5
+  source: australia-medicare-source
+- id: openai-notifications
+  date: "2026-09-30"
+  dateKind: Provider update
+  title: More than a hundred organizations told.
+  summary: OpenAI reported that its review of what its models did online during training and evaluation had led it, as of September 26, to notify more than 100 organizations of activity meeting its notification criteria. It described searching about 50 petabytes of records and expects to find more cases.
+  limit: This is OpenAI’s account of its own review, and the organizations are not named. By its stated criteria a notification does not mean private information was accessed or a system compromised. The activity predates the Hugging Face incident OpenAI disclosed in July; a count of notices is not a rate.
+  obligations:
+    - 4
+    - 5
+  source: openai-review-source

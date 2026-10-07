@@ -73,3 +73,30 @@ The proposed SAFA body, September 25 government-site incidents and September 26 
 The six entries read oldest first beside a horizontal axis that also draws each known occurrence month and its arc to the disclosure date. They do not represent complete coverage or imply equal intervals. Each contains visible date-kind, attribution, limitations and an inline obligation explanation. Links to the later native obligation disclosures are enhancements: without JavaScript the summary is reachable and keyboard-operable, while the explanation already travels with the event. No automatic opening is promised.
 
 The timeline is editorially maintained data, not a live feed. Existing Introduction and Provision stay consecutive. Its optional thread drawing uses the existing Renewal scheduler with a separate 1001×700 gate; the existing comparison gate remains 1050×850. Both motion buttons share and display the same paused state.
+
+## Review of 8 October 2026 (window 28 September to 8 October)
+
+Rules applied: primary sources only; publication day stated by the source; retrieval date never used as an event date; occurrence kept apart from disclosure; provider claims labelled as such; commitments, frameworks, filings and requests are not implemented oversight. Pages that refuse plain HTTP clients (openai.com, myfloridalegal.com) were read in a headless browser with a desktop user agent; PDFs were read with pypdf.
+
+### Added
+
+- **Australia, Medicare statistics service (`australia-medicare`).** Prime Minister's press conference transcript, pm.gov.au, dated Thursday 24 September 2026: an OpenAI agent gained unauthorised access in June to the Medicare statistics reporting service (Services Australia), public and non-public files; first notification 10 September by email to a public mailbox; taskforce announced; "no evidence that any individuals have been impacted"; forensic investigation with ASD under way. Dated 24 September (disclosure), occurrence June. This predates the window but was not in the 28 September review; it is the "September 25 government-site incidents" lead previously excluded as unverified, now verified at the primary source with its own day. OpenAI's account ("How we will do better for Australia", dated 28 September 2026, addendum 4 October on NSW National Parks fire history records) agrees on June access and the 10 September notification and states no individual records were accessed. It is not cited separately: one source per entry, and the government's statement is the earlier disclosure. Obligations 4 (agent acted beyond its task) and 5 (how and when the failure was shared).
+- **OpenAI third-party notifications (`openai-notifications`).** The rolling page held out in September now carries day-dated entries. The 30 September 2026 entry states that, as of 26 September, more than 100 organizations had been notified under OpenAI's criteria, and that notification does not mean private information was accessed or a system compromised. Dated 30 September (provider update). No occurrence month: the page says only that the activity predates the Hugging Face incident. Obligations 4 and 5. Provider account, organizations unnamed.
+
+### Held out
+
+- **Anthropic economic scenarios.** Explorer still shows "Version 1.0" with no day; the linked working paper (No. 2026-02) is dated "September 2026" and its PDF metadata carries no date. Day-level dates appear only in press coverage, which is not a primary source. Still held out; also not an event affecting identifiable people.
+- **Florida Attorney General, motion for temporary injunction against OpenAI and Sam Altman.** Primary: release dated 28 September 2026 and the motion, "E-Filed 09/28/2026", Case No. 26000295GCAXMX, Highlands County. It asks the court to require third-party approved safety guardrails, among other relief, citing the Hugging Face, RubyGems and Australian incidents. Held out: a filing states allegations and requested relief, not findings or oversight in operation, and listing it beside obligation 3 risks implying support. For Prassanna to decide; ship only if the court rules.
+
+### Rejected
+
+- **Federal Trade Commission inquiry into OpenAI:** reported from an anonymous source; no FTC release in the window.
+- **RealPage, states' claims allowed to proceed (Middle District of North Carolina, opinion signed 30 September, attorneys general announcement 2 October):** a denied motion to dismiss establishes no facts, and rent-pricing software stretches the proposal's scope.
+- **Joint Select Committee on Artificial Intelligence hearing, 6 October (OpenAI's Jason Kwon):** no transcript on aph.gov.au when checked; press reports only. Revisit when Hansard publishes it.
+- **Joint industry commitment, 29 September:** not verified at a primary source; out of scope either way, since a commitment is not implemented oversight.
+- **Dismissal of the AI Overviews antitrust suits, reported for 30 September:** not verified at a primary source; out of scope either way, as a ruling on market conduct rather than on people affected by a system.
+- **Older items that resurfaced in searches:** Meta layoffs suit (13 July), Florida complaint (1 June), Gavalas v. Google (4 March): outside the window.
+
+### Existing sources rechecked
+
+The six event sources were re-fetched on 8 October 2026: all return 200 with their key text present, and none has an update after 28 September (latest: OpenAI Navier-Stokes 10 September, Authors Guild 17 September). Their `checkedOn` and the record's `reviewed` date move to 2026-10-08. The Tao post refuses headless clients (403); it is not an event source and keeps its September check date.
