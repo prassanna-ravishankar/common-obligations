@@ -11,3 +11,4 @@ hairline/kit/
 src/hairline/snapshots/
 src/styles/hairline.css
 hairline/figures/
+public/google*.html
